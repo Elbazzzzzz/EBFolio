@@ -11,17 +11,29 @@ html {
   scroll-padding-top: var(--main-pad-for-nav);
   /* No horizontal scroll from full-bleed 100vw breakout vs scrollbar gutter */
   overflow-x: hidden;
+  min-height: 100%;
+  scrollbar-gutter: stable;
 }
 
 body {
   margin: 0;
-  background: var(--page-canvas);
+  min-height: 100%;
+  /* Soft site-wide wash (similar spirit to unobtrusive.design) — full height with content */
+  background-color: var(--page-canvas);
+  background-image: var(--page-canvas-gradient);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   color: #000000;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 22.4px;
+  line-height: 1.6;
   overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgba(0, 127, 47, 0.15);
+  color: #000000;
 }
 
 /* Layout + button tokens: desktop from Desktop - Home; mobile from Figma iPhone 16 frames */
@@ -36,15 +48,31 @@ body {
   --btn-bg: transparent;
   --btn-hover-bg: #ececec;
   --btn-pressed-bg: #d6d6d6;
+  /* Slightly stronger hover/press on fine-pointer devices (see @media hover + pointer) */
+  --btn-hover-bg-pointer: #dedede;
+  --btn-pressed-bg-pointer: #c8c8c8;
   --btn-disabled-opacity: 0.38;
   --btn-focus-ring: #000000;
   --nav-mobile-h: 83px;
-  /* Fixed floating nav: inset from top + bar height (approx) for main content offset */
+  /* Fixed floating nav: matches header `top` + inner nav height (padding + row) */
   --float-nav-top: 16px;
-  --float-nav-block: 68px;
-  --main-pad-for-nav: calc(var(--float-nav-top) + var(--float-nav-block));
+  /* Nav row ≈ max(brand line-height, .btn min-height) + .nav vertical padding */
+  --float-nav-block: 88px;
+  /* Align with header: `top: max(--float-nav-top, safe-area)` + bar height */
+  --main-pad-for-nav: calc(
+    max(var(--float-nav-top), env(safe-area-inset-top, 0px)) + var(--float-nav-block)
+  );
   /* Page canvas behind cards / sections */
   --page-canvas: #fff5f5;
+  /* Gentle diagonal wash; stops stay close for AA-friendly, unobtrusive shift */
+  --page-canvas-gradient: linear-gradient(
+    152deg,
+    #fff5f5 0%,
+    #fff9f7 26%,
+    #faf7f8 52%,
+    #fff6f5 78%,
+    #fef3f5 100%
+  );
 }
 
 img {
@@ -64,13 +92,23 @@ a {
   text-decoration: none;
 }
 
+a:focus {
+  outline: none;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--btn-focus-ring);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 /* --- Layout shell --- */
 
 .page {
   width: 100%;
   max-width: var(--page-max);
   margin: 0 auto;
-  background: var(--page-canvas);
+  background: transparent;
 }
 
 .page__pad {
@@ -92,8 +130,8 @@ a {
 .h1 {
   font-family: "Kaisei Decol", serif;
   font-weight: 400;
-  font-size: 38px;
-  line-height: 45.6px;
+  font-size: clamp(38px, 4.5vw, 56px);
+  line-height: 1.1;
   margin: 0;
 }
 
@@ -115,8 +153,8 @@ a {
 
 .text-body {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 22.4px;
+  font-size: 16px;
+  line-height: 1.6;
   font-weight: 400;
   margin: 0;
 }
@@ -125,7 +163,7 @@ a {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 22.4px;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .text-metric {
@@ -164,6 +202,7 @@ a {
   box-shadow:
     0 1px 0 rgba(0, 0, 0, 0.06),
     0 12px 40px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.25s ease;
 }
 
 .site-header .page__pad {
@@ -181,9 +220,9 @@ a {
 
 .nav__brand {
   font-family: "Kaisei Decol", serif;
-  font-size: 16px;
+  font-size: 30px;
+  line-height: 36px;
   font-weight: 400;
-  line-height: normal;
   display: inline-flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -207,11 +246,12 @@ a {
 }
 
 .nav__brand-location {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-family: "Kaisei Decol", serif;
+  font-size: inherit;
+  line-height: inherit;
   font-weight: 400;
-  line-height: normal;
-  color: #595959;
+  /* Lighter than name; 30px meets WCAG large-text threshold (~3:1) */
+  color: #8b8b8b;
 }
 
 .nav__actions {
@@ -222,6 +262,28 @@ a {
 
 .nav__actions .btn--ghost {
   border: none;
+}
+
+/* Tablet: balance brand + actions between mobile (768) and full desktop */
+@media (max-width: 900px) and (min-width: 769px) {
+  .nav {
+    gap: 12px;
+  }
+
+  .nav__brand {
+    font-size: clamp(22px, 2.75vw, 28px);
+    line-height: 1.2;
+  }
+
+  .nav__actions {
+    gap: 10px;
+  }
+
+  .nav__actions .btn {
+    padding: 8px 14px;
+    min-height: 38px;
+    font-size: 15px;
+  }
 }
 
 /* CV label: full title on desktop, “CV” on narrow viewports (Figma mobile bottom nav) */
@@ -248,7 +310,7 @@ a {
   align-items: flex-end;
   justify-content: center;
   gap: 8px;
-  padding: 15px var(--page-pad-x);
+  padding: 12px 20px;
   max-width: var(--page-max);
   margin: 0 auto;
   box-sizing: border-box;
@@ -307,20 +369,24 @@ a {
   background-color: var(--btn-bg);
 }
 
-.btn--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
-  background-color: var(--btn-hover-bg);
-}
-
-.btn--ghost:active:not(:disabled):not([aria-disabled="true"]) {
-  background-color: var(--btn-pressed-bg);
-}
-
-.btn--primary:hover:not(:disabled):not([aria-disabled="true"]) {
-  background-color: var(--btn-hover-bg);
-}
-
+.btn--ghost:active:not(:disabled):not([aria-disabled="true"]),
 .btn--primary:active:not(:disabled):not([aria-disabled="true"]) {
   background-color: var(--btn-pressed-bg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--btn-hover-bg-pointer);
+  }
+
+  .btn--primary:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--btn-hover-bg-pointer);
+  }
+
+  .btn--ghost:active:not(:disabled):not([aria-disabled="true"]),
+  .btn--primary:active:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--btn-pressed-bg-pointer);
+  }
 }
 
 .btn__icon {
@@ -348,85 +414,32 @@ a {
 
 .section-label__inner {
   width: 709px;
+  max-width: 100%;
   text-align: right;
 }
 
-/* --- Hero (home): interactive background from assets/Hero texture.html --- */
+/* --- Hero (home) --- */
 
 .hero-home {
   position: relative;
-  /* Full viewport width while staying in document flow (break out of main padding) */
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  min-height: min(76vh, 640px);
-  padding-top: 0;
+  width: 100%;
   padding-bottom: 24px;
   margin-bottom: 0;
-  overflow: hidden;
-  isolation: isolate;
   box-sizing: border-box;
 }
 
-/* Home: pull hero under fixed nav so texture reaches viewport top; pad content below bar */
-.page > main.main-stack > .hero-home:first-child {
-  margin-top: calc(-1 * var(--main-pad-for-nav));
-  padding-top: calc(var(--main-pad-for-nav) + 44px);
-}
-
-/* Fade interactive background into page (matches body background) */
-.hero-home::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: min(42%, 320px);
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 245, 245, 0) 0%,
-    rgba(255, 245, 245, 0.65) 55%,
-    var(--page-canvas) 100%
-  );
-}
-
-.hero-home__texture-shell {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 0;
-  pointer-events: auto;
-}
-
-.hero-home__texture-frame {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 480px;
-  border: 0;
-  background: var(--page-canvas);
-  filter: grayscale(1);
+@media (min-width: 769px) {
+  .hero-home {
+    padding-top: 60px;
+  }
 }
 
 .hero-home__stack {
-  position: relative;
-  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  max-width: none;
-  pointer-events: none;
   box-sizing: border-box;
-  /* Match horizontal alignment of main.page__pad content to centered .page */
-  padding-left: calc((100vw - min(var(--page-max), 100vw)) * 0.5 + var(--page-pad-x));
-  padding-right: var(--page-pad-x);
 }
 
 .hero-home__text-panel {
@@ -441,17 +454,7 @@ a {
   background: #ffffff;
   border: 2px solid #000000;
   border-radius: 14px;
-  /* Let pointer events reach the iframe; restore on CTAs below */
-  pointer-events: none;
-}
-
-.hero-home__text-panel * {
-  pointer-events: none;
-}
-
-.hero-home__text-panel .hero-home__actions,
-.hero-home__text-panel .hero-home__actions * {
-  pointer-events: auto;
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.07);
 }
 
 .hero-home__intro {
@@ -464,7 +467,8 @@ a {
 
 @media (max-width: 768px) {
   .hero-home__bio-tail {
-    display: none;
+    font-size: 14px;
+    line-height: 1.5;
   }
 }
 
@@ -508,22 +512,6 @@ a {
   flex-shrink: 0;
   border-radius: 50%;
   background-color: #007f2f;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-home__texture-shell {
-    display: none;
-  }
-
-  .hero-home {
-    background-color: var(--page-canvas);
-    min-height: 0;
-  }
-
-  .hero-home__text-panel,
-  .hero-home__text-panel * {
-    pointer-events: auto;
-  }
 }
 
 /* --- Experience table --- */
@@ -587,8 +575,8 @@ a {
 
 .experience__text {
   font-family: "Kaisei Decol", serif;
-  font-size: 24px;
-  line-height: 31.2px;
+  font-size: 18px;
+  line-height: 1.4;
   font-weight: 400;
   margin: 0;
   color: #000000;
@@ -617,9 +605,9 @@ a {
 }
 
 .project-card--half {
-  width: 570px;
+  width: calc(50% - 22.5px);
   max-width: 570px;
-  flex-shrink: 0;
+  flex-shrink: 1;
 }
 
 .project-card__surface {
@@ -630,6 +618,9 @@ a {
   flex-direction: column;
   justify-content: flex-end;
   gap: 12px;
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
 }
 
 a.project-card__surface--link {
@@ -637,12 +628,10 @@ a.project-card__surface--link {
   color: inherit;
   cursor: pointer;
   transition:
-    background-color 0.15s ease,
-    transform 0.15s ease;
-}
-
-a.project-card__surface--link:hover {
-  background-color: var(--btn-hover-bg);
+    background-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.22s ease,
+    border-color 0.18s ease;
 }
 
 a.project-card__surface--link:active {
@@ -659,7 +648,19 @@ a.project-card__surface--link:focus-visible {
   outline-offset: 3px;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  a.project-card__surface--link:hover {
+    background-color: var(--btn-hover-bg-pointer);
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.09);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: none;
+  }
+
   a.project-card__surface--link {
     transition: none;
   }
@@ -672,19 +673,15 @@ a.project-card__surface--link:focus-visible {
   a.project-card__surface--link .project-card__media .placeholder {
     transition: none;
   }
-
-  a.project-card__surface--link:hover .project-card__media .media-fill-img,
-  a.project-card__surface--link:hover .project-card__media .placeholder,
-  a.project-card__surface--link:focus-visible .project-card__media .media-fill-img,
-  a.project-card__surface--link:focus-visible .project-card__media .placeholder {
-    transform: none;
-  }
 }
 
 .project-card__media {
   position: relative;
   width: 100%;
-  height: 607px;
+  height: auto;
+  min-height: 300px;
+  max-height: 500px;
+  aspect-ratio: 4 / 5;
   border-radius: 14px;
   overflow: hidden;
 }
@@ -735,11 +732,30 @@ a.project-card__surface--link .project-card__media .placeholder {
   transform-origin: center center;
 }
 
-a.project-card__surface--link:hover .project-card__media .media-fill-img,
-a.project-card__surface--link:hover .project-card__media .placeholder,
 a.project-card__surface--link:focus-visible .project-card__media .media-fill-img,
 a.project-card__surface--link:focus-visible .project-card__media .placeholder {
   transform: scale(1.06);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.project-card__surface--link:hover .project-card__media .media-fill-img,
+  a.project-card__surface--link:hover .project-card__media .placeholder {
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.project-card__surface--link:focus-visible .project-card__media .media-fill-img,
+  a.project-card__surface--link:focus-visible .project-card__media .placeholder {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
+  a.project-card__surface--link:hover .project-card__media .media-fill-img,
+  a.project-card__surface--link:hover .project-card__media .placeholder {
+    transform: none;
+  }
 }
 
 .project-card__title {
@@ -800,7 +816,7 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
 /* --- Footer --- */
 
 .site-footer {
-  padding: 0 var(--page-pad-x) 30px;
+  padding: 30px var(--page-pad-x) 30px;
 }
 
 .footer-row {
@@ -827,10 +843,12 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
 
 .footer-note {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 22.4px;
+  font-size: 15px;
+  line-height: 1.5;
   font-weight: 400;
   margin: 0;
+  max-width: min(38rem, 100%);
+  color: #4a4a4a;
 }
 
 .footer-row__actions {
@@ -897,8 +915,8 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
 
 .cs-meta__value {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 22.4px;
+  font-size: 16px;
+  line-height: 1.5;
   font-weight: 400;
   margin: 0;
 }
@@ -1096,6 +1114,7 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
 
 .cs-more-heading .section-label__inner {
   width: 709px;
+  max-width: 100%;
 }
 
 .more-projects-row {
@@ -1112,20 +1131,8 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
   :root {
     --page-pad-x: 36px;
   }
-}
 
-@media (max-width: 900px) {
-  :root {
-    --page-pad-x: 24px;
-    --section-gap-lg: 36px;
-  }
-
-  .main-stack,
-  .cs-stack {
-    gap: var(--section-gap-lg);
-    padding-bottom: var(--section-gap-lg);
-  }
-
+  /* Desktop + mobile GIF rows exceed ~1030px; stack before horizontal overflow */
   .media-bleed {
     flex-direction: column;
     align-items: stretch;
@@ -1191,13 +1198,39 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
   }
 }
 
+@media (max-width: 900px) {
+  :root {
+    --page-pad-x: 24px;
+    --section-gap-lg: 36px;
+  }
+
+  .main-stack,
+  .cs-stack {
+    gap: var(--section-gap-lg);
+    padding-bottom: var(--section-gap-lg);
+  }
+}
+
+@media (max-width: 860px) {
+  .project-row-split {
+    flex-direction: column;
+    gap: var(--section-gap-lg);
+  }
+
+  .project-card--half {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   :root {
     --page-pad-x: 15px;
     --section-gap-lg: 30px;
     --section-gap-sm: 24px;
     --float-nav-top: 12px;
-    --float-nav-block: 52px;
+    /* Centered brand can wrap (name + location); keep hero/main clear of fixed bar */
+    --float-nav-block: 100px;
   }
 
   .btn__label-desktop {
@@ -1239,6 +1272,8 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
 
   .nav__brand {
     text-align: center;
+    font-size: clamp(24px, 6vw, 30px);
+    line-height: 1.2;
   }
 
   .h1 {
@@ -1254,19 +1289,6 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
   .project-card__title {
     font-size: clamp(22px, 5.5vw, 30px);
     line-height: 1.2;
-  }
-
-  .hero-home {
-    min-height: min(68vh, 560px);
-  }
-
-  .page > main.main-stack > .hero-home:first-child {
-    padding-top: calc(var(--main-pad-for-nav) + 24px);
-  }
-
-  .hero-home__stack {
-    padding-left: var(--page-pad-x);
-    padding-right: var(--page-pad-x);
   }
 
   .hero-home__text-panel {
@@ -1317,7 +1339,7 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
 
   .experience__text {
     font-size: 18px;
-    line-height: 1.3;
+    line-height: 1.4;
   }
 
   .experience .section-label {
@@ -1328,22 +1350,12 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
     gap: var(--section-gap-lg);
   }
 
-  .project-row-split {
-    flex-direction: column;
-    gap: var(--section-gap-lg);
-  }
-
-  .project-card--half {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  /* Mobile project card ~353px wide; flexible image height */
+  /* Mobile project card: same 4:5 ratio, slightly lower floor on narrow viewports */
   .project-card__media {
+    aspect-ratio: 4 / 5;
     height: auto;
     min-height: 240px;
-    aspect-ratio: 353 / 440;
-    max-height: 520px;
+    max-height: 500px;
   }
 
   .project-card__metrics span {
@@ -1395,7 +1407,7 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
 
   .nav-mobile__inner {
     gap: 6px;
-    padding: 11px var(--page-pad-x);
+    padding: 11px 20px;
     row-gap: 8px;
   }
 
