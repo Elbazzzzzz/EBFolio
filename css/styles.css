@@ -672,6 +672,9 @@ a:focus-visible {
   padding: 18px 18px;
   box-sizing: border-box;
   text-align: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .hero-home__intro {
