@@ -17,9 +17,35 @@
       <header class="site-header">
         <div class="page__pad">
           <nav class="nav" aria-label="Primary">
-            <a class="nav__brand font-heading" href="index.html"><span class="nav__brand-name">Ellie Barrett</span><span class="nav__brand-location"> South East + London UK</span></a>
+            <a class="nav__brand font-heading" href="index.html"><span class="nav__brand-name">Ellie Barrett</span><span class="nav__brand-location"> UK Based</span></a>
             <div class="nav__actions">
-              <a class="btn btn--ghost" href="index.html#projects">Projects</a>
+              <div class="nav-dropdown">
+                <a class="btn btn--ghost nav-dropdown__trigger" href="index.html#projects" aria-haspopup="true">
+                  Projects
+                  <img
+                    class="btn__icon nav-dropdown__chevron"
+                    src="assets/icons/chevron-down.svg"
+                    width="16"
+                    height="16"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </a>
+                <ul class="nav-dropdown__menu" role="menu" aria-label="Case studies">
+                  <li role="none">
+                    <a class="nav-dropdown__item" role="menuitem" href="case-study-wcr.html">Worldwide Cancer Research</a>
+                  </li>
+                  <li role="none">
+                    <a class="nav-dropdown__item" role="menuitem" href="case-study-gifct.html">GIFCT</a>
+                  </li>
+                  <li role="none">
+                    <a class="nav-dropdown__item" role="menuitem" href="case-study-ffs.html">Fight for Sight</a>
+                  </li>
+                  <li role="none">
+                    <a class="nav-dropdown__item" role="menuitem" href="case-study-wwct.html">Walk Wheel Cycle Trust</a>
+                  </li>
+                </ul>
+              </div>
               <a class="btn btn--ghost" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
               <a class="btn btn--primary" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer">
                 <span class="btn__label-desktop">Download my CV</span><span class="btn__label-mobile">CV</span>
@@ -326,6 +352,7 @@
       </nav>
     </div>
     <script src="js/smooth-scroll.js" defer></script>
+    <script src="js/case-study-nav.js" defer></script>
     <script src="js/mobile-nav-visibility.js" defer></script>
   </body>
 </html>
