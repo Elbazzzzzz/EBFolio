@@ -71,8 +71,23 @@
     var dotSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--cs-nav-dot-size")) || 6;
     var x = linkRect.left - trackRect.left + (linkRect.width - dotSize) / 2;
 
+    indicator.style.setProperty("--home-subnav-indicator-x", x + "px");
     indicator.style.transform = "translateX(" + x + "px)";
     indicator.hidden = false;
+  }
+
+  function bounceIndicator() {
+    if (!indicator || prefersReducedMotion) return;
+
+    indicator.classList.remove("home-subnav__indicator--bounce");
+    void indicator.offsetWidth;
+    indicator.classList.add("home-subnav__indicator--bounce");
+  }
+
+  function onIndicatorAnimationEnd(event) {
+    if (!indicator || event.target !== indicator) return;
+    if (event.animationName !== "home-subnav-indicator-bounce") return;
+    indicator.classList.remove("home-subnav__indicator--bounce");
   }
 
   function resolveActiveFromScroll() {
@@ -134,6 +149,11 @@
   }
 
   function navigateTo(item) {
+    var currentId = pendingId || resolveActiveFromScroll();
+    if (currentId === item.id) {
+      bounceIndicator();
+    }
+
     beginPending(item.id);
 
     if (item.isOverview) {
@@ -222,6 +242,7 @@
     indicator.className = "home-subnav__indicator";
     indicator.setAttribute("aria-hidden", "true");
     indicator.hidden = true;
+    indicator.addEventListener("animationend", onIndicatorAnimationEnd);
 
     var list = document.createElement("ul");
     list.className = "home-subnav__list";
