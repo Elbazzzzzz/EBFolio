@@ -86,7 +86,7 @@ body {
   --page-max: 1440px;
   /* Desktop: 90px sides (1440 − 1260 content). Mobile: 15px (353px content in 393px frame) */
   --page-pad-x: 90px;
-  --section-gap-extra: 40px;
+  --section-gap-extra: 60px;
   --section-gap-lg: calc(45px + var(--section-gap-extra));
   --section-gap-sm: calc(30px + var(--section-gap-extra));
   --btn-fg: #000000;
@@ -964,20 +964,26 @@ a:focus-visible {
   text-align: right;
 }
 
-.experience .section-label {
-  margin-bottom: 32px;
-}
-
 #projects {
   scroll-margin-top: var(--main-pad-for-nav);
 }
 
 .projects {
   position: relative;
+  width: 100%;
+  max-width: var(--content-wide);
 }
 
-.projects .section-label {
+.projects .section-label,
+.experience .section-label {
   margin-bottom: 32px;
+}
+
+.projects .section-label__inner,
+.experience .section-label__inner {
+  width: 100%;
+  max-width: 100%;
+  text-align: right;
 }
 
 .experience__text {
@@ -1918,6 +1924,11 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
   .section-label__inner {
     width: 100%;
     max-width: 100%;
+    text-align: left;
+  }
+
+  .projects .section-label__inner,
+  .experience .section-label__inner {
     text-align: left;
   }
 
