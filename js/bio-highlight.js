@@ -10,7 +10,7 @@
   var chars = [];
   Array.from(text).forEach(function (ch) {
     var span = document.createElement("span");
-    span.className = "bio__char";
+    span.className = "bio__char bio__char--muted";
     span.textContent = ch;
     lead.appendChild(span);
     chars.push(span);
@@ -18,9 +18,7 @@
 
   if (!chars.length) return;
 
-  var readOrder = chars.map(function (_, index) {
-    return index;
-  });
+  var readOrder = [];
 
   function sortByReadingOrder() {
     var positions = chars.map(function (span, index) {
@@ -41,26 +39,37 @@
   sortByReadingOrder();
 
   var ticking = false;
+  var hasScrolled = false;
+
+  function isInViewport() {
+    var rect = lead.getBoundingClientRect();
+    var viewport = window.innerHeight;
+    return rect.top < viewport && rect.bottom > 0;
+  }
 
   function updateHighlight() {
     ticking = false;
 
-    var rect = lead.getBoundingClientRect();
-    var viewport = window.innerHeight;
-    var start = viewport * 0.9;
-    var end = viewport * 0.2;
-    var range = start - end;
-    var progress = range > 0 ? (start - rect.top) / range : 1;
-    progress = Math.max(0, Math.min(1, progress));
+    var progress = 0;
 
-    var highlightedCount = Math.floor(progress * readOrder.length);
-
-    for (var i = 0; i < chars.length; i++) {
-      chars[i].classList.remove("bio__char--muted");
+    if (hasScrolled && isInViewport()) {
+      var rect = lead.getBoundingClientRect();
+      var viewport = window.innerHeight;
+      var start = viewport * 0.9;
+      var end = viewport * 0.2;
+      var range = start - end;
+      progress = range > 0 ? (start - rect.top) / range : 1;
+      progress = Math.max(0, Math.min(1, progress));
     }
 
-    for (var j = 0; j < highlightedCount; j++) {
-      chars[readOrder[j]].classList.add("bio__char--muted");
+    var revealedCount = Math.floor(progress * readOrder.length);
+
+    for (var i = 0; i < chars.length; i++) {
+      chars[i].classList.add("bio__char--muted");
+    }
+
+    for (var j = 0; j < revealedCount; j++) {
+      chars[readOrder[j]].classList.remove("bio__char--muted");
     }
   }
 
@@ -70,12 +79,17 @@
     requestAnimationFrame(updateHighlight);
   }
 
+  function onScroll() {
+    hasScrolled = true;
+    requestUpdate();
+  }
+
   function onResize() {
     sortByReadingOrder();
     requestUpdate();
   }
 
-  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onResize, { passive: true });
   updateHighlight();
 })();

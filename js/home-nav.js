@@ -2,25 +2,49 @@
   var main = document.querySelector("main.main-stack");
   if (!main) return;
 
-  var desktopMq = window.matchMedia("(min-width: 1101px)");
+  var DESKTOP_MQ = window.matchMedia("(min-width: 1101px)");
+  var OVERVIEW_ID = "overview";
+
+  var SECTION_DEFS = [
+    { id: OVERVIEW_ID, label: "Overview", selector: ".hero-home", isOverview: true },
+    { id: "bio", label: "Bio", selector: "#bio", hashAliases: ["bio-heading"] },
+    { id: "projects", label: "Projects", selector: "#projects", hashAliases: ["projects-heading"] },
+    { id: "experience", label: "Experience", selector: "#experience", hashAliases: ["experience-heading"] },
+  ];
+
   var nav = null;
+  var track = null;
+  var indicator = null;
   var navItems = [];
-  var scrollTicking = false;
+  var observer = null;
+  var intersecting = new Set();
+  var pendingId = null;
+  var pendingTimer = null;
+  var resizeTimer = null;
   var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var initialHash = window.location.hash.slice(1);
 
-  var SECTIONS = [
-    { id: "overview", label: "Overview", isOverview: true },
-    { id: "bio-heading", label: "Bio" },
-    { id: "projects-heading", label: "Projects" },
-    { id: "experience-heading", label: "Experience" },
-  ];
+  function getScrollOffset() {
+    var header = document.querySelector(".site-header");
+    if (!header) return 104;
+    return header.getBoundingClientRect().bottom;
+  }
 
-  function getScrollSpyLine() {
-    var offset = parseFloat(
-      getComputedStyle(document.documentElement).getPropertyValue("--home-subnav-scroll-spy")
-    );
-    return isNaN(offset) ? 164 : offset;
+  function getSpyBandMargin() {
+    var top = Math.round(getScrollOffset());
+    var bottom = Math.max(0, window.innerHeight - top - 1);
+    return "-" + top + "px 0px -" + bottom + "px 0px";
+  }
+
+  function matchesHash(item, hash) {
+    if (!hash || item.isOverview) return false;
+    if (item.id === hash) return true;
+    return item.hashAliases && item.hashAliases.indexOf(hash) !== -1;
+  }
+
+  function findItemByHash(hash) {
+    if (!hash) return navItems.find(function (item) { return item.isOverview; }) || null;
+    return navItems.find(function (item) { return matchesHash(item, hash); }) || null;
   }
 
   function setActive(id) {
@@ -33,29 +57,73 @@
         item.link.removeAttribute("aria-current");
       }
     });
+    positionIndicator(id);
   }
 
-  function updateActiveFromScroll() {
-    scrollTicking = false;
+  function positionIndicator(id) {
+    if (!indicator || !track) return;
 
-    if (!navItems.length) return;
+    var item = navItems.find(function (entry) { return entry.id === id; });
+    if (!item) return;
 
-    var spyLine = getScrollSpyLine();
-    var active = navItems[0];
+    var trackRect = track.getBoundingClientRect();
+    var linkRect = item.link.getBoundingClientRect();
+    var dotSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--cs-nav-dot-size")) || 6;
+    var x = linkRect.left - trackRect.left + (linkRect.width - dotSize) / 2;
 
-    for (var i = 1; i < navItems.length; i++) {
-      if (navItems[i].heading && navItems[i].heading.getBoundingClientRect().top <= spyLine) {
-        active = navItems[i];
-      }
+    indicator.style.transform = "translateX(" + x + "px)";
+    indicator.hidden = false;
+  }
+
+  function resolveActiveFromScroll() {
+    if (pendingId) return pendingId;
+
+    var activeId = OVERVIEW_ID;
+
+    if (intersecting.size) {
+      navItems.forEach(function (item) {
+        if (item.element && intersecting.has(item.element)) {
+          activeId = item.id;
+        }
+      });
+      return activeId;
     }
 
-    setActive(active.id);
+    var spyLine = getScrollOffset();
+    navItems.forEach(function (item) {
+      if (!item.element || item.isOverview) return;
+      if (item.element.getBoundingClientRect().top <= spyLine) {
+        activeId = item.id;
+      }
+    });
+
+    return activeId;
   }
 
-  function requestScrollUpdate() {
-    if (scrollTicking) return;
-    scrollTicking = true;
-    requestAnimationFrame(updateActiveFromScroll);
+  function syncActiveFromScroll() {
+    setActive(resolveActiveFromScroll());
+  }
+
+  function clearPending() {
+    pendingId = null;
+    clearTimeout(pendingTimer);
+    syncActiveFromScroll();
+  }
+
+  function beginPending(id) {
+    pendingId = id;
+    clearTimeout(pendingTimer);
+    setActive(id);
+    pendingTimer = setTimeout(clearPending, prefersReducedMotion ? 80 : 1200);
+  }
+
+  function scrollToSection(element) {
+    var offset = getScrollOffset();
+    var top = window.scrollY + element.getBoundingClientRect().top - offset;
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
   }
 
   function scrollToTop() {
@@ -65,53 +133,80 @@
     });
   }
 
-  function scrollToTarget(target) {
-    target.scrollIntoView({
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-      block: "start",
+  function navigateTo(item) {
+    beginPending(item.id);
+
+    if (item.isOverview) {
+      scrollToTop();
+      history.pushState(null, "", window.location.pathname + window.location.search);
+      return;
+    }
+
+    scrollToSection(item.element);
+    history.pushState(null, "", "#" + item.id);
+  }
+
+  function onIntersect(entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        intersecting.add(entry.target);
+      } else {
+        intersecting.delete(entry.target);
+      }
+    });
+
+    if (!pendingId) {
+      syncActiveFromScroll();
+    }
+  }
+
+  function createObserver() {
+    if (observer) observer.disconnect();
+
+    observer = new IntersectionObserver(onIntersect, {
+      root: null,
+      rootMargin: getSpyBandMargin(),
+      threshold: 0,
+    });
+
+    navItems.forEach(function (item) {
+      if (item.element) observer.observe(item.element);
     });
   }
 
-  function createNavItem(id, label, options) {
-    options = options || {};
-
+  function createNavItem(def, element) {
     var item = document.createElement("li");
     item.className = "home-subnav__item";
 
     var link = document.createElement("a");
     link.className = "home-subnav__link";
-    link.href = options.isOverview ? "#" : "#" + id;
+    link.href = def.isOverview ? "#" : "#" + def.id;
 
-    var dot = document.createElement("span");
-    dot.className = "home-subnav__dot";
-    dot.setAttribute("aria-hidden", "true");
+    var dotSlot = document.createElement("span");
+    dotSlot.className = "home-subnav__dot-slot";
+    dotSlot.setAttribute("aria-hidden", "true");
 
     var linkLabel = document.createElement("span");
     linkLabel.className = "home-subnav__label";
-    linkLabel.textContent = label;
+    linkLabel.textContent = def.label;
 
-    link.appendChild(dot);
+    link.appendChild(dotSlot);
     link.appendChild(linkLabel);
     item.appendChild(link);
 
     link.addEventListener("click", function (e) {
       e.preventDefault();
-      if (options.isOverview) {
-        scrollToTop();
-        history.pushState(null, "", window.location.pathname + window.location.search);
-      } else if (options.heading) {
-        scrollToTarget(options.heading);
-        history.pushState(null, "", "#" + id);
-      }
-      setActive(id);
+      navigateTo(navItems.find(function (entry) { return entry.id === def.id; }));
     });
 
     return {
-      id: id,
+      id: def.id,
+      label: def.label,
       link: link,
       item: item,
-      isOverview: !!options.isOverview,
-      heading: options.heading || null,
+      element: element,
+      isOverview: !!def.isOverview,
+      hashAliases: def.hashAliases || null,
     };
   }
 
@@ -120,72 +215,130 @@
     nav.className = "home-subnav";
     nav.setAttribute("aria-label", "Page sections");
 
+    track = document.createElement("div");
+    track.className = "home-subnav__track";
+
+    indicator = document.createElement("span");
+    indicator.className = "home-subnav__indicator";
+    indicator.setAttribute("aria-hidden", "true");
+    indicator.hidden = true;
+
     var list = document.createElement("ul");
     list.className = "home-subnav__list";
 
-    SECTIONS.forEach(function (section) {
-      var heading = section.isOverview ? null : document.getElementById(section.id);
-      if (!section.isOverview && !heading) return;
+    SECTION_DEFS.forEach(function (def) {
+      var element = document.querySelector(def.selector);
+      if (!element) return;
 
-      var navItem = createNavItem(section.id, section.label, {
-        isOverview: section.isOverview,
-        heading: heading,
-      });
-
+      var navItem = createNavItem(def, element);
       list.appendChild(navItem.item);
       navItems.push(navItem);
     });
 
     if (!navItems.length) return;
 
-    nav.appendChild(list);
+    track.appendChild(indicator);
+    track.appendChild(list);
+    nav.appendChild(track);
     document.body.appendChild(nav);
 
-    window.addEventListener("scroll", requestScrollUpdate, { passive: true });
-    window.addEventListener("resize", requestScrollUpdate, { passive: true });
+    createObserver();
 
-    setActive(navItems[0].id);
-    updateActiveFromScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+    window.addEventListener("hashchange", onHashChange);
+
+    if ("onscrollend" in window) {
+      window.addEventListener("scrollend", onScrollEnd, { passive: true });
+    }
+
+    syncActiveFromScroll();
 
     if (initialHash) {
-      var match = navItems.find(function (item) {
-        return !item.isOverview && item.id === initialHash;
-      });
-      if (match) {
-        window.addEventListener(
-          "load",
-          function () {
-            scrollToTarget(match.heading);
-            setActive(match.id);
-          },
-          { once: true }
-        );
+      var match = findItemByHash(initialHash);
+      if (match && !match.isOverview) {
+        requestAnimationFrame(function () {
+          beginPending(match.id);
+          scrollToSection(match.element);
+        });
       }
     }
   }
 
+  function onScroll() {
+    if (pendingId) return;
+    syncActiveFromScroll();
+  }
+
+  function onScrollEnd() {
+    clearPending();
+  }
+
+  function onResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      createObserver();
+      positionIndicator(resolveActiveFromScroll());
+    }, 100);
+  }
+
+  function onHashChange() {
+    if (!navItems.length) return;
+
+    var hash = window.location.hash.slice(1);
+    var match = findItemByHash(hash);
+
+    if (!match) return;
+
+    beginPending(match.id);
+    if (match.isOverview) {
+      scrollToTop();
+    } else {
+      scrollToSection(match.element);
+    }
+  }
+
   function destroyNav() {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+
+    intersecting.clear();
+    pendingId = null;
+    clearTimeout(pendingTimer);
+    clearTimeout(resizeTimer);
+
+    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("resize", onResize);
+    window.removeEventListener("hashchange", onHashChange);
+
+    if ("onscrollend" in window) {
+      window.removeEventListener("scrollend", onScrollEnd);
+    }
+
     if (nav) {
       nav.remove();
       nav = null;
     }
+
+    track = null;
+    indicator = null;
     navItems = [];
-    window.removeEventListener("scroll", requestScrollUpdate);
-    window.removeEventListener("resize", requestScrollUpdate);
   }
 
   function connect() {
-    if (desktopMq.matches) {
+    if (DESKTOP_MQ.matches) {
       if (!nav) buildNav();
     } else {
       destroyNav();
     }
   }
 
-  if (typeof desktopMq.addEventListener === "function") {
-    desktopMq.addEventListener("change", connect);
+  if (typeof DESKTOP_MQ.addEventListener === "function") {
+    DESKTOP_MQ.addEventListener("change", connect);
   } else {
-    desktopMq.addListener(connect);
+    DESKTOP_MQ.addListener(connect);
   }
 
   connect();

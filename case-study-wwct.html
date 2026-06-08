@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The Walk Wheel Cycle Trust, Ellie Barrett</title>
+    <title>Designing a Mapping Tool for Disabled Users, Ellie Barrett</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,11 +17,18 @@
       <header class="site-header">
         <div class="page__pad">
           <nav class="nav" aria-label="Primary">
-            <a class="nav__brand font-heading" href="index.html"><span class="nav__brand-name">Ellie Barrett</span><span class="nav__brand-location"> UK Based</span></a>
+            <a class="nav__brand font-heading" href="index.html"><span class="nav__brand-name">Ellie Barrett</span></a>
             <div class="nav__actions">
               <div class="nav-dropdown">
-                <a class="btn btn--ghost nav-dropdown__trigger" href="index.html#projects" aria-haspopup="true">
-                  Projects
+                <a class="btn btn--ghost nav-dropdown__link" href="index.html#projects">Projects</a>
+                <button
+                  type="button"
+                  class="btn btn--ghost nav-dropdown__toggle"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls="nav-projects-menu"
+                  aria-label="Show case studies"
+                >
                   <img
                     class="btn__icon nav-dropdown__chevron"
                     src="assets/icons/chevron-down.svg"
@@ -30,21 +37,26 @@
                     alt=""
                     aria-hidden="true"
                   />
-                </a>
-                <ul class="nav-dropdown__menu" role="menu" aria-label="Case studies">
-                  <li role="none">
-                    <a class="nav-dropdown__item" role="menuitem" href="case-study-wcr.html">Worldwide Cancer Research</a>
-                  </li>
-                  <li role="none">
-                    <a class="nav-dropdown__item" role="menuitem" href="case-study-gifct.html">GIFCT</a>
-                  </li>
-                  <li role="none">
-                    <a class="nav-dropdown__item" role="menuitem" href="case-study-ffs.html">Fight for Sight</a>
-                  </li>
-                  <li role="none">
-                    <a class="nav-dropdown__item" role="menuitem" href="case-study-wwct.html">Walk Wheel Cycle Trust</a>
-                  </li>
-                </ul>
+                </button>
+                <div class="nav-dropdown__menu" id="nav-projects-menu">
+                  <ul class="nav-dropdown__list" role="menu" aria-label="Case studies">
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-wcr.html">Worldwide Cancer Research</a>
+                    </li>
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-gifct.html">GIFCT</a>
+                    </li>
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-ffs.html">Fight for Sight</a>
+                    </li>
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-wwct.html">Designing a Mapping Tool for Disabled Users</a>
+                    </li>
+                  </ul>
+                  <button type="button" class="nav-dropdown__close" aria-label="Close case studies menu">
+                    <span class="nav-dropdown__close-icon" aria-hidden="true">×</span>
+                  </button>
+                </div>
               </div>
               <a class="btn btn--ghost" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
               <a class="btn btn--primary" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer">
@@ -65,52 +77,49 @@
       <main class="page__pad cs-stack">
         <div class="cs-intro">
           <div class="cs-hero">
-            <h1 class="h1 cs-hero__title">The Walk Wheel Cycle Trust</h1>
-            <p class="text-body cs-hero__lede">
-              Full website redesign for a disability charity, clarifying how people donate, access support, and
-              understand the trust’s impact across communities that rely on mobility equipment and services.
+            <h1 class="h1 cs-hero__title">The Walk Wheel Cycle Trust / A Pan-Impairment Digital Map</h1>
+            <p class="text-body cs-hero__lede">Walk Wheel Cycle Trust</p>
+            <p class="text-body">
+              A research-led mapping tool for pan-impairment active travel, designed in partnership with Transport for All
+              and an embedded expert panel of disabled volunteers. Built around real barriers (gates, terrain, audio
+              navigation gaps, surface quality) rather than assumed user fitness, with accessibility as a structural
+              constraint not a feature layer.
             </p>
           </div>
 
           <div class="cs-meta" aria-label="Project details">
             <div class="cs-meta__item">
-              <p class="cs-meta__label">My Role</p>
+              <p class="cs-meta__label">Role</p>
               <p class="cs-meta__value">UX Lead</p>
             </div>
             <div class="cs-meta__item">
-              <p class="cs-meta__label">Sector</p>
-              <p class="cs-meta__value">Disability charity</p>
+              <p class="cs-meta__label">Project type</p>
+              <p class="cs-meta__value">Mapping tool, discovery through design</p>
             </div>
             <div class="cs-meta__item">
-              <p class="cs-meta__label">Project Type</p>
-              <p class="cs-meta__value">Website redesign + build</p>
+              <p class="cs-meta__label">Launched</p>
+              <p class="cs-meta__value">2024</p>
             </div>
             <div class="cs-meta__item">
-              <p class="cs-meta__label">Donation uplift</p>
-              <p class="cs-meta__value">+£1,157 per month</p>
+              <p class="cs-meta__label">Result</p>
+              <p class="cs-meta__value">Secured phase 2 funding</p>
             </div>
           </div>
-
-          <a class="btn btn--primary" href="#">
-            Visit live site
-            <img
-              class="btn__icon"
-              src="assets/icons/arrow-outward.svg"
-              width="16"
-              height="16"
-              alt=""
-            />
-          </a>
         </div>
 
         <section class="cs-section" aria-labelledby="approach-heading">
           <h2 id="approach-heading" class="h1 cs-section__title">The Approach</h2>
           <div class="cs-prose text-body">
             <p>
-              We started with inclusive research: conversations with beneficiaries, carers, and fundraisers to
-              understand emotional and practical barriers on the legacy site. That fed a phased redesign that
-              balanced warm storytelling with task-led journeys (donate, get help, learn about the trust’s
-              programmes) without overwhelming users with dense content up front.
+              Research-led from the start, with pan-impairment accessibility as a structural constraint not a layer on
+              top. Rather than recruiting a one-off user cohort for end-stage testing, we built an embedded expert panel
+              of charity partners and volunteers with lived experience of disability. The panel reviewed designs with us
+              dynamically throughout the project rather than at fixed milestones.
+            </p>
+            <p>
+              This matters because pan-impairment accessibility work tends to fail at the seams: a design that works for
+              one impairment type can create friction for another, and those tensions only surface when expertise is in the
+              room continuously, not just at sign-off.
             </p>
           </div>
         </section>
@@ -119,8 +128,11 @@
           <h2 id="team-heading" class="h1 cs-section__title">The Team</h2>
           <div class="cs-prose text-body">
             <p>
-              A cross-discipline squad of UX, UI, front-end and back-end developers, PM, and client stakeholders.
-              I stayed close to content owners so tone, accessibility, and CMS structure evolved together.
+              UX Lead (me), a supporting UI Designer I worked closely with through iterative design rounds, a
+              development team, and a Project Manager on both sides. The client was the Walk Wheel Cycle Trust (formerly
+              Sustrans). Pan-impairment research and design review was led in partnership with Transport for All and
+              additional charity-sector partners, with an embedded expert panel of disabled volunteers reviewing work
+              dynamically alongside us throughout the project.
             </p>
           </div>
         </section>
@@ -129,30 +141,49 @@
           <h2 id="problem-heading" class="h1 cs-section__title">The Problem</h2>
           <div class="cs-prose text-body">
             <p>
-              The previous experience mixed urgent support pathways with long-form content, making it hard for
-              users under stress to find the right next step. Fundraising narratives also undersold tangible
-              outcomes for donors who wanted transparent, respectful reporting.
+              The Walk Wheel Cycle Trust is a UK charity advocating for active travel: walking, wheeling, cycling, and
+              everything in between. Their remit covers users that mainstream mapping tools systematically fail. We
+              confirmed this by auditing the five most-used tools in the market (Google Maps, Apple iOS Maps, OS Maps,
+              Strava, Komoot) against accessibility-critical functionality. Each fell short in different ways. Wheelchair
+              routing was inaccurate. Offline access sat behind paywalls. Fitness filters used exclusionary language.
+              Audio navigation didn't flag hazards.
+            </p>
+            <p>
+              The challenge: design a mapping tool that genuinely supports active travel for users mainstream tools
+              overlook, without falling into the same trap of locking accessibility-critical features behind paywalls or
+              assumed ability.
             </p>
           </div>
         </section>
 
-        <div class="cs-competitor">
-          <img
-            class="media-fill-img"
-            src="assets/WCR/wwct%20desktop%20image.png"
-            width="2874"
-            height="1758"
-            alt=""
-          />
+        <div class="cs-figure-group">
+          <div class="cs-figure-group__stacked">
+            <img
+              class="media-fill-img"
+              src="assets/Sustrans/Desktop/Map%20Dark%20Mode%20v3.jpg"
+              width="1440"
+              height="900"
+              alt="Desktop map view in dark mode, showing community-reported barriers across active travel routes."
+            />
+          </div>
+          <div class="cs-figure-group__stacked">
+            <img
+              class="media-fill-img"
+              src="assets/Sustrans/Navigation%20v4.jpg"
+              width="390"
+              height="844"
+              alt="Mobile navigation view with turn-by-turn guidance and hazard-aware audio cues."
+            />
+          </div>
         </div>
 
         <section class="cs-section" aria-labelledby="method-heading">
           <h2 id="method-heading" class="h1 cs-section__title">Method</h2>
           <div class="cs-prose text-body">
             <p>
-              Discovery combined interviews and analytics; definition produced revised journeys, sitemap, and
-              component priorities for donations and programme content. Build paired weekly design QA with
-              accessibility checks on real assistive-tech setups.
+              Discovery (pan-impairment research with advocacy partners, stakeholder immersion, comparator analysis),
+              definition (personas, design principles), and design through to prototype handover. Accessibility was woven
+              through each phase rather than treated as a final QA step.
             </p>
           </div>
         </section>
@@ -160,11 +191,35 @@
         <section class="cs-section" aria-labelledby="discovery-heading">
           <h2 id="discovery-heading" class="h1 cs-section__title">Discovery</h2>
           <div class="cs-prose text-body">
+            <p>Three strands ran in parallel.</p>
             <p>
-              We mapped moments of crisis (equipment failure, new diagnosis) against calmer research tasks
-              (planning fundraising, learning about grants). That contrast shaped navigation labels, cross-links,
-              and the order of reassurance versus action on key templates.
+              <strong>Pan-impairment research and embedded expert review.</strong> Working alongside Transport for All and
+              other charity-sector partners, we built a foundational picture of the barriers and frustrations users face
+              when trying to engage with active travel. Crucially, the same network supported an ongoing expert panel that
+              reviewed designs as they evolved. Findings didn't just feed into a discovery document and then sit on a
+              shelf, they kept shaping decisions through definition and design.
             </p>
+            <p>
+              <strong>Stakeholder immersion at the Trust.</strong> Listened to internal teams to understand the wider
+              organisation, what it does, what it advocates for, and where the mapping tool needed to sit within that.
+              Surfaced complexities like balancing the strength of the NCN brand against the wider organisational mission,
+              and a historical service-delivery focus that had underrepresented end beneficiaries.
+            </p>
+            <p>
+              <strong>Comparator tool analysis.</strong> Five major mapping tools assessed against
+              accessibility-critical functionality: audio navigation depth, offline access, terrain and hazard data,
+              personalisation language, wheelchair routing accuracy. Four findings shaped the design direction:
+            </p>
+            <ul>
+              <li>
+                Estimated journey durations are unreliable when tools don't account for terrain or user-specific pace.
+              </li>
+              <li>Audio navigation needs to convey hazards and barriers, not just turn-by-turn directions.</li>
+              <li>
+                Personalisation done badly (e.g. Komoot's "In Good Shape" fitness slider) excludes rather than includes.
+              </li>
+              <li>Offline access is a safety must-have, never a premium feature.</li>
+            </ul>
           </div>
         </section>
 
@@ -172,31 +227,184 @@
           <h2 id="definition-heading" class="h1 cs-section__title">Definition</h2>
           <div class="cs-prose text-body">
             <p>
-              The sitemap separated evergreen trust stories from seasonal appeals. Donation components gained
-              clearer hierarchy: amount, impact copy, and preferred channels, all tested with users who donate on
-              mobile first.
+              Synthesised research and comparator analysis into five pan-impairment personas: Sarah, partially sighted,
+              walking and running. Samuel, wheelchair user, integrating active travel into work-from-home life. Lucy,
+              sensory-overwhelm and anxiety, walking commute. David, hand cyclist, fitness-driven. Kathy, new tricycle
+              user, low digital confidence.
+            </p>
+            <p>
+              The personas were deliberately built to surface conflicting needs, not consensus. Designing for Sarah's
+              audio navigation could create friction for Lucy's sensory overload. David's appetite for road traffic
+              context conflicts with Kathy's need for safety reassurance. Each persona shipped with explicit "do this /
+              don't do this" guidance, making them a working design tool rather than a marketing artefact.
             </p>
           </div>
         </section>
+
+        <div class="cs-figure-group">
+          <div class="cs-figure-group__row">
+            <div class="cs-figure-group__a">
+              <img
+                class="media-fill-img"
+                src="assets/Sustrans/Sarah%20-%20Running%20and%20Walking%2C%20Rural%2C%20Physical%20Health.png"
+                width="800"
+                height="600"
+                alt="Persona card for Sarah: partially sighted, walking and running in rural settings."
+              />
+            </div>
+            <div class="cs-figure-group__b">
+              <img
+                class="media-fill-img"
+                src="assets/Sustrans/Samuel%20Ansal%20-%20Wheelchair%2C%20Rural%2C%20Mental%20Health%20-%20v1.png"
+                width="800"
+                height="600"
+                alt="Persona card for Samuel: wheelchair user integrating active travel into work-from-home life."
+              />
+            </div>
+          </div>
+          <div class="cs-figure-group__row">
+            <div class="cs-figure-group__a">
+              <img
+                class="media-fill-img"
+                src="assets/Sustrans/Lucy%20Ross%20-%20Walking%2C%20Town/City%2C%20Commute%20-%20v1.png"
+                width="800"
+                height="600"
+                alt="Persona card for Lucy: sensory overwhelm and anxiety on a walking commute."
+              />
+            </div>
+            <div class="cs-figure-group__b">
+              <img
+                class="media-fill-img"
+                src="assets/Sustrans/David%20Lee%20-%20Hand%20Cycle%2C%20Rural%2C%20Physical%20Health.png"
+                width="800"
+                height="600"
+                alt="Persona card for David: hand cyclist, fitness-driven, in rural settings."
+              />
+            </div>
+          </div>
+          <div class="cs-figure-group__primary">
+            <img
+              class="media-fill-img"
+              src="assets/Sustrans/Kathy%20Davies-%20Tricycle%2C%20Town%2C%20Social%20-%20v1.png"
+              width="800"
+              height="600"
+              alt="Persona card for Kathy: new tricycle user with low digital confidence in town settings."
+            />
+          </div>
+          <p class="text-img-caption cs-figure-group__caption">
+            Five pan-impairment personas built to surface conflicting needs, each with explicit do-this / don't-do-this
+            guidance for design decisions.
+          </p>
+        </div>
+
+        <div class="cs-figure-group">
+          <div class="cs-figure-group__stacked">
+            <img
+              class="media-fill-img"
+              src="assets/Sustrans/Screenshot%202026-05-19%20at%2013.04.07.png"
+              width="1920"
+              height="1080"
+              alt="User flow and content model diagram for the mapping tool homepage, map launch, and barrier reporting journeys."
+            />
+          </div>
+          <p class="text-img-caption cs-figure-group__caption">
+            User flow and content model mapping the homepage, tool launch, and barrier reporting pathways.
+          </p>
+        </div>
 
         <section class="cs-section" aria-labelledby="design-heading">
           <h2 id="design-heading" class="h1 cs-section__title">Design</h2>
           <div class="cs-prose text-body">
             <p>
-              Visual language stayed bright and human without novelty for its own sake. Spacious layouts,
-              high-contrast type, and predictable UI patterns supported users with varied vision and motor
-              needs while keeping the brand approachable.
+              Worked collaboratively with the supporting UI Designer through iterative rounds, with each significant
+              decision reviewed by the expert panel before it solidified. Three design decisions defined the tool.
+            </p>
+            <p>
+              <strong>A barrier map, not a routing tool.</strong> Existing mapping tools optimise for "fastest route" and
+              bury accessibility filters behind premium accounts or vague fitness language. We deliberately stepped away
+              from suggesting routes at all. The map surfaces community-reported barriers (path width, gates, steep
+              gradients, surface quality) and lets users decide for themselves whether a route works for their needs. When
+              the comparator analysis showed that Komoot's "In Good Shape" fitness slider was actively exclusionary,
+              replacing it with another version of the same logic felt wrong. Trusting users with the raw information
+              instead felt right.
+            </p>
+            <p>
+              <strong>Lightweight community data maintenance.</strong> Each barrier point shows its last-reported date.
+              When a user selects one, they're prompted to confirm whether the barrier is still present. "Yes, it is"
+              updates the timestamp. "No, it's gone" removes it. New points only appear on the map after being reported by
+              more than one user, guarding against single-source noise. This pattern means the Trust can keep the map
+              fresh through its volunteer network without needing centralised manual audits.
+            </p>
+            <p>
+              <strong>Accessibility patterns built into the persistent UI.</strong> Text size and contrast controls sit in
+              the main interface, not buried in a settings menu. Filter information surfaces on both hover and tab so
+              keyboard and mouse users see the same content at the same trigger. Help icons expand inline rather than
+              navigating users away from what they were doing. The first-load warning modal is fully tab-able and users
+              must confirm they understand the data's limitations before continuing, an honest contract rather than a
+              hidden T&amp;C.
             </p>
           </div>
         </section>
+
+        <div class="cs-figure-group">
+          <div class="cs-figure-group__stacked">
+            <img
+              class="media-fill-img"
+              src="assets/Sustrans/Route%20Listing/List%20View.png"
+              width="1920"
+              height="2400"
+              alt="Find a route screen with pan-impairment filters for mobility type, path width, surface, and traffic exposure."
+            />
+          </div>
+          <div class="cs-figure-group__stacked">
+            <img
+              class="media-fill-img"
+              src="assets/Sustrans/Route%20Page.png"
+              width="1920"
+              height="3200"
+              alt="Route detail page showing map, traffic-free percentage, surface breakdown, and community photos."
+            />
+          </div>
+          <p class="text-img-caption cs-figure-group__caption">
+            Route discovery with pan-impairment filters and detail views, letting users assess suitability from
+            community data rather than algorithmic route-suggesting.
+          </p>
+        </div>
+
+        <div class="cs-figure-group">
+          <div class="cs-figure-group__stacked">
+            <img
+              class="media-fill-img"
+              src="assets/Sustrans/Report%20Barrier%202%20v3.jpg"
+              width="1440"
+              height="900"
+              alt="Desktop screen for reporting a barrier, showing path width, surface quality, and gate details."
+            />
+          </div>
+          <div class="cs-figure-group__stacked">
+            <img
+              class="media-fill-img"
+              src="assets/Sustrans/How%20to%20use.png"
+              width="800"
+              height="600"
+              alt="How-to guidance explaining community barrier reporting and confirmation flows."
+            />
+          </div>
+          <p class="text-img-caption cs-figure-group__caption">
+            Barrier reporting and inline help: community-fed data with lightweight maintenance built into the core
+            experience.
+          </p>
+        </div>
 
         <section class="cs-section" aria-labelledby="delivery-heading">
           <h2 id="delivery-heading" class="h1 cs-section__title">Delivery</h2>
           <div class="cs-prose text-body">
             <p>
-              I supported UAT and training so editors could maintain accessibility in new templates, with structured
-              headings, meaningful link text, and media alternatives, without leaning on developers for every
-              change.
+              The prototype was built in Figma at sufficient fidelity that the Trust could extend it directly into user
+              testing with their NCN volunteer network, hundreds of community members already engaged with active travel
+              infrastructure on the ground. This was a deliberate handover model. Rather than the Trust waiting on us for
+              the next round of validation, the prototype embedded a research practice into the organisation that could
+              continue running after our involvement ended.
             </p>
           </div>
         </section>
@@ -205,9 +413,21 @@
           <h2 id="outcome-heading" class="h1 cs-section__title">Outcome</h2>
           <div class="cs-prose text-body">
             <p>
-              Post-launch metrics showed stronger engagement and a meaningful lift in donation income alongside
-              healthier session depth, evidence that clearer pathways and compassionate pacing translated into
-              measurable support for the trust’s mission.
+              The project achieved what discovery-through-design work is meant to achieve: it built enough evidence and
+              clarity to justify the next phase of investment. The Trust used the work to secure phase 2 funding,
+              validating both the direction of the tool and the methodology behind it.
+            </p>
+            <p>
+              Alongside the prototype handover, we produced a findings report documenting the pan-impairment research, the
+              comparator analysis, the personas, and the design rationale. This means the work outlasts the project itself.
+              The personas remain a working reference for any future product or campaign decisions the Trust makes for
+              disabled users, and the design principles (community-fed data, barrier mapping over route-suggesting,
+              structural accessibility) are documented in a form that can guide the next team picking up the build.
+            </p>
+            <p>
+              The expert panel model also has legs beyond this engagement. Embedding lived-experience review throughout,
+              rather than as one-off user testing, is a methodology the Trust can carry into future projects with or
+              without us.
             </p>
           </div>
         </section>
@@ -215,16 +435,16 @@
         <div class="results-metrics" aria-label="Results">
           <div class="results-metrics__row">
             <div class="results-metrics__item">
-              <p class="results-metrics__value">+£1,157</p>
-              <p class="results-metrics__label">More revenue per month</p>
+              <p class="results-metrics__value">Phase 2</p>
+              <p class="results-metrics__label">Funding secured</p>
             </div>
             <div class="results-metrics__item">
-              <p class="results-metrics__value">+18.6%</p>
-              <p class="results-metrics__label">Uplift in total users</p>
+              <p class="results-metrics__value">5</p>
+              <p class="results-metrics__label">Pan-impairment personas</p>
             </div>
             <div class="results-metrics__item">
-              <p class="results-metrics__value">+19.6%</p>
-              <p class="results-metrics__label">Average session duration</p>
+              <p class="results-metrics__value">5</p>
+              <p class="results-metrics__label">Mapping tools audited</p>
             </div>
           </div>
         </div>
@@ -351,6 +571,7 @@
         </div>
       </nav>
     </div>
+    <script src="js/nav-dropdown.js" defer></script>
     <script src="js/smooth-scroll.js" defer></script>
     <script src="js/case-study-nav.js" defer></script>
     <script src="js/mobile-nav-visibility.js" defer></script>

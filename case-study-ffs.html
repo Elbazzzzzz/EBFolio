@@ -17,11 +17,18 @@
       <header class="site-header">
         <div class="page__pad">
           <nav class="nav" aria-label="Primary">
-            <a class="nav__brand font-heading" href="index.html"><span class="nav__brand-name">Ellie Barrett</span><span class="nav__brand-location"> UK Based</span></a>
+            <a class="nav__brand font-heading" href="index.html"><span class="nav__brand-name">Ellie Barrett</span></a>
             <div class="nav__actions">
               <div class="nav-dropdown">
-                <a class="btn btn--ghost nav-dropdown__trigger" href="index.html#projects" aria-haspopup="true">
-                  Projects
+                <a class="btn btn--ghost nav-dropdown__link" href="index.html#projects">Projects</a>
+                <button
+                  type="button"
+                  class="btn btn--ghost nav-dropdown__toggle"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls="nav-projects-menu"
+                  aria-label="Show case studies"
+                >
                   <img
                     class="btn__icon nav-dropdown__chevron"
                     src="assets/icons/chevron-down.svg"
@@ -30,21 +37,26 @@
                     alt=""
                     aria-hidden="true"
                   />
-                </a>
-                <ul class="nav-dropdown__menu" role="menu" aria-label="Case studies">
-                  <li role="none">
-                    <a class="nav-dropdown__item" role="menuitem" href="case-study-wcr.html">Worldwide Cancer Research</a>
-                  </li>
-                  <li role="none">
-                    <a class="nav-dropdown__item" role="menuitem" href="case-study-gifct.html">GIFCT</a>
-                  </li>
-                  <li role="none">
-                    <a class="nav-dropdown__item" role="menuitem" href="case-study-ffs.html">Fight for Sight</a>
-                  </li>
-                  <li role="none">
-                    <a class="nav-dropdown__item" role="menuitem" href="case-study-wwct.html">Walk Wheel Cycle Trust</a>
-                  </li>
-                </ul>
+                </button>
+                <div class="nav-dropdown__menu" id="nav-projects-menu">
+                  <ul class="nav-dropdown__list" role="menu" aria-label="Case studies">
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-wcr.html">Worldwide Cancer Research</a>
+                    </li>
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-gifct.html">GIFCT</a>
+                    </li>
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-ffs.html">Fight for Sight</a>
+                    </li>
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-wwct.html">Designing a Mapping Tool for Disabled Users</a>
+                    </li>
+                  </ul>
+                  <button type="button" class="nav-dropdown__close" aria-label="Close case studies menu">
+                    <span class="nav-dropdown__close-icon" aria-hidden="true">×</span>
+                  </button>
+                </div>
               </div>
               <a class="btn btn--ghost" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
               <a class="btn btn--primary" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer">
@@ -80,16 +92,20 @@
 
           <div class="cs-meta" aria-label="Project details">
             <div class="cs-meta__item">
-              <p class="cs-meta__label">Client</p>
-              <p class="cs-meta__value">Fight for Sight x Vision Foundation</p>
-            </div>
-            <div class="cs-meta__item">
               <p class="cs-meta__label">Role</p>
               <p class="cs-meta__value">Lead UX Designer</p>
             </div>
             <div class="cs-meta__item">
-              <p class="cs-meta__label">Phase</p>
-              <p class="cs-meta__value">Discovery, Definition, Design, Prototype testing</p>
+              <p class="cs-meta__label">Sector</p>
+              <p class="cs-meta__value">Charity merger, accessibility-led redesign</p>
+            </div>
+            <div class="cs-meta__item">
+              <p class="cs-meta__label">Launched</p>
+              <p class="cs-meta__value">2023</p>
+            </div>
+            <div class="cs-meta__item">
+              <p class="cs-meta__label">Result</p>
+              <p class="cs-meta__value">+70% donations page traffic</p>
             </div>
           </div>
 
@@ -368,26 +384,28 @@
               </a>
             </article>
             <article class="project-card project-card--half">
-              <div class="project-card__surface project-card__surface--inactive">
+              <a class="project-card__surface project-card__surface--link" href="case-study-wwct.html">
                 <div class="project-card__media">
-                  <span class="project-card__badge">Coming soon</span>
                   <img
                     class="media-fill-img"
-                    src="assets/WCR/wwct%20desktop%20image.png"
-                    width="2874"
-                    height="1758"
-                    alt="The Walk Wheel Cycle Trust website: desktop view of the homepage hero and navigation."
+                    src="assets/Sustrans/Desktop/Map%20Dark%20Mode%20v3.jpg"
+                    width="1440"
+                    height="900"
+                    alt="Walk Wheel Cycle Trust mapping tool on desktop, showing community-reported barriers on active travel routes."
                   />
                 </div>
-                <h3 class="project-card__title">The Walk Wheel Cycle Trust</h3>
-                <p class="project-card__category">Disability charity</p>
-                <p class="project-card__desc">Full website redesign for a disability charity.</p>
+                <h3 class="project-card__title">Designing a Mapping Tool for Disabled Users</h3>
+                <p class="project-card__category">Active travel mapping tool</p>
+                <p class="project-card__desc">
+                  A research-led mapping tool for pan-impairment active travel, designed with Transport for All
+                  and an embedded expert panel of disabled volunteers. Built around real barriers rather than
+                  assumed fitness.</p>
                 <div class="project-card__metrics" aria-label="Project metrics">
-                  <span>+£1,157 / month in donations</span>
-                  <span>+18.6% users</span>
-                  <span>+19.6% session duration</span>
+                  <span>Secured phase 2 funding</span>
+                  <span>5 pan-impairment personas</span>
+                  <span>5 mapping tools audited</span>
                 </div>
-              </div>
+              </a>
             </article>
           </div>
         </section>
@@ -432,6 +450,7 @@
         </div>
       </nav>
     </div>
+    <script src="js/nav-dropdown.js" defer></script>
     <script src="js/smooth-scroll.js" defer></script>
     <script src="js/case-study-nav.js" defer></script>
     <script src="js/mobile-nav-visibility.js" defer></script>
