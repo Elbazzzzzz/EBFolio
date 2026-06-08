@@ -720,6 +720,7 @@ a:focus-visible {
   gap: 12px;
   align-items: center;
   justify-content: center;
+  margin-top: 20px;
 }
 
 /* Status line: same padding + min-height rhythm as .btn */
