@@ -54,7 +54,6 @@ body {
   --leading-tight: 1.15;
   --leading-snug: 1.4;
   --leading-normal: 1.6;
-  --text-muted: #6b6b6b;
   /* Case study article nav (AA on white: inactive 7:1, border visible on white) */
   --cs-nav-bg: #ffffff;
   --cs-nav-fg: #000000;
@@ -78,7 +77,6 @@ body {
   --home-subnav-block: 60px;
   --bio-highlight-fg: #000000;
   --bio-highlight-fg-muted: #b0b0b0;
-  --color-metric: #007f2f;
   --color-metric-pill-bg: #007f2f;
   --color-metric-pill-fg: #ffffff;
   --content-prose: min(44.3125rem, 100%);
@@ -214,35 +212,12 @@ a:focus-visible {
   margin: 0;
 }
 
-.h3 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: var(--text-heading);
-  line-height: var(--leading-snug);
-  margin: 0;
-}
-
 .text-body {
   font-family: var(--font-sans);
   font-size: var(--text-body);
   line-height: var(--leading-normal);
   font-weight: 400;
   margin: 0;
-}
-
-.text-caption {
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  line-height: var(--leading-snug);
-  font-weight: 500;
-}
-
-.text-metric {
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  line-height: var(--leading-snug);
-  font-weight: 400;
-  color: var(--color-metric);
 }
 
 .text-img-caption {
@@ -721,6 +696,14 @@ a:focus-visible {
   box-shadow: none;
 }
 
+.hero-home__avatar {
+  width: 156px;
+  height: 156px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 22%;
+}
+
 .hero-home__intro {
   max-width: var(--content-prose);
   font-size: var(--text-display-hero-home);
@@ -1107,8 +1090,7 @@ a.project-card__surface--link:focus-visible {
     transform: none;
   }
 
-  a.project-card__surface--link .project-card__media .media-fill-img,
-  a.project-card__surface--link .project-card__media .placeholder {
+  a.project-card__surface--link .project-card__media .media-fill-img {
     transition: none;
   }
 }
@@ -1124,45 +1106,6 @@ a.project-card__surface--link:focus-visible {
   overflow: hidden;
 }
 
-.project-card__surface--inactive {
-  cursor: default;
-  background: #fafafa;
-  border-color: rgba(0, 0, 0, 0.08);
-  box-shadow: none;
-}
-
-.project-card__surface--inactive .project-card__media .media-fill-img {
-  opacity: 0.82;
-}
-
-.project-card__surface--inactive .project-card__desc {
-  color: #4a4a4a;
-}
-
-.project-card__badge {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 2;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  line-height: 1.2;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 7px 12px;
-  border-radius: 999px;
-  background: #000000;
-  color: #ffffff;
-  pointer-events: none;
-}
-
-.placeholder {
-  background: #e5e5e5;
-  width: 100%;
-  height: 100%;
-}
-
 .media-fill-img {
   display: block;
   width: 100%;
@@ -1170,35 +1113,30 @@ a.project-card__surface--link:focus-visible {
   object-fit: cover;
 }
 
-a.project-card__surface--link .project-card__media .media-fill-img,
-a.project-card__surface--link .project-card__media .placeholder {
+a.project-card__surface--link .project-card__media .media-fill-img {
   transition: transform 0.45s ease;
   transform: scale(1);
   transform-origin: center center;
 }
 
-a.project-card__surface--link:focus-visible .project-card__media .media-fill-img,
-a.project-card__surface--link:focus-visible .project-card__media .placeholder {
+a.project-card__surface--link:focus-visible .project-card__media .media-fill-img {
   transform: scale(1.06);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  a.project-card__surface--link:hover .project-card__media .media-fill-img,
-  a.project-card__surface--link:hover .project-card__media .placeholder {
+  a.project-card__surface--link:hover .project-card__media .media-fill-img {
     transform: scale(1.06);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  a.project-card__surface--link:focus-visible .project-card__media .media-fill-img,
-  a.project-card__surface--link:focus-visible .project-card__media .placeholder {
+  a.project-card__surface--link:focus-visible .project-card__media .media-fill-img {
     transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
-  a.project-card__surface--link:hover .project-card__media .media-fill-img,
-  a.project-card__surface--link:hover .project-card__media .placeholder {
+  a.project-card__surface--link:hover .project-card__media .media-fill-img {
     transform: none;
   }
 }
@@ -1210,10 +1148,6 @@ a.project-card__surface--link:focus-visible .project-card__media .placeholder {
   font-weight: 400;
   margin: 0;
   color: #000000;
-}
-
-.project-card__title a {
-  text-decoration: none;
 }
 
 .project-card__category {

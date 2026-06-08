@@ -1,2 +1,8 @@
 # Archived snapshots — not part of the shipped site (see .cursor/rules/ignore-archive.mdc)
 Archive /
+
+# macOS
+.DS_Store
+
+# Local notes (not part of the site)
+*Notes.txt
