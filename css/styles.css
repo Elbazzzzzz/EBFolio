@@ -75,6 +75,9 @@ body {
   --cs-nav-dot-gap: 10px;
   --home-subnav-bottom-gap: 24px;
   --home-subnav-block: 60px;
+  --nav-glass-bg: rgba(255, 255, 255, 0.58);
+  --nav-glass-border: rgba(255, 255, 255, 0.42);
+  --nav-glass-blur: 14px;
   --bio-highlight-fg: #000000;
   --bio-highlight-fg-muted: #b0b0b0;
   --color-metric-pill-bg: #007f2f;
@@ -242,12 +245,14 @@ a:focus-visible {
   max-width: var(--page-max);
   box-sizing: border-box;
   overflow: visible;
-  background: #ffffff;
+  background: var(--nav-glass-bg);
+  backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
+  -webkit-backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
   border-radius: 14px;
-  border: none;
+  border: 1px solid var(--nav-glass-border);
   box-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.06),
-    0 12px 40px rgba(0, 0, 0, 0.1);
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 12px 40px rgba(0, 0, 0, 0.08);
   transition: box-shadow 0.25s ease;
 }
 
@@ -346,7 +351,9 @@ a:focus-visible {
   max-width: 22rem;
   margin: 0;
   padding: 0;
-  background: #ffffff;
+  background: var(--nav-glass-bg);
+  backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
+  -webkit-backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   box-shadow:
@@ -455,6 +462,16 @@ a:focus-visible {
   }
 }
 
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header,
+  .home-subnav,
+  .nav-mobile,
+  .nav-dropdown__menu,
+  .cs-article-nav {
+    background: rgba(255, 255, 255, 0.94);
+  }
+}
+
 /* Tablet: balance brand + actions between mobile (768) and full desktop */
 @media (max-width: 900px) and (min-width: 769px) {
   .nav {
@@ -484,9 +501,14 @@ a:focus-visible {
   left: 0;
   right: 0;
   z-index: 100;
-  background: #ffffff;
+  background: var(--nav-glass-bg);
+  backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
+  -webkit-backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
+  border-top: 1px solid var(--nav-glass-border);
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 -8px 32px rgba(0, 0, 0, 0.06);
 }
 
 .nav-mobile__inner {
@@ -799,10 +821,15 @@ a:focus-visible {
   z-index: 50;
   box-sizing: border-box;
   max-width: calc(100vw - 48px);
-  background: var(--cs-nav-bg);
-  border: 2px solid var(--cs-nav-border);
+  background: var(--nav-glass-bg);
+  backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
+  -webkit-backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
+  border: 1px solid var(--nav-glass-border);
   border-radius: var(--cs-nav-radius);
   padding: var(--cs-nav-pad) calc(var(--cs-nav-pad) + 10px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 12px 32px rgba(0, 0, 0, 0.08);
 }
 
 .home-subnav__track {
@@ -1588,10 +1615,15 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   box-sizing: border-box;
   max-height: calc(100vh - var(--cs-nav-sticky-top) - 16px);
   overflow-y: auto;
-  background: var(--cs-nav-bg);
-  border: 2px solid var(--cs-nav-border);
+  background: var(--nav-glass-bg);
+  backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
+  -webkit-backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
+  border: 1px solid var(--nav-glass-border);
   border-radius: var(--cs-nav-radius);
   padding: var(--cs-nav-pad);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 12px 32px rgba(0, 0, 0, 0.08);
 }
 
 .cs-article-nav__list {
