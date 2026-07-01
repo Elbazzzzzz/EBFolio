@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Assessment Group — Nandos North US</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      :root {
+        --purple: #4b286d;
+        --purple-hover: #3d1f58;
+        --purple-pressed: #2f1845;
+        --purple-muted: #6b4d8a;
+        --lavender: #ebe6f2;
+        --lavender-deep: #e2dced;
+        --lavender-pressed: #d4c9e4;
+        --lavender-selected: #ddd5eb;
+        --red: #7a2e3a;
+        --red-hover: #682733;
+        --red-pressed: #551f28;
+        --border: #c8c0d4;
+        --border-input: #b8b0c4;
+        --text-muted: #6a6278;
+        --white: #ffffff;
+        --panel-width: 420px;
+        --radius-rect: 8px;
+        --font: "Source Sans 3", Helvetica, Arial, sans-serif;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        font-family: var(--font);
+        font-size: 14px;
+        color: var(--purple);
+        background: var(--white);
+      }
+
+      .side-panel {
+        width: 100%;
+        max-width: var(--panel-width);
+        min-height: 100vh;
+        margin: 0 auto;
+        background: var(--white);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .side-panel__scroll {
+        flex: 1;
+        overflow-y: auto;
+        padding: 28px 32px 24px;
+      }
+
+      /* Header */
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin: 0 0 20px;
+        padding: 0;
+        border: 0;
+        background: none;
+        font: inherit;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--purple);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        cursor: pointer;
+      }
+
+      .back-link svg {
+        width: 10px;
+        height: 10px;
+        flex-shrink: 0;
+      }
+
+      .page-title {
+        margin: 0 0 32px;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: var(--purple);
+      }
+
+      /* Sections */
+      .section {
+        margin-bottom: 32px;
+      }
+
+      .section__heading {
+        margin: 0 0 18px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--purple);
+      }
+
+      .field {
+        margin-bottom: 18px;
+      }
+
+      .field__label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--purple-muted);
+      }
+
+      .field__input,
+      .field__textarea {
+        width: 100%;
+        padding: 9px 12px;
+        border: 1px solid var(--border-input);
+        border-radius: var(--radius-rect);
+        font: inherit;
+        font-size: 14px;
+        color: #2a2433;
+        background: var(--white);
+      }
+
+      .field__textarea {
+        min-height: 72px;
+        resize: vertical;
+        line-height: 1.45;
+      }
+
+      .field__input:focus,
+      .field__textarea:focus {
+        outline: 2px solid rgba(75, 40, 109, 0.25);
+        outline-offset: 0;
+        border-color: var(--purple);
+      }
+
+      .field__hint {
+        margin: 0 0 10px;
+        font-size: 12px;
+        line-height: 1.45;
+        color: var(--text-muted);
+      }
+
+      /* Multi-select */
+      .multiselect {
+        border: 1px solid var(--border-input);
+        border-radius: var(--radius-rect);
+        overflow: hidden;
+      }
+
+      .multiselect__trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 9px 12px;
+        border: 0;
+        background: var(--white);
+        font: inherit;
+        font-size: 14px;
+        color: #2a2433;
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .multiselect__trigger svg {
+        width: 12px;
+        height: 12px;
+        color: var(--purple-muted);
+        flex-shrink: 0;
+      }
+
+      .multiselect__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid var(--border-input);
+      }
+
+      .multiselect__option {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 12px;
+        background: var(--lavender-selected);
+        border-bottom: 1px solid rgba(75, 40, 109, 0.08);
+        font-size: 14px;
+        color: #2a2433;
+        cursor: pointer;
+      }
+
+      .multiselect__option:last-child {
+        border-bottom: 0;
+      }
+
+      .multiselect__option--unchecked {
+        background: var(--white);
+      }
+
+      .multiselect__option input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .checkbox {
+        width: 18px;
+        height: 18px;
+        border: 1.5px solid var(--border-input);
+        border-radius: var(--radius-rect);
+        background: var(--white);
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+      }
+
+      .multiselect__option input:checked + .checkbox {
+        background: var(--purple);
+        border-color: var(--purple);
+      }
+
+      .checkbox svg {
+        width: 11px;
+        height: 11px;
+        color: var(--white);
+        opacity: 0;
+      }
+
+      .multiselect__option input:checked + .checkbox svg {
+        opacity: 1;
+      }
+
+      /* Site accordions */
+      .site-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .site-accordion {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-rect);
+        overflow: hidden;
+      }
+
+      .site-accordion__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 12px 14px;
+        border: 0;
+        background: var(--lavender);
+        font: inherit;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--purple);
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .site-accordion__header svg {
+        width: 12px;
+        height: 12px;
+        flex-shrink: 0;
+        transition: transform 0.2s ease;
+      }
+
+      .site-accordion--collapsed .site-accordion__header svg {
+        transform: rotate(180deg);
+      }
+
+      .site-accordion__body {
+        padding: 16px 14px 14px;
+        background: var(--lavender-deep);
+        border-top: 1px solid var(--border);
+      }
+
+      .site-accordion--collapsed .site-accordion__body {
+        display: none;
+      }
+
+      .site-accordion__body .field__label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
+      .site-accordion__body .field {
+        margin-bottom: 14px;
+      }
+
+      .site-accordion__body .field:last-of-type {
+        margin-bottom: 18px;
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 11px 16px;
+        border-radius: var(--radius-rect);
+        font: inherit;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          background 0.15s ease,
+          border-color 0.15s ease,
+          color 0.15s ease;
+      }
+
+      .btn svg {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+      }
+
+      .btn--outline {
+        width: 100%;
+        margin-top: 4px;
+        border: 1.5px solid var(--purple);
+        background: var(--white);
+        color: var(--purple);
+      }
+
+      .btn--outline:hover {
+        background: var(--lavender);
+        border-color: var(--purple-hover);
+        color: var(--purple-hover);
+      }
+
+      .btn--outline:active {
+        background: var(--lavender-pressed);
+        border-color: var(--purple-pressed);
+        color: var(--purple-pressed);
+      }
+
+      .btn--danger {
+        width: 100%;
+        border: 0;
+        background: var(--red);
+        color: var(--white);
+      }
+
+      .btn--danger:hover {
+        background: var(--red-hover);
+      }
+
+      .btn--danger:active {
+        background: var(--red-pressed);
+      }
+
+      .btn--danger-solid {
+        border: 0;
+        background: var(--red);
+        color: var(--white);
+        padding: 12px 18px;
+      }
+
+      .btn--danger-solid:hover {
+        background: var(--red-hover);
+      }
+
+      .btn--danger-solid:active {
+        background: var(--red-pressed);
+      }
+
+      .btn--primary {
+        border: 0;
+        background: var(--purple);
+        color: var(--white);
+        padding: 12px 18px;
+      }
+
+      .btn--primary:hover {
+        background: var(--purple-hover);
+      }
+
+      .btn--primary:active {
+        background: var(--purple-pressed);
+      }
+
+      .btn--text {
+        border: 0;
+        background: none;
+        color: var(--purple);
+        padding: 12px 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .btn--text:hover {
+        color: var(--purple-hover);
+      }
+
+      .btn--text:active {
+        color: var(--purple-pressed);
+      }
+
+      /* Footer */
+      .side-panel__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 16px 32px 24px;
+        border-top: 1px solid var(--border);
+        background: var(--white);
+      }
+
+      .footer-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="side-panel" aria-label="Edit assessment group">
+        <div class="side-panel__scroll">
+          <button type="button" class="back-link">
+            <svg viewBox="0 0 10 10" fill="none" aria-hidden="true">
+              <path
+                d="M6.5 1.5 2.5 5l4 3.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Assessment Groups
+          </button>
+
+          <h1 class="page-title">Nandos North US</h1>
+
+          <section class="section" aria-labelledby="details-heading">
+            <h2 id="details-heading" class="section__heading">Details</h2>
+
+            <div class="field">
+              <label class="field__label" for="group-name">Name</label>
+              <input
+                class="field__input"
+                type="text"
+                id="group-name"
+                value="Nandos North US"
+              />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="group-description">Description</label>
+              <textarea class="field__textarea" id="group-description">Doesn't include bars, or restaurants outside of Washington, Oregon or Montana.</textarea>
+            </div>
+
+            <div class="field">
+              <span class="field__label">Assigned Assessment types</span>
+              <p class="field__hint">
+                These will be the assessment templates available to the organisation for
+                this assessment group.
+              </p>
+
+              <div class="multiselect">
+                <button type="button" class="multiselect__trigger" aria-expanded="true">
+                  <span id="selected-count">2 selected</span>
+                  <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <path
+                      d="M3 4.5 6 7.5 9 4.5"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+                <ul class="multiselect__list" role="listbox" aria-multiselectable="true">
+                  <li>
+                    <label class="multiselect__option multiselect__option--unchecked">
+                      <span>FMG Enterprise 2026</span>
+                      <input type="checkbox" data-label="FMG Enterprise 2026" />
+                      <span class="checkbox" aria-hidden="true">
+                        <svg viewBox="0 0 11 11" fill="none">
+                          <path
+                            d="M2 5.5 4.5 8 9 3"
+                            stroke="currentColor"
+                            stroke-width="1.75"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="multiselect__option">
+                      <span>FMG Bars and Pubs 2025</span>
+                      <input type="checkbox" data-label="FMG Bars and Pubs 2025" checked />
+                      <span class="checkbox" aria-hidden="true">
+                        <svg viewBox="0 0 11 11" fill="none">
+                          <path
+                            d="M2 5.5 4.5 8 9 3"
+                            stroke="currentColor"
+                            stroke-width="1.75"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="multiselect__option">
+                      <span>FMG Universities UK</span>
+                      <input type="checkbox" data-label="FMG Universities UK" checked />
+                      <span class="checkbox" aria-hidden="true">
+                        <svg viewBox="0 0 11 11" fill="none">
+                          <path
+                            d="M2 5.5 4.5 8 9 3"
+                            stroke="currentColor"
+                            stroke-width="1.75"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" aria-labelledby="sites-heading">
+            <h2 id="sites-heading" class="section__heading">Sites</h2>
+
+            <div class="site-list">
+              <div class="site-accordion site-accordion--collapsed" data-accordion>
+                <button
+                  type="button"
+                  class="site-accordion__header"
+                  aria-expanded="false"
+                >
+                  Washington Downtown
+                  <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <path
+                      d="M3 7.5 6 4.5 9 7.5"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+                <div class="site-accordion__body" hidden>
+                  <div class="field">
+                    <label class="field__label" for="site-wa-name">Site name</label>
+                    <input
+                      class="field__input"
+                      type="text"
+                      id="site-wa-name"
+                      value="Washington Downtown"
+                    />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-wa-line1">Address Line 1</label>
+                    <input class="field__input" type="text" id="site-wa-line1" />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-wa-line2">Address Line 2</label>
+                    <input class="field__input" type="text" id="site-wa-line2" />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-wa-postcode"
+                      >Postcode or Zipcode</label
+                    >
+                    <input class="field__input" type="text" id="site-wa-postcode" />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-wa-city">City</label>
+                    <input class="field__input" type="text" id="site-wa-city" />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-wa-state"
+                      >County or State</label
+                    >
+                    <input class="field__input" type="text" id="site-wa-state" />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-wa-country">Country</label>
+                    <input class="field__input" type="text" id="site-wa-country" />
+                  </div>
+                  <button type="button" class="btn btn--danger">
+                    Delete Site
+                    <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path
+                        d="M3 4h8M5.5 4V3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1M11 4v7.5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4"
+                        stroke="currentColor"
+                        stroke-width="1.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M6 6.5v3M8 6.5v3"
+                        stroke="currentColor"
+                        stroke-width="1.2"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="site-accordion" data-accordion>
+                <button
+                  type="button"
+                  class="site-accordion__header"
+                  aria-expanded="true"
+                >
+                  New Site
+                  <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <path
+                      d="M3 7.5 6 4.5 9 7.5"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+                <div class="site-accordion__body">
+                  <div class="field">
+                    <label class="field__label" for="site-new-name">Site name</label>
+                    <input class="field__input" type="text" id="site-new-name" />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-new-line1">Address Line 1</label>
+                    <input class="field__input" type="text" id="site-new-line1" />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-new-line2">Address Line 2</label>
+                    <input class="field__input" type="text" id="site-new-line2" />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-new-postcode"
+                      >Postcode or Zipcode</label
+                    >
+                    <input class="field__input" type="text" id="site-new-postcode" />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-new-city">City</label>
+                    <input class="field__input" type="text" id="site-new-city" />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-new-state"
+                      >County or State</label
+                    >
+                    <input class="field__input" type="text" id="site-new-state" />
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="site-new-country">Country</label>
+                    <input class="field__input" type="text" id="site-new-country" />
+                  </div>
+                  <button type="button" class="btn btn--danger">
+                    Delete Site
+                    <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path
+                        d="M3 4h8M5.5 4V3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1M11 4v7.5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4"
+                        stroke="currentColor"
+                        stroke-width="1.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M6 6.5v3M8 6.5v3"
+                        stroke="currentColor"
+                        stroke-width="1.2"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn--outline">
+              Add a new site
+              <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path
+                  d="M7 3v8M3 7h8"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+          </section>
+        </div>
+
+        <footer class="side-panel__footer">
+          <button type="button" class="btn btn--text">Cancel</button>
+          <div class="footer-actions">
+            <button type="button" class="btn btn--danger-solid">
+              Delete Assessment Group
+              <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path
+                  d="M3 4h8M5.5 4V3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1M11 4v7.5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M6 6.5v3M8 6.5v3"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+            <button type="button" class="btn btn--primary">
+              Save Changes
+              <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <rect
+                  x="3.5"
+                  y="6"
+                  width="7"
+                  height="5.5"
+                  rx="1"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                />
+                <path
+                  d="M5 6V4.5a2 2 0 0 1 4 0V6"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </footer>
+    </aside>
+
+    <script>
+      document.querySelectorAll("[data-accordion]").forEach((accordion) => {
+        const header = accordion.querySelector(".site-accordion__header");
+        const body = accordion.querySelector(".site-accordion__body");
+
+        header.addEventListener("click", () => {
+          const collapsed = accordion.classList.toggle("site-accordion--collapsed");
+          header.setAttribute("aria-expanded", String(!collapsed));
+          body.hidden = collapsed;
+        });
+      });
+
+      const checkboxes = document.querySelectorAll(".multiselect__option input");
+      const countEl = document.getElementById("selected-count");
+
+      function updateSelectedCount() {
+        const count = [...checkboxes].filter((cb) => cb.checked).length;
+        countEl.textContent = count === 1 ? "1 selected" : count + " selected";
+
+        checkboxes.forEach((cb) => {
+          cb.closest(".multiselect__option").classList.toggle(
+            "multiselect__option--unchecked",
+            !cb.checked
+          );
+        });
+      }
+
+      checkboxes.forEach((cb) => {
+        cb.addEventListener("change", updateSelectedCount);
+      });
+    </script>
+  </body>
+</html>

@@ -62,7 +62,8 @@ body {
   --cs-nav-fg-hover: #404040;
   --cs-nav-fg-pressed: #262626;
   --cs-nav-border: #cccccc;
-  --cs-nav-radius: 12px;
+  --radius-rect: 8px;
+  --cs-nav-radius: var(--radius-rect);
   /* Shift nav right so wide case study media (1099px) isn’t covered */
   --cs-nav-offset: 72px;
   --cs-nav-top-gap: 60px;
@@ -129,7 +130,7 @@ img {
 
 /* Framed content images (hero, case study); project card thumbs sit inside card chrome */
 img:not(.btn__icon):not(.media-fill-img) {
-  border-radius: 14px;
+  border-radius: var(--radius-rect);
   border: 2px solid #000000;
   box-sizing: border-box;
 }
@@ -145,7 +146,7 @@ img:not(.btn__icon):not(.media-fill-img) {
   font-weight: 500;
   color: #ffffff;
   background: #000000;
-  border-radius: 4px;
+  border-radius: var(--radius-rect);
   text-decoration: none;
 }
 
@@ -171,7 +172,7 @@ a:focus {
 a:focus-visible {
   outline: 2px solid var(--btn-focus-ring);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: var(--radius-rect);
 }
 
 /* --- Layout shell --- */
@@ -248,7 +249,7 @@ a:focus-visible {
   background: var(--nav-glass-bg);
   backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
   -webkit-backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
-  border-radius: 14px;
+  border-radius: var(--radius-rect);
   border: 1px solid var(--nav-glass-border);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.65),
@@ -355,7 +356,7 @@ a:focus-visible {
   backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
   -webkit-backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
   border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
+  border-radius: var(--radius-rect);
   box-shadow:
     0 1px 0 rgba(0, 0, 0, 0.04),
     0 12px 32px rgba(0, 0, 0, 0.12);
@@ -421,7 +422,7 @@ a:focus-visible {
   background: transparent;
   border: none;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 var(--radius-rect) var(--radius-rect);
   cursor: pointer;
 }
 
@@ -544,7 +545,7 @@ a:focus-visible {
   color: var(--btn-fg);
   background-color: var(--btn-bg);
   border: 2px solid var(--btn-border);
-  border-radius: 4px;
+  border-radius: var(--radius-rect);
   cursor: pointer;
   box-sizing: border-box;
   text-decoration: none;
@@ -892,7 +893,7 @@ a:focus-visible {
   line-height: var(--leading-snug);
   color: var(--cs-nav-fg-muted);
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: var(--radius-rect);
   transition: color 0.15s ease;
   white-space: nowrap;
 }
@@ -927,7 +928,7 @@ a:focus-visible {
 .home-subnav__link:focus-visible {
   outline: 2px solid var(--btn-focus-ring);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-rect);
 }
 
 .home-subnav__dot-slot {
@@ -1086,7 +1087,7 @@ a:focus-visible {
 
 .project-card__surface {
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: var(--radius-rect);
   padding: 18px;
   display: flex;
   flex-direction: column;
@@ -1154,7 +1155,7 @@ a.project-card__surface--link:focus-visible {
   min-height: 300px;
   max-height: 500px;
   aspect-ratio: 4 / 5;
-  border-radius: 14px;
+  border-radius: var(--radius-rect);
   overflow: hidden;
 }
 
@@ -1163,6 +1164,7 @@ a.project-card__surface--link:focus-visible {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: var(--radius-rect);
 }
 
 a.project-card__surface--link .project-card__media .media-fill-img {
@@ -1237,7 +1239,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   align-items: center;
   gap: 6px;
   padding: 0.5rem 0.9375rem;
-  border-radius: 999px;
+  border-radius: var(--radius-rect);
   background-color: var(--color-metric-pill-bg);
   color: var(--color-metric-pill-fg);
   white-space: normal;
@@ -1411,29 +1413,30 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 }
 
 .media-bleed {
-  display: flex;
+  display: grid;
+  grid-template-columns: 800fr 214fr;
   gap: 15px;
   width: 1099px;
   max-width: 100%;
 }
 
 .media-bleed__lg {
-  width: 800px;
-  height: 398px;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 800 / 398;
   overflow: hidden;
-  flex-shrink: 0;
 }
 
 .media-bleed__sm {
-  width: 214px;
-  height: 398px;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 214 / 398;
   overflow: hidden;
-  flex-shrink: 0;
 }
 
 .media-bleed--framed .media-bleed__lg,
 .media-bleed--framed .media-bleed__sm {
-  border-radius: 14px;
+  border-radius: var(--radius-rect);
   border: 2px solid #000000;
   box-sizing: border-box;
 }
@@ -1442,7 +1445,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   width: 1099px;
   max-width: 100%;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: var(--radius-rect);
   border: 2px solid #000000;
   box-sizing: border-box;
 }
@@ -1470,6 +1473,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   height: 307px;
   overflow: hidden;
   flex-shrink: 0;
+  border-radius: var(--radius-rect);
 }
 
 .cs-figure-group__caption {
@@ -1487,6 +1491,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   height: 489px;
   overflow: hidden;
   flex-shrink: 0;
+  border-radius: var(--radius-rect);
 }
 
 .cs-figure-group__b {
@@ -1494,6 +1499,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   height: 489px;
   overflow: hidden;
   flex-shrink: 0;
+  border-radius: var(--radius-rect);
 }
 
 .cs-figure-group__stacked {
@@ -1513,6 +1519,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   height: 365px;
   overflow: hidden;
   max-width: 100%;
+  border-radius: var(--radius-rect);
 }
 
 .results-metrics {
@@ -1650,7 +1657,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   line-height: var(--leading-snug);
   color: var(--cs-nav-fg-muted);
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: var(--radius-rect);
   transition: color 0.15s ease;
 }
 
@@ -1684,7 +1691,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 .cs-article-nav__link:focus-visible {
   outline: 2px solid var(--btn-focus-ring);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-rect);
 }
 
 .cs-article-nav__dot {
@@ -1738,27 +1745,9 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
     --page-pad-x: 36px;
   }
 
-  /* Desktop + mobile GIF rows exceed ~1030px; stack before horizontal overflow */
+  /* Desktop + mobile GIF rows: stay side-by-side through tablet; stack on phone */
   .media-bleed {
-    flex-direction: column;
-    align-items: stretch;
     width: 100%;
-    gap: 12px;
-  }
-
-  .media-bleed__lg,
-  .media-bleed__sm {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    min-height: 200px;
-    aspect-ratio: 800 / 398;
-  }
-
-  .media-bleed__sm {
-    aspect-ratio: 214 / 398;
-    max-width: 360px;
-    margin: 0 auto;
   }
 
   .cs-figure-group__row {
@@ -1926,6 +1915,25 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   .cs-more-heading .section-label__inner {
     width: 100%;
     text-align: left;
+  }
+
+  .media-bleed {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .media-bleed__lg {
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+  }
+
+  .media-bleed__sm {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    justify-self: center;
+    min-height: 200px;
   }
 
   .cs-figure-group__caption {
