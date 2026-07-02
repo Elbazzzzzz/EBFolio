@@ -725,7 +725,7 @@ html.is-header-floating .site-header {
   width: 100%;
   min-height: auto;
   padding-top: calc(var(--float-nav-block) + 4px);
-  padding-bottom: 24px;
+  padding-bottom: 0;
   margin-bottom: 0;
   box-sizing: border-box;
 }
@@ -777,8 +777,12 @@ html.is-header-floating .site-header {
   align-items: flex-start;
   width: 100%;
   margin-top: 0;
-  margin-bottom: 4px;
+  margin-bottom: 48px;
   box-sizing: border-box;
+}
+
+.main-stack > .hero-home + .bio {
+  margin-top: -44px;
 }
 
 @media (min-width: 769px) {
@@ -862,11 +866,11 @@ html.is-header-floating .site-header {
   flex-direction: column;
   gap: 16px;
   max-width: var(--content-prose);
+  margin-left: auto;
 }
 
 .bio__lead {
   margin: 0;
-  font-family: var(--font-serif);
 }
 
 .bio__text {
@@ -879,8 +883,8 @@ html.is-header-floating .site-header {
   display: none;
   position: fixed;
   bottom: calc(var(--home-subnav-bottom-gap) + env(safe-area-inset-bottom, 0px));
-  left: 50%;
-  transform: translateX(-50%);
+  left: var(--page-pad-x);
+  transform: none;
   z-index: 50;
   box-sizing: border-box;
   max-width: calc(100vw - 48px);
@@ -1279,7 +1283,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
 .project-card__desc {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-body);
   line-height: var(--leading-normal);
   font-weight: 400;
   margin: 0;
@@ -1345,7 +1349,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
 .footer-note {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-body);
   line-height: var(--leading-normal);
   font-weight: 400;
   margin: 0;
@@ -1974,6 +1978,10 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
   .hero-home__stack {
     margin-bottom: 0;
+  }
+
+  .main-stack > .hero-home + .bio {
+    margin-top: 0;
   }
 
   .hero-home__text-panel {
