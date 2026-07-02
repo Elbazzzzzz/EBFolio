@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=2" />
+    <link rel="stylesheet" href="css/styles.css?v=3" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -83,7 +83,7 @@
 
       <main id="main-content" class="page__pad main-stack">
         <section class="hero-home" aria-label="Introduction">
-          <div class="hero-home__stack">
+          <div class="hero-home__stack" data-mobile-nav-sentinel>
             <div class="hero-home__text-panel">
               <img
                 class="hero-home__avatar"
@@ -92,23 +92,49 @@
                 height="156"
                 alt="Ellie Barrett"
               />
-              <h1 class="h1 hero-home__intro">
-                I'm a Senior UX Designer who untangles complex briefs to create accessible, research-led products that drive results.
-              </h1>
-              <div class="hero-home__actions" data-mobile-nav-sentinel>
-                <a class="btn btn--primary" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer">
-                  <span class="btn__label-desktop">Download my CV</span><span class="btn__label-mobile">CV</span>
-                  <img
-                    class="btn__icon"
-                    src="assets/icons/download.svg"
-                    width="16"
-                    height="16"
-                    alt=""
-                  />
-                </a>
-                <a class="btn btn--ghost" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
+              <div class="hero-home__content">
+                <h1 class="h1 hero-home__intro">
+                  I'm a Senior UX Designer who untangles ambigutity to create accessible, research-led products that drive results.
+                </h1>
+                <div class="hero-home__actions">
+                  <a class="btn btn--primary" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer">
+                    <span class="btn__label-desktop">Download my CV</span><span class="btn__label-mobile">CV</span>
+                    <img
+                      class="btn__icon"
+                      src="assets/icons/download.svg"
+                      width="16"
+                      height="16"
+                      alt=""
+                    />
+                  </a>
+                  <a class="btn btn--ghost" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
+                </div>
               </div>
             </div>
+          </div>
+          <div class="hero-home__ticker" aria-hidden="true">
+            <svg
+              class="hero-home__ticker-svg"
+              viewBox="0 50 1440 360"
+              preserveAspectRatio="xMidYMid meet"
+              focusable="false"
+            >
+              <path class="hero-home__ticker-track" id="hero-ticker-fill" />
+              <defs>
+                <path id="hero-ticker-path" />
+              </defs>
+              <text class="hero-home__ticker-text">
+                <textPath
+                  class="hero-home__ticker-text-path"
+                  href="#hero-ticker-path"
+                  xlink:href="#hero-ticker-path"
+                  text-anchor="start"
+                >
+                  Ellie Barrett User Experience Designer
+                </textPath>
+              </text>
+            </svg>
+            <script src="js/hero-ticker.js"></script>
           </div>
         </section>
 
@@ -352,9 +378,9 @@
         </div>
       </nav>
     </div>
+    <script src="js/header-scroll.js" defer></script>
     <script src="js/nav-dropdown.js" defer></script>
     <script src="js/smooth-scroll.js" defer></script>
-    <script src="js/bio-highlight.js" defer></script>
     <script src="js/home-nav.js" defer></script>
     <script src="js/mobile-nav-visibility.js" defer></script>
   </body>
