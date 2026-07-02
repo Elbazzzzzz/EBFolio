@@ -69,8 +69,8 @@ body {
   --cs-nav-radius: var(--radius-rect);
   /* Shift nav right so wide case study media (1099px) isn’t covered */
   --cs-nav-offset: 72px;
-  --cs-nav-top-gap: 64px;
-  --cs-nav-sticky-top: calc(var(--main-pad-for-nav) + var(--cs-nav-top-gap));
+  --cs-nav-top-gap: 40px;
+  --cs-nav-sticky-top: calc(var(--float-nav-block) + var(--cs-nav-top-gap));
   --cs-nav-pad: 16px;
   --cs-nav-link-pad-y: 8px;
   --cs-nav-link-pad-x: 8px;
@@ -210,12 +210,12 @@ html.is-header-floating {
 /* --- Typography --- */
 
 .font-heading {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-weight: 400;
 }
 
 .h1 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-weight: 400;
   font-size: var(--text-display);
   line-height: var(--leading-tight);
@@ -223,7 +223,7 @@ html.is-header-floating {
 }
 
 .h2 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-weight: 400;
   font-size: var(--text-title);
   line-height: var(--leading-tight);
@@ -303,8 +303,8 @@ html.is-header-floating .site-header {
 }
 
 .nav__brand {
-  font-family: var(--font-serif);
-  font-size: var(--text-nav);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
   line-height: var(--leading-snug);
   font-weight: 400;
   display: inline-flex;
@@ -808,16 +808,22 @@ html.is-header-floating .site-header {
 }
 
 .hero-home__content {
-  flex: 1;
+  flex: 0 1 calc(var(--content-prose) - 176px);
+  max-width: calc(var(--content-prose) - 176px);
   min-width: 0;
 }
 
 .hero-home__avatar {
-  display: none;
+  display: block;
+  width: 152px;
+  height: 152px;
+  flex: 0 0 152px;
+  object-fit: cover;
+  object-position: center 22%;
 }
 
 .hero-home__intro {
-  max-width: var(--content-prose);
+  max-width: 100%;
   font-size: var(--text-display-hero-home);
   text-align: left;
 }
@@ -1262,7 +1268,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 }
 
 .project-card__title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: var(--text-heading);
   line-height: var(--leading-tight);
   font-weight: 400;
@@ -1384,7 +1390,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-top: 32px;
+  padding-top: 72px;
   width: 854px;
   max-width: 100%;
 }
@@ -1415,7 +1421,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 }
 
 .cs-meta__label {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: var(--text-heading);
   line-height: var(--leading-snug);
   font-weight: 400;
@@ -1613,7 +1619,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 }
 
 .results-metrics__value {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: var(--text-heading);
   line-height: var(--leading-snug);
   font-weight: 400;
@@ -1675,14 +1681,15 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   min-width: 0;
   /* Full grid row height so inner sticky nav has room to stick */
   align-self: stretch;
-  /* Align nav with hero title block (matches .cs-hero padding-top) */
-  padding-top: 32px;
+  /* Load position matches sticky position */
+  padding-top: var(--cs-nav-sticky-top);
 }
 
 .cs-article-nav {
   position: -webkit-sticky;
   position: sticky;
   top: var(--cs-nav-sticky-top);
+  margin-top: 0;
   z-index: 5;
   align-self: start;
   box-sizing: border-box;
@@ -1988,6 +1995,10 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
     gap: 16px;
   }
 
+  .hero-home__avatar {
+    display: none;
+  }
+
   .hero-home__intro {
     line-height: 1.3;
   }
@@ -2088,7 +2099,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   }
 
   .cs-hero {
-    padding-top: 24px;
+    padding-top: 40px;
   }
 
   .cs-section {
