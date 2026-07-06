@@ -1220,6 +1220,22 @@ a.project-card__surface--link:focus-visible {
   }
 }
 
+.project-card--feature .project-card__media .media-fill-img {
+  object-fit: cover;
+  object-position: center center;
+}
+
+.project-card--feature a.project-card__surface--link .project-card__media .media-fill-img,
+.project-card--feature a.project-card__surface--link:focus-visible .project-card__media .media-fill-img {
+  transform: scale(1.2);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-card--feature a.project-card__surface--link:hover .project-card__media .media-fill-img {
+    transform: scale(1.26);
+  }
+}
+
 .project-card__media {
   position: relative;
   width: 100%;
