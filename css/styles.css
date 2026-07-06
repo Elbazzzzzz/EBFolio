@@ -1916,20 +1916,30 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 @media (max-width: 768px) {
   :root {
     --page-pad-x: 16px;
+    --section-gap-extra: 24px;
     --section-gap-lg: calc(32px + var(--section-gap-extra));
     --section-gap-sm: calc(24px + var(--section-gap-extra));
     --float-nav-top: 16px;
     /* Centered brand can wrap (name + location); keep hero/main clear of fixed bar */
-    --float-nav-block: 96px;
+    --float-nav-block: 72px;
     --text-display: clamp(1.75rem, 4vw + 1rem, 2.375rem);
-    --text-display-hero-home: clamp(1.2rem, 0.75rem + 2.4vw, 1.6rem);
+    --text-display-hero-home: clamp(1.25rem, 0.85rem + 2.8vw, 1.625rem);
     --text-title: clamp(1.5rem, 3vw + 1rem, 1.875rem);
-    --text-heading: clamp(1.375rem, 2.8vw + 1rem, 1.75rem);
+    --text-heading: clamp(1.25rem, 2.6vw + 0.9rem, 1.5rem);
     --text-sm: 0.9375rem;
     --text-body: 1rem;
     --leading-normal: 1.65;
     --grid-columns: var(--grid-columns-mobile);
     --grid-gutter: var(--grid-gutter-mobile);
+  }
+
+  html {
+    scroll-padding-top: calc(var(--float-nav-block) + 8px);
+  }
+
+  .main-stack {
+    gap: var(--section-gap-lg);
+    padding-bottom: var(--section-gap-lg);
   }
 
   .btn__label-desktop {
@@ -1945,6 +1955,11 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   }
 
   .page:has(.nav-mobile.nav-mobile--show) {
+    padding-bottom: calc(var(--nav-mobile-h) + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Case-study pages: bottom nav is always available on mobile */
+  .page:not(:has(.hero-home)) {
     padding-bottom: calc(var(--nav-mobile-h) + env(safe-area-inset-bottom, 0px));
   }
 
@@ -1965,12 +1980,17 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   }
 
   .nav {
-    padding: 16px 0;
+    padding: 12px 0;
     justify-content: center;
   }
 
   .nav__brand {
     text-align: center;
+    font-size: var(--text-body);
+  }
+
+  .hero-home {
+    padding-top: calc(var(--float-nav-block) + 8px);
   }
 
   .hero-home__ticker {
@@ -1993,6 +2013,12 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
   .hero-home__text-panel {
     gap: 16px;
+    max-width: 100%;
+  }
+
+  .hero-home__content {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 
   .hero-home__avatar {
@@ -2000,7 +2026,12 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   }
 
   .hero-home__intro {
-    line-height: 1.3;
+    line-height: 1.35;
+  }
+
+  .bio__content {
+    max-width: 100%;
+    margin-left: 0;
   }
 
   .section-label__inner {
@@ -2054,8 +2085,8 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   }
 
   .experience__cell {
-    flex: 1 1 calc(50% - 8px);
-    min-width: 140px;
+    flex: 1 1 100%;
+    min-width: 0;
   }
 
   .experience__cell--date {
@@ -2069,23 +2100,37 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   }
 
   .experience .section-label {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
 
   .projects .section-label {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
 
   .projects-list {
-    gap: var(--section-gap-lg);
+    gap: calc(var(--grid-gutter) * 2);
+  }
+
+  .project-card__surface {
+    padding: 16px;
+    gap: 12px;
   }
 
   /* Mobile project card: same 4:5 ratio, slightly lower floor on narrow viewports */
   .project-card__media {
     aspect-ratio: 4 / 5;
     height: auto;
-    min-height: 240px;
-    max-height: 500px;
+    min-height: 200px;
+    max-height: 360px;
+  }
+
+  .project-card__metrics span {
+    padding: 0.4375rem 0.75rem;
+    font-size: var(--text-sm);
+  }
+
+  .site-footer {
+    padding: 24px var(--page-pad-x);
   }
 
   .footer-row {
@@ -2098,17 +2143,45 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
     display: none; /* Sticky bottom nav already has Projects / Contact / CV */
   }
 
+  .cs-stack {
+    gap: var(--section-gap-lg);
+    padding-bottom: var(--section-gap-lg);
+  }
+
   .cs-hero {
-    padding-top: 40px;
+    padding-top: calc(var(--float-nav-block) + 16px);
+    width: 100%;
   }
 
   .cs-section {
     gap: 16px;
+    width: 100%;
+  }
+
+  .cs-meta {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
   }
 
   .cs-meta__label {
     font-size: var(--text-heading);
     line-height: var(--leading-snug);
+  }
+
+  .cs-prose {
+    max-width: 100%;
+  }
+
+  .nav-mobile__inner {
+    padding: 12px 16px;
+    justify-content: space-between;
+  }
+
+  .nav-mobile__inner .btn {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 10px 12px;
+    font-size: var(--text-sm);
   }
 
   .results-metrics__row {
