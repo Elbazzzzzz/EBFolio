@@ -5,10 +5,9 @@
 (function () {
   var TOTAL_FRAMES = 51;
   var FRAMES_PER_SCROLL_UNIT = 4;
-  var SCROLL_UNIT_PX = 100;
-  var PIXELS_PER_FRAME = SCROLL_UNIT_PX / FRAMES_PER_SCROLL_UNIT;
-  var MAX_SCROLL_RANGE = (TOTAL_FRAMES - 1) * PIXELS_PER_FRAME;
-  var FADE_RANGE = 2 * SCROLL_UNIT_PX;
+  var SCROLL_UNIT_DESKTOP = 100;
+  var SCROLL_UNIT_MOBILE = 72;
+  var mobileMq = window.matchMedia("(max-width: 768px)");
 
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var root = document.documentElement;
@@ -16,6 +15,7 @@
   var runway = intro && intro.querySelector(".scroll-intro__runway");
   var frameEl = document.getElementById("scroll-intro-frame");
   var headlineEl = document.getElementById("scroll-intro-headline");
+  var cueEl = document.getElementById("scroll-intro-cue");
 
   if (!intro || !runway || !frameEl || !headlineEl) return;
 
@@ -32,16 +32,25 @@
     );
   }
 
+  var scrollUnitPx = SCROLL_UNIT_DESKTOP;
+  var pixelsPerFrame = scrollUnitPx / FRAMES_PER_SCROLL_UNIT;
+  var maxScrollRange = (TOTAL_FRAMES - 1) * pixelsPerFrame;
+  var fadeRange = 2 * scrollUnitPx;
   var currentFrame = -1;
   var active = false;
   var complete = false;
+  var resizeTimer = null;
 
-  function syncRunwayHeight() {
-    runway.style.setProperty("--scroll-intro-runway", MAX_SCROLL_RANGE + "px");
+  function syncMetrics() {
+    scrollUnitPx = mobileMq.matches ? SCROLL_UNIT_MOBILE : SCROLL_UNIT_DESKTOP;
+    pixelsPerFrame = scrollUnitPx / FRAMES_PER_SCROLL_UNIT;
+    maxScrollRange = (TOTAL_FRAMES - 1) * pixelsPerFrame;
+    fadeRange = 2 * scrollUnitPx;
+    runway.style.setProperty("--scroll-intro-runway", maxScrollRange + "px");
   }
 
   function progressWithinIntro() {
-    return Math.min(MAX_SCROLL_RANGE, Math.max(0, window.scrollY));
+    return Math.min(maxScrollRange, Math.max(0, window.scrollY));
   }
 
   function setActive(next) {
@@ -60,22 +69,29 @@
     var scrolled = progressWithinIntro();
     // Stage stays dismissed through the post-animation landing buffer;
     // it only returns once scroll is back inside the scrub range.
-    var finished = window.scrollY >= MAX_SCROLL_RANGE;
+    var finished = window.scrollY >= maxScrollRange;
 
     setComplete(finished);
     // Hide site chrome while the yellow stage is still covering the viewport.
     setActive(!finished);
 
-    var fadeIn = Math.min(1, Math.max(0, scrolled / FADE_RANGE));
+    var fadeIn = Math.min(1, Math.max(0, scrolled / fadeRange));
     var fadeOut = Math.min(
       1,
-      Math.max(0, (MAX_SCROLL_RANGE - scrolled) / FADE_RANGE)
+      Math.max(0, (maxScrollRange - scrolled) / fadeRange)
     );
     headlineEl.style.opacity = String(Math.min(fadeIn, fadeOut));
 
+    // Scroll cue: fully visible on load, faded out within 2 scroll units.
+    if (cueEl) {
+      cueEl.style.opacity = String(
+        Math.min(1, Math.max(0, 1 - scrolled / fadeRange))
+      );
+    }
+
     var nextFrame = Math.min(
       TOTAL_FRAMES - 1,
-      Math.max(0, Math.floor(scrolled / PIXELS_PER_FRAME))
+      Math.max(0, Math.floor(scrolled / pixelsPerFrame))
     );
 
     if (nextFrame === currentFrame) return;
@@ -84,23 +100,47 @@
   }
 
   function preload() {
+    // On mobile, preload nearby frames first to keep early scrub responsive.
+    var priorityCount = mobileMq.matches ? 16 : TOTAL_FRAMES;
     frames.forEach(function (src, index) {
       if (index === 0) return;
-      var img = new Image();
-      img.src = src;
+      if (index < priorityCount) {
+        var img = new Image();
+        img.src = src;
+        return;
+      }
+      // Defer the rest until idle when possible.
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(function () {
+          var lazy = new Image();
+          lazy.src = src;
+        });
+      } else {
+        setTimeout(function () {
+          var lazy = new Image();
+          lazy.src = src;
+        }, 250 + index * 20);
+      }
     });
   }
 
-  syncRunwayHeight();
+  function onResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      syncMetrics();
+      currentFrame = -1;
+      render();
+    }, 120);
+  }
+
+  syncMetrics();
   render();
   window.addEventListener("scroll", render, { passive: true });
-  window.addEventListener(
-    "resize",
-    function () {
-      syncRunwayHeight();
-      render();
-    },
-    { passive: true }
-  );
+  window.addEventListener("resize", onResize, { passive: true });
+  if (typeof mobileMq.addEventListener === "function") {
+    mobileMq.addEventListener("change", onResize);
+  } else if (typeof mobileMq.addListener === "function") {
+    mobileMq.addListener(onResize);
+  }
   requestAnimationFrame(preload);
 })();

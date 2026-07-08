@@ -176,7 +176,7 @@ img {
 }
 
 /* Framed content images (case study); project card thumbs sit inside card chrome */
-img:not(.btn__icon):not(.media-fill-img):not(.scroll-intro__frame):not(.hero-home__avatar):not(.footer-social__icon) {
+img:not(.btn__icon):not(.media-fill-img):not(.scroll-intro__frame):not(.scroll-intro__cue):not(.hero-home__avatar):not(.footer-social__icon) {
   border-radius: var(--radius-rect);
   border: 2px solid #000000;
   box-sizing: border-box;
@@ -1209,14 +1209,14 @@ html.is-header-floating .site-header {
 }
 
 .project-card__surface {
-  background: #ffffff;
+  background: transparent;
   border-radius: var(--radius-rect);
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: none;
+  border: 1px solid transparent;
   box-sizing: border-box;
 }
 
@@ -1232,7 +1232,7 @@ a.project-card__surface--link {
 }
 
 a.project-card__surface--link:active {
-  background-color: color-mix(in srgb, var(--nav-state-dot) 22%, #ffffff);
+  background-color: #ffffff;
   transform: translateY(1px);
 }
 
@@ -1247,7 +1247,7 @@ a.project-card__surface--link:focus-visible {
 
 @media (hover: hover) and (pointer: fine) {
   a.project-card__surface--link:hover {
-    background-color: color-mix(in srgb, var(--nav-state-dot) 18%, #ffffff);
+    background-color: #ffffff;
     box-shadow: 0 6px 28px rgba(0, 0, 0, 0.09);
     border-color: rgba(0, 0, 0, 0.1);
   }
@@ -2377,6 +2377,10 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   opacity: 1;
   visibility: visible;
   transition: opacity 0.35s ease, visibility 0.35s ease;
+  /* Prefer dynamic viewport so mobile browser chrome doesn't clip the stage */
+  min-height: 100vh;
+  min-height: 100dvh;
+  min-height: 100svh;
 }
 
 .scroll-intro.is-complete .scroll-intro__stage {
@@ -2392,6 +2396,22 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   display: block;
   border: 0;
   border-radius: 0;
+}
+
+.scroll-intro__cue {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(28vmin, 120px);
+  height: auto;
+  display: block;
+  border: 0;
+  border-radius: 0;
+  opacity: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
 }
 
 .scroll-intro__headline {
@@ -2428,5 +2448,46 @@ html.scroll-intro-active .home-subnav {
 @media (prefers-reduced-motion: reduce) {
   .scroll-intro {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-intro__landing {
+    height: 48vh;
+    height: 48dvh;
+    min-height: 280px;
+  }
+
+  .scroll-intro__frame {
+    width: min(78vw, 360px);
+  }
+
+  .scroll-intro__cue {
+    width: min(22vw, 88px);
+  }
+
+  .scroll-intro__headline {
+    font-size: clamp(1.65rem, 7.2vw, 2.4rem);
+    line-height: 1.1;
+    max-width: min(88vw, 14ch);
+    padding: 0 1.25rem;
+  }
+
+  .footer-row {
+    align-items: flex-start;
+  }
+
+  .footer-row__actions {
+    align-self: flex-end;
+  }
+
+  .footer-social {
+    width: 40px;
+    height: 40px;
+  }
+
+  .footer-social__icon {
+    width: 22px;
+    height: 22px;
   }
 }
