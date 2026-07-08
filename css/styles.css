@@ -2104,39 +2104,49 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   }
 
   .hero-home {
-    padding-top: calc(var(--float-nav-block) + 8px);
+    /* Clear the fixed brand bar with less empty air above the intro */
+    padding-top: calc(var(--float-nav-block) - 12px);
+    /* Mobile: ticker first, then intro copy */
+    display: flex;
+    flex-direction: column;
   }
 
   .hero-home__ticker {
-    margin-bottom: 0;
-  }
-
-  .hero-home__ticker-text {
-    font-size: clamp(1.5rem, 0.65rem + 3.6vw, 2.125rem);
-    letter-spacing: 0.06em;
-    word-spacing: 0.28em;
+    display: none;
   }
 
   .hero-home__stack {
-    margin-bottom: 0;
+    order: 0;
+    margin-bottom: 28px;
   }
 
+  /* Cancel the large main-stack section gap so bio starts just below the intro */
   .main-stack > .hero-home + .bio {
-    margin-top: 0;
+    margin-top: calc(-1 * var(--section-gap-lg));
   }
 
   .hero-home__text-panel {
+    flex-direction: row;
+    align-items: flex-start;
     gap: 16px;
     max-width: 100%;
   }
 
   .hero-home__content {
-    flex: 1 1 100%;
-    max-width: 100%;
+    flex: 1 1 auto;
+    order: 0;
+    width: auto;
+    max-width: none;
+    min-width: 0;
   }
 
   .hero-home__avatar {
-    display: none;
+    display: block;
+    order: 1;
+    width: 96px;
+    height: 96px;
+    flex: 0 0 96px;
+    align-self: flex-start;
   }
 
   .hero-home__intro {
@@ -2453,9 +2463,9 @@ html.scroll-intro-active .home-subnav {
 
 @media (max-width: 768px) {
   .scroll-intro__landing {
-    height: 48vh;
-    height: 48dvh;
-    min-height: 280px;
+    /* Keep a short buffer so a small upward scroll doesn't re-trigger the intro */
+    height: 56px;
+    min-height: 56px;
   }
 
   .scroll-intro__frame {
