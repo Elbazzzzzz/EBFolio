@@ -5,11 +5,42 @@
   var textPath = document.querySelector(".hero-home__ticker-text-path");
   if (!svg || !track || !center || !textPath) return;
 
+  var SVG_NS = "http://www.w3.org/2000/svg";
   var label = "Ellie Barrett User Experience Designer";
-  var gap = "   \u2022   ";
-  var segment = label + gap;
   var pathLength = 0;
   var segmentLength = 0;
+
+  function clearTextPath() {
+    while (textPath.firstChild) {
+      textPath.removeChild(textPath.firstChild);
+    }
+  }
+
+  function appendSpace(parent, spaces) {
+    var span = document.createElementNS(SVG_NS, "tspan");
+    span.textContent = spaces;
+    parent.appendChild(span);
+  }
+
+  function appendLabel(parent) {
+    var span = document.createElementNS(SVG_NS, "tspan");
+    span.textContent = label;
+    parent.appendChild(span);
+  }
+
+  function appendDot(parent) {
+    var span = document.createElementNS(SVG_NS, "tspan");
+    span.setAttribute("class", "hero-home__ticker-dot");
+    span.textContent = "\u2022";
+    parent.appendChild(span);
+  }
+
+  function appendSegment(parent) {
+    appendLabel(parent);
+    appendSpace(parent, "   ");
+    appendDot(parent);
+    appendSpace(parent, "   ");
+  }
   var prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
@@ -107,18 +138,24 @@
   }
 
   function measureSegmentLength() {
-    textPath.textContent = segment;
+    clearTextPath();
+    appendSegment(textPath);
     return textPath.getComputedTextLength() || 0;
   }
 
   function buildTickerText() {
     var repeats =
       Math.max(2, Math.ceil((pathLength + segmentLength) / segmentLength) + 1);
-    textPath.textContent = new Array(repeats).fill(segment).join("");
+    var i;
+    clearTextPath();
+    for (i = 0; i < repeats; i += 1) {
+      appendSegment(textPath);
+    }
   }
 
   function setStaticTicker() {
-    textPath.textContent = label;
+    clearTextPath();
+    appendLabel(textPath);
     textPath.setAttribute("text-anchor", "middle");
     textPath.setAttribute("startOffset", String(pathLength / 2));
   }

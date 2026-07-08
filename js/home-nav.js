@@ -148,6 +148,20 @@
     });
   }
 
+  function scrollToOverview() {
+    var target =
+      document.querySelector(".hero-home") ||
+      document.getElementById("main-content") ||
+      document.querySelector(".page");
+
+    if (target) {
+      scrollToSection(target);
+      return;
+    }
+
+    scrollToTop();
+  }
+
   function navigateTo(item) {
     var currentId = pendingId || resolveActiveFromScroll();
     if (currentId === item.id) {
@@ -157,7 +171,7 @@
     beginPending(item.id);
 
     if (item.isOverview) {
-      scrollToTop();
+      scrollToOverview();
       history.pushState(null, "", window.location.pathname + window.location.search);
       return;
     }
@@ -313,7 +327,7 @@
 
     beginPending(match.id);
     if (match.isOverview) {
-      scrollToTop();
+      scrollToOverview();
     } else {
       scrollToSection(match.element);
     }
