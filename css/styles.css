@@ -1657,7 +1657,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 }
 
 .cs-at-a-glance {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 16px;
   width: 854px;
