@@ -1556,7 +1556,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 }
 
 .cs-hero__title {
-  max-width: 709px;
+  max-width: 854px;
 }
 
 .cs-hero__lede {
@@ -1590,7 +1590,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
 .cs-meta__value {
   font-family: var(--font-sans);
-  font-size: var(--text-body);
+  font-size: 12px;
   line-height: var(--leading-normal);
   font-weight: 400;
   margin: 0;
