@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=32" />
+    <link rel="stylesheet" href="css/styles.css?v=34" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -63,8 +63,7 @@
                   </button>
                 </div>
               </div>
-              <a class="btn btn--ghost" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
-              <a class="btn btn--primary" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download my CV">
+              <a class="btn btn--ghost" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download my CV">
                 <span class="btn__label-desktop">Download my </span>CV
                 <img
                   class="btn__icon"
@@ -74,6 +73,7 @@
                   alt=""
                 />
               </a>
+              <a class="btn btn--primary" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
             </div>
           </nav>
         </div>
@@ -91,6 +91,40 @@
               constraint not a feature layer.
             </p>
           </div>
+
+          <aside class="cs-at-a-glance" aria-labelledby="wwct-at-a-glance-heading">
+            <h2 id="wwct-at-a-glance-heading" class="cs-at-a-glance__title">At a glance</h2>
+            <ul class="cs-at-a-glance__facts">
+              <li class="cs-at-a-glance__fact">
+                <p class="cs-at-a-glance__fact-label">Role</p>
+                <p class="cs-at-a-glance__fact-value">UX Lead</p>
+              </li>
+              <li class="cs-at-a-glance__fact">
+                <p class="cs-at-a-glance__fact-label">Timeline</p>
+                <p class="cs-at-a-glance__fact-value">Discovery through prototype, 2024</p>
+              </li>
+              <li class="cs-at-a-glance__fact">
+                <p class="cs-at-a-glance__fact-label">Headline outcome</p>
+                <p class="cs-at-a-glance__fact-value">Findings report + 5 pan-impairment personas</p>
+              </li>
+            </ul>
+            <div class="results-metrics" aria-label="Key results">
+              <div class="results-metrics__row">
+                <div class="results-metrics__item">
+                  <p class="results-metrics__value">Report</p>
+                  <p class="results-metrics__label">Findings report delivered</p>
+                </div>
+                <div class="results-metrics__item">
+                  <p class="results-metrics__value">5</p>
+                  <p class="results-metrics__label">Pan-impairment personas</p>
+                </div>
+                <div class="results-metrics__item">
+                  <p class="results-metrics__value">5</p>
+                  <p class="results-metrics__label">Mapping tools audited</p>
+                </div>
+              </div>
+            </div>
+          </aside>
 
           <div class="cs-meta" aria-label="Project details">
             <div class="cs-meta__item">
@@ -147,7 +181,10 @@
           <div class="cs-prose text-body">
             <p>
               The Walk Wheel Cycle Trust is a UK charity advocating for active travel: walking, wheeling, cycling, and
-              everything in between. Their remit covers users that mainstream mapping tools systematically fail. We
+              everything in between. Their remit covers users that mainstream mapping tools systematically fail.
+            </p>
+            <p>
+              We
               confirmed this by auditing the five most-used tools in the market (Google Maps, Apple iOS Maps, OS Maps,
               Strava, Komoot) against accessibility-critical functionality. Each fell short in different ways. Wheelchair
               routing was inaccurate. Offline access sat behind paywalls. Fitness filters used exclusionary language.
@@ -197,21 +234,24 @@
           <h2 id="discovery-heading" class="h1 cs-section__title">Discovery</h2>
           <div class="cs-prose text-body">
             <p>Three strands ran in parallel.</p>
+            <h3>Pan-impairment research and embedded expert review</h3>
             <p>
-              <strong>Pan-impairment research and embedded expert review.</strong> Working alongside Transport for All and
+              Working alongside Transport for All and
               other charity-sector partners, we built a foundational picture of the barriers and frustrations users face
               when trying to engage with active travel. Crucially, the same network supported an ongoing expert panel that
               reviewed designs as they evolved. Findings didn't just feed into a discovery document and then sit on a
               shelf, they kept shaping decisions through definition and design.
             </p>
+            <h3>Stakeholder immersion at the Trust</h3>
             <p>
-              <strong>Stakeholder immersion at the Trust.</strong> Listened to internal teams to understand the wider
+              Listened to internal teams to understand the wider
               organisation, what it does, what it advocates for, and where the mapping tool needed to sit within that.
               Surfaced complexities like balancing the strength of the NCN brand against the wider organisational mission,
               and a historical service-delivery focus that had underrepresented end beneficiaries.
             </p>
+            <h3>Comparator tool analysis</h3>
             <p>
-              <strong>Comparator tool analysis.</strong> Five major mapping tools assessed against
+              Five major mapping tools assessed against
               accessibility-critical functionality: audio navigation depth, offline access, terrain and hazard data,
               personalisation language, wheelchair routing accuracy. Four findings shaped the design direction:
             </p>
@@ -324,8 +364,9 @@
               Worked collaboratively with the supporting UI Designer through iterative rounds, with each significant
               decision reviewed by the expert panel before it solidified. Three design decisions defined the tool.
             </p>
+            <h3>A barrier map, not a routing tool</h3>
             <p>
-              <strong>A barrier map, not a routing tool.</strong> Existing mapping tools optimise for "fastest route" and
+              Existing mapping tools optimise for "fastest route" and
               bury accessibility filters behind premium accounts or vague fitness language. We deliberately stepped away
               from suggesting routes at all. The map surfaces community-reported barriers (path width, gates, steep
               gradients, surface quality) and lets users decide for themselves whether a route works for their needs. When
@@ -333,15 +374,17 @@
               replacing it with another version of the same logic felt wrong. Trusting users with the raw information
               instead felt right.
             </p>
+            <h3>Lightweight community data maintenance</h3>
             <p>
-              <strong>Lightweight community data maintenance.</strong> Each barrier point shows its last-reported date.
+              Each barrier point shows its last-reported date.
               When a user selects one, they're prompted to confirm whether the barrier is still present. "Yes, it is"
               updates the timestamp. "No, it's gone" removes it. New points only appear on the map after being reported by
               more than one user, guarding against single-source noise. This pattern means the Trust can keep the map
               fresh through its volunteer network without needing centralised manual audits.
             </p>
+            <h3>Accessibility patterns built into the persistent UI</h3>
             <p>
-              <strong>Accessibility patterns built into the persistent UI.</strong> Text size and contrast controls sit in
+              Text size and contrast controls sit in
               the main interface, not buried in a settings menu. Filter information surfaces on both hover and tab so
               keyboard and mouse users see the same content at the same trigger. Help icons expand inline rather than
               navigating users away from what they were doing. The first-load warning modal is fully tab-able and users
@@ -435,23 +478,6 @@
             </p>
           </div>
         </section>
-
-        <div class="results-metrics" aria-label="Results">
-          <div class="results-metrics__row">
-            <div class="results-metrics__item">
-              <p class="results-metrics__value">Report</p>
-              <p class="results-metrics__label">Findings report delivered</p>
-            </div>
-            <div class="results-metrics__item">
-              <p class="results-metrics__value">5</p>
-              <p class="results-metrics__label">Pan-impairment personas</p>
-            </div>
-            <div class="results-metrics__item">
-              <p class="results-metrics__value">5</p>
-              <p class="results-metrics__label">Mapping tools audited</p>
-            </div>
-          </div>
-        </div>
 
         <section class="projects" aria-labelledby="more-projects-heading">
           <div class="section-label cs-more-heading">
@@ -559,9 +585,8 @@
 
       <nav class="nav-mobile" aria-label="Primary mobile" aria-hidden="true">
         <div class="nav-mobile__inner">
-          <a class="btn btn--primary" href="index.html#projects">Projects</a>
-          <a class="btn btn--primary" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
-          <a class="btn btn--primary" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download my CV">
+          <a class="btn btn--ghost" href="index.html#projects">Projects</a>
+          <a class="btn btn--ghost" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download my CV">
             <span class="btn__label-desktop">Download my </span>CV
             <img
               class="btn__icon"
@@ -571,12 +596,13 @@
               alt=""
             />
           </a>
+          <a class="btn btn--primary" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
         </div>
       </nav>
     </div>
     <script src="js/header-scroll.js" defer></script>
-    <script src="js/nav-dropdown.js" defer></script>
-    <script src="js/smooth-scroll.js" defer></script>
+    <script src="js/nav-dropdown.js?v=3" defer></script>
+    <script src="js/smooth-scroll.js?v=3" defer></script>
     <script src="js/case-study-nav.js" defer></script>
     <script src="js/mobile-nav-visibility.js" defer></script>
   </body>

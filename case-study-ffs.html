@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=32" />
+    <link rel="stylesheet" href="css/styles.css?v=34" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -63,8 +63,7 @@
                   </button>
                 </div>
               </div>
-              <a class="btn btn--ghost" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
-              <a class="btn btn--primary" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download my CV">
+              <a class="btn btn--ghost" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download my CV">
                 <span class="btn__label-desktop">Download my </span>CV
                 <img
                   class="btn__icon"
@@ -74,6 +73,7 @@
                   alt=""
                 />
               </a>
+              <a class="btn btn--primary" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
             </div>
           </nav>
         </div>
@@ -94,6 +94,40 @@
               treating accessibility not as a checklist item but as the core design constraint.
             </p>
           </div>
+
+          <aside class="cs-at-a-glance" aria-labelledby="ffs-at-a-glance-heading">
+            <h2 id="ffs-at-a-glance-heading" class="cs-at-a-glance__title">At a glance</h2>
+            <ul class="cs-at-a-glance__facts">
+              <li class="cs-at-a-glance__fact">
+                <p class="cs-at-a-glance__fact-label">Role</p>
+                <p class="cs-at-a-glance__fact-value">Lead UX Designer</p>
+              </li>
+              <li class="cs-at-a-glance__fact">
+                <p class="cs-at-a-glance__fact-label">Timeline</p>
+                <p class="cs-at-a-glance__fact-value">Merger redesign, launched 2023</p>
+              </li>
+              <li class="cs-at-a-glance__fact">
+                <p class="cs-at-a-glance__fact-label">Headline outcome</p>
+                <p class="cs-at-a-glance__fact-value">+70% donations page traffic</p>
+              </li>
+            </ul>
+            <div class="results-metrics" aria-label="Key results">
+              <div class="results-metrics__row">
+                <div class="results-metrics__item">
+                  <p class="results-metrics__value">+70%</p>
+                  <p class="results-metrics__label">Increase in donations page traffic (vs pre-merger)</p>
+                </div>
+                <div class="results-metrics__item">
+                  <p class="results-metrics__value">228</p>
+                  <p class="results-metrics__label">Monthly newsletter sign-ups</p>
+                </div>
+                <div class="results-metrics__item">
+                  <p class="results-metrics__value">+£10k</p>
+                  <p class="results-metrics__label">Donation income in year one</p>
+                </div>
+              </div>
+            </div>
+          </aside>
 
           <div class="cs-meta" aria-label="Project details">
             <div class="cs-meta__item">
@@ -185,7 +219,10 @@
             </p>
             <p>
               We ran a content audit across both the Fight for Sight and Vision Foundation websites, which quickly
-              revealed how much duplication existed and how inconsistently similar content was structured. Paired with an
+              revealed how much duplication existed and how inconsistently similar content was structured.
+            </p>
+            <p>
+              Paired with an
               SEO and analytics audit, this gave us a clear picture of where traffic was actually coming from, which
               pages were performing, and what could safely be cut.
             </p>
@@ -215,19 +252,25 @@
             <p>
               From the research, we moved into definition. We built a sitemap and IA to consolidate the
               two content estates into a single, logical structure, resolved duplication, and ensured the navigation
-              hierarchy made sense to someone discovering the charity for the first time. Content modelling mapped out
+              hierarchy made sense to someone discovering the charity for the first time.
+            </p>
+            <p>
+              Content modelling mapped out
               the repeating structures across page types, which informed the component set downstream.
             </p>
+            <h3>Functionality scoping</h3>
             <p>
               Functionality scoping used the MoSCoW method to prioritise features against timeline and
               budget, keeping the build realistic. Page templates and components were defined alongside a full
               build specification covering browser support, hosting, and technical requirements.
             </p>
+            <h3>Design concept development</h3>
             <p>
               Design concept development followed collaborative moodboard feedback with the client. We
               didn't present a single direction; we built shared understanding of the visual language first, then developed
               the concept from that agreed foundation.
             </p>
+            <h3>Prototype user testing</h3>
             <p>
               The phase closed with prototype user testing across 5 participants, again including
               screen reader users. Testing at this stage let us validate the IA, the component behaviour with assistive
@@ -299,23 +342,17 @@
 
         <section class="cs-section" aria-labelledby="results-heading">
           <h2 id="results-heading" class="h1 cs-section__title">Results</h2>
-          <div class="results-metrics" aria-label="Results">
+          <div class="cs-prose text-body">
+            <p>
+              Post-launch metrics showed strong early traction across donations, newsletter sign-ups, and year-one
+              donation income (see At a glance above).
+            </p>
+          </div>
+          <div class="results-metrics" aria-label="Additional results">
             <div class="results-metrics__row">
-              <div class="results-metrics__item">
-                <p class="results-metrics__value">+70%</p>
-                <p class="results-metrics__label">Increase in donations page traffic (vs pre-merger)</p>
-              </div>
-              <div class="results-metrics__item">
-                <p class="results-metrics__value">228</p>
-                <p class="results-metrics__label">Monthly newsletter sign-ups</p>
-              </div>
               <div class="results-metrics__item">
                 <p class="results-metrics__value">+533%</p>
                 <p class="results-metrics__label">Newsletter sign-up growth vs both prior sites</p>
-              </div>
-              <div class="results-metrics__item">
-                <p class="results-metrics__value">+£10k</p>
-                <p class="results-metrics__label">Donation income in year one</p>
               </div>
             </div>
           </div>
@@ -439,9 +476,8 @@
 
       <nav class="nav-mobile" aria-label="Primary mobile" aria-hidden="true">
         <div class="nav-mobile__inner">
-          <a class="btn btn--primary" href="index.html#projects">Projects</a>
-          <a class="btn btn--primary" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
-          <a class="btn btn--primary" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download my CV">
+          <a class="btn btn--ghost" href="index.html#projects">Projects</a>
+          <a class="btn btn--ghost" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download my CV">
             <span class="btn__label-desktop">Download my </span>CV
             <img
               class="btn__icon"
@@ -451,12 +487,13 @@
               alt=""
             />
           </a>
+          <a class="btn btn--primary" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
         </div>
       </nav>
     </div>
     <script src="js/header-scroll.js" defer></script>
-    <script src="js/nav-dropdown.js" defer></script>
-    <script src="js/smooth-scroll.js" defer></script>
+    <script src="js/nav-dropdown.js?v=3" defer></script>
+    <script src="js/smooth-scroll.js?v=3" defer></script>
     <script src="js/case-study-nav.js" defer></script>
     <script src="js/mobile-nav-visibility.js" defer></script>
   </body>

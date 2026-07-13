@@ -93,7 +93,8 @@ body {
   --cs-nav-bg: #ffffff;
   --cs-nav-fg: #000000;
   --cs-nav-fg-muted: #595959;
-  --cs-nav-fg-knockback: #a3a3a3;
+  /* Knocked-back inactive items still meet WCAG AA (4.5:1+) on white */
+  --cs-nav-fg-knockback: #6e6e6e;
   --cs-nav-fg-hover: #404040;
   --cs-nav-fg-pressed: #262626;
   --cs-nav-border: #cccccc;
@@ -147,6 +148,10 @@ body {
   --btn-pressed-bg-pointer: #e0b000;
   --btn-disabled-opacity: 0.38;
   --btn-focus-ring: #000000;
+  /* Primary CTA: solid brand-yellow fill (black text on #ffce00 = 12.6:1) */
+  --btn-primary-bg: #ffce00;
+  --btn-primary-hover-bg: #edbf00;
+  --btn-primary-pressed-bg: #d9ae00;
   --nav-mobile-h: 80px;
   /* Fixed floating nav: matches header `top` + inner nav height (padding + row) */
   --float-nav-top: 16px;
@@ -427,9 +432,9 @@ html.is-header-floating .site-header {
   max-width: 22rem;
   margin: 0;
   padding: 0;
-  background: var(--nav-glass-bg);
-  backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
-  -webkit-backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
+  /* Solid opaque surface: menu text never renders over page imagery
+     (AA contrast holds regardless of what's behind the menu) */
+  background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: var(--radius-rect);
   box-shadow:
@@ -657,9 +662,18 @@ html.is-header-floating .site-header {
   background-color: var(--btn-bg);
 }
 
-.btn--ghost:active:not(:disabled):not([aria-disabled="true"]),
-.btn--primary:active:not(:disabled):not([aria-disabled="true"]) {
+/* Primary CTA: solid fill for highest visual weight; ghost stays outline/transparent */
+.btn--primary {
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-border);
+}
+
+.btn--ghost:active:not(:disabled):not([aria-disabled="true"]) {
   background-color: var(--btn-pressed-bg);
+}
+
+.btn--primary:active:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--btn-primary-pressed-bg);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -668,12 +682,15 @@ html.is-header-floating .site-header {
   }
 
   .btn--primary:hover:not(:disabled):not([aria-disabled="true"]) {
-    background-color: var(--btn-hover-bg-pointer);
+    background-color: var(--btn-primary-hover-bg);
   }
 
-  .btn--ghost:active:not(:disabled):not([aria-disabled="true"]),
-  .btn--primary:active:not(:disabled):not([aria-disabled="true"]) {
+  .btn--ghost:active:not(:disabled):not([aria-disabled="true"]) {
     background-color: var(--btn-pressed-bg-pointer);
+  }
+
+  .btn--primary:active:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--btn-primary-pressed-bg);
   }
 }
 
@@ -772,7 +789,9 @@ html.is-header-floating .site-header {
   flex-direction: column;
   width: 100%;
   min-height: auto;
-  padding-top: calc(var(--float-nav-block) + 4px);
+  /* Clear the floating glass header exactly, plus a small fluid gap —
+     keeps intro text + top of the yellow wave above the fold at 1440x900 */
+  padding-top: calc(var(--main-pad-for-nav-floating) + clamp(8px, 1.5vh, 20px));
   padding-bottom: 0;
   margin-bottom: 0;
   box-sizing: border-box;
@@ -829,7 +848,7 @@ html.is-header-floating .site-header {
   align-items: flex-start;
   width: 100%;
   margin-top: 0;
-  margin-bottom: 48px;
+  margin-bottom: clamp(24px, 3.5vh, 40px);
   box-sizing: border-box;
 }
 
@@ -948,10 +967,10 @@ html.is-header-floating .site-header {
   z-index: 50;
   box-sizing: border-box;
   max-width: calc(100vw - 48px);
-  background: var(--nav-glass-bg);
-  backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
-  -webkit-backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
-  border: 1px solid var(--nav-glass-border);
+  /* Solid opaque surface: items (e.g. "Experience") stay AA-readable when the
+     floating menu passes over project imagery */
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: var(--cs-nav-radius);
   padding: var(--cs-nav-pad) calc(var(--cs-nav-pad) + 10px);
   box-shadow:
@@ -1625,6 +1644,80 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   margin-bottom: 0;
 }
 
+.cs-prose h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-heading);
+  line-height: var(--leading-snug);
+  font-weight: 700;
+  margin: 24px 0 8px;
+}
+
+.cs-prose h3:first-child {
+  margin-top: 0;
+}
+
+.cs-at-a-glance {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 854px;
+  max-width: 100%;
+  padding: 20px 24px;
+  background: #f7f7f7;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-rect);
+  box-sizing: border-box;
+}
+
+.cs-at-a-glance__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-heading);
+  line-height: var(--leading-snug);
+  font-weight: 700;
+  margin: 0;
+}
+
+.cs-at-a-glance__summary {
+  margin: 0;
+  max-width: 709px;
+}
+
+.cs-at-a-glance__facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px var(--grid-gutter);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-at-a-glance__fact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.cs-at-a-glance__fact-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--cs-nav-fg-muted);
+  margin: 0;
+}
+
+.cs-at-a-glance__fact-value {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  margin: 0;
+}
+
+.cs-at-a-glance .results-metrics {
+  width: 100%;
+  margin-top: 4px;
+}
+
 .media-bleed {
   display: grid;
   grid-template-columns: 800fr 214fr;
@@ -1836,10 +1929,9 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   box-sizing: border-box;
   max-height: calc(100vh - var(--cs-nav-sticky-top) - 16px);
   overflow-y: auto;
-  background: var(--nav-glass-bg);
-  backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
-  -webkit-backdrop-filter: blur(var(--nav-glass-blur)) saturate(1.12);
-  border: 1px solid var(--nav-glass-border);
+  /* Solid opaque surface: same AA-contrast reasoning as .home-subnav */
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: var(--cs-nav-radius);
   padding: var(--cs-nav-pad);
   box-shadow:
@@ -2399,10 +2491,11 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 }
 
 .scroll-intro__landing {
-  /* Buffer after the last frame so the hero can be read without re-entering the scrub */
-  height: 70vh;
-  height: 70dvh;
-  min-height: 448px;
+  /* Buffer after the last frame so the hero can be read without re-entering the scrub.
+     Kept short (viewport-relative) so manual scrollers don't cross a long blank
+     stretch before the hero, and the hero + wave land above the fold. */
+  height: clamp(240px, 32vh, 400px);
+  height: clamp(240px, 32dvh, 400px);
   pointer-events: none;
 }
 

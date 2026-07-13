@@ -19,19 +19,36 @@
   var observer = null;
   var intersecting = new Set();
   var pendingId = null;
+  var clickedLockId = null;
   var pendingTimer = null;
   var resizeTimer = null;
   var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var initialHash = window.location.hash.slice(1);
 
+  // Smooth scrolling can settle a fraction of a pixel short of the target,
+  // so the spy line sits slightly below the scroll offset to absorb rounding.
+  var SPY_TOLERANCE_PX = 2;
+
   function getScrollOffset() {
     var header = document.querySelector(".site-header");
     if (!header) return 104;
-    return header.getBoundingClientRect().bottom;
+    // Measure the header's post-scroll (floating glass bar) position, not its
+    // current one: scrolling to any section floats the header, and using its
+    // pre-scroll bottom edge here would leave targets and the scroll-spy line
+    // disagreeing about where sections start (indicator lands on the wrong item).
+    var floatTop = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue("--float-nav-top")
+    );
+    if (isNaN(floatTop)) floatTop = 16;
+    return floatTop + header.offsetHeight;
+  }
+
+  function getSpyLine() {
+    return getScrollOffset() + SPY_TOLERANCE_PX;
   }
 
   function getSpyBandMargin() {
-    var top = Math.round(getScrollOffset());
+    var top = Math.round(getSpyLine());
     var bottom = Math.max(0, window.innerHeight - top - 1);
     return "-" + top + "px 0px -" + bottom + "px 0px";
   }
@@ -90,21 +107,26 @@
     indicator.classList.remove("home-subnav__indicator--bounce");
   }
 
+  // Geometric resolution only: the section is active when its top has crossed
+  // the spy line. Uses the exact same offset as the click scroll targets, so
+  // clicked and scrolled states can never disagree. (The IntersectionObserver
+  // is just an extra update trigger; its async entries aren't trusted here.)
   function resolveActiveFromScroll() {
     if (pendingId) return pendingId;
 
-    var activeId = OVERVIEW_ID;
-
-    if (intersecting.size) {
-      navItems.forEach(function (item) {
-        if (item.element && intersecting.has(item.element)) {
-          activeId = item.id;
-        }
-      });
-      return activeId;
+    // Fully scrolled: the last section is active even when the page is too
+    // short for its top to ever reach the spy line.
+    if (
+      navItems.length &&
+      window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 2
+    ) {
+      return navItems[navItems.length - 1].id;
     }
 
-    var spyLine = getScrollOffset();
+    var activeId = OVERVIEW_ID;
+    var spyLine = getSpyLine();
+
     navItems.forEach(function (item) {
       if (!item.element || item.isOverview) return;
       if (item.element.getBoundingClientRect().top <= spyLine) {
@@ -116,20 +138,62 @@
   }
 
   function syncActiveFromScroll() {
-    setActive(resolveActiveFromScroll());
+    var resolved = resolveActiveFromScroll();
+    if (clickedLockId) {
+      if (resolved === clickedLockId) {
+        clickedLockId = null;
+      } else {
+        setActive(clickedLockId);
+        return;
+      }
+    }
+    setActive(resolved);
   }
 
-  function clearPending() {
+  // keepClicked: the click navigation finished, so the clicked item stays
+  // active even if the scroll was clamped short of the section (page bottom).
+  // Without it (manual scroll took over), the scroll-spy resolves instead.
+  function clearPending(keepClicked) {
+    var id = pendingId;
     pendingId = null;
     clearTimeout(pendingTimer);
-    syncActiveFromScroll();
+    if (keepClicked && id) {
+      clickedLockId = id;
+      setActive(id);
+    } else {
+      clickedLockId = null;
+      syncActiveFromScroll();
+    }
+  }
+
+  // The clicked section has arrived when its top sits at the spy line (same
+  // offset the scroll target used), or the page can't scroll any further.
+  function pendingArrived() {
+    if (!pendingId) return false;
+
+    var atBottom =
+      window.scrollY + window.innerHeight >=
+      document.documentElement.scrollHeight - 2;
+    if (atBottom) return true;
+
+    var item = navItems.find(function (entry) { return entry.id === pendingId; });
+    if (!item || !item.element) return true;
+
+    if (item.isOverview) {
+      return item.element.getBoundingClientRect().top >= 0 || window.scrollY === 0;
+    }
+
+    return Math.abs(item.element.getBoundingClientRect().top - getScrollOffset()) <= 4;
   }
 
   function beginPending(id) {
     pendingId = id;
     clearTimeout(pendingTimer);
     setActive(id);
-    pendingTimer = setTimeout(clearPending, prefersReducedMotion ? 80 : 1200);
+    // Safety net only: arrival (or scrollend) normally clears pending first.
+    pendingTimer = setTimeout(function () {
+      clearPending(true);
+    }, prefersReducedMotion ? 80 : 3000);
   }
 
   function scrollToSection(element) {
@@ -272,6 +336,28 @@
 
     if (!navItems.length) return;
 
+    list.addEventListener("keydown", function (event) {
+      var links = navItems.map(function (item) {
+        return item.link;
+      });
+      var index = links.indexOf(document.activeElement);
+      if (index === -1) return;
+
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        links[(index + 1) % links.length].focus();
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        links[(index - 1 + links.length) % links.length].focus();
+      } else if (event.key === "Home") {
+        event.preventDefault();
+        links[0].focus();
+      } else if (event.key === "End") {
+        event.preventDefault();
+        links[links.length - 1].focus();
+      }
+    });
+
     track.appendChild(indicator);
     track.appendChild(list);
     nav.appendChild(track);
@@ -282,6 +368,9 @@
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize, { passive: true });
     window.addEventListener("hashchange", onHashChange);
+    // Manual scroll input hands control back to the scroll-spy immediately.
+    window.addEventListener("wheel", onUserScrollInput, { passive: true });
+    window.addEventListener("touchmove", onUserScrollInput, { passive: true });
 
     if ("onscrollend" in window) {
       window.addEventListener("scrollend", onScrollEnd, { passive: true });
@@ -301,12 +390,21 @@
   }
 
   function onScroll() {
-    if (pendingId) return;
+    if (pendingId) {
+      if (pendingArrived()) clearPending(true);
+      return;
+    }
     syncActiveFromScroll();
   }
 
+  function onUserScrollInput() {
+    clickedLockId = null;
+    if (pendingId) clearPending(false);
+    else syncActiveFromScroll();
+  }
+
   function onScrollEnd() {
-    clearPending();
+    if (pendingId) clearPending(true);
   }
 
   function onResize() {
@@ -341,12 +439,15 @@
 
     intersecting.clear();
     pendingId = null;
+    clickedLockId = null;
     clearTimeout(pendingTimer);
     clearTimeout(resizeTimer);
 
     window.removeEventListener("scroll", onScroll);
     window.removeEventListener("resize", onResize);
     window.removeEventListener("hashchange", onHashChange);
+    window.removeEventListener("wheel", onUserScrollInput);
+    window.removeEventListener("touchmove", onUserScrollInput);
 
     if ("onscrollend" in window) {
       window.removeEventListener("scrollend", onScrollEnd);

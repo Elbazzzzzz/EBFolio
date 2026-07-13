@@ -1,7 +1,14 @@
 (function () {
   function getScrollOffset() {
     var header = document.querySelector(".site-header");
-    return header ? header.getBoundingClientRect().bottom : 0;
+    if (!header) return 0;
+    // Match the post-scroll floating-header offset (same math as home-nav.js),
+    // so anchor targets and scroll-spy highlighting agree on section positions.
+    var floatTop = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue("--float-nav-top")
+    );
+    if (isNaN(floatTop)) floatTop = 16;
+    return floatTop + header.offsetHeight;
   }
 
   function scrollToHashTarget(target) {
