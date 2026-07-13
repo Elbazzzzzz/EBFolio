@@ -515,6 +515,11 @@ html.is-header-floating .site-header {
   line-height: 1;
 }
 
+/* Multiplication-sign glyph lives in CSS so no stray character sits in the markup/text layer */
+.nav-dropdown__close-icon::before {
+  content: "\00D7";
+}
+
 @media (hover: hover) and (pointer: fine) {
   /* Treat the joined Projects link + chevron toggle as a single button on hover */
   .nav-dropdown:hover .nav-dropdown__link.btn--ghost,
@@ -1473,8 +1478,34 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   border-radius: 0 !important;
 }
 
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 8px;
+  border-radius: var(--radius-rect);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  font-weight: 400;
+  color: #2d2c2b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: background-color 0.15s ease;
+}
+
+.footer-link:focus {
+  outline: none;
+}
+
+.footer-link:focus-visible {
+  outline: 2px solid var(--btn-focus-ring);
+  outline-offset: 2px;
+}
+
 @media (hover: hover) and (pointer: fine) {
-  .footer-social:hover {
+  .footer-social:hover,
+  .footer-link:hover {
     background-color: color-mix(in srgb, var(--nav-state-dot) 18%, transparent);
   }
 }

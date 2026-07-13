@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>How I use AI as a UX designer, Ellie Barrett</title>
+    <meta
+      name="description"
+      content="How I use AI in my UX practice: speeding up research analysis, spotting accessibility issues in code, and learning new skills without outsourcing the thinking."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css?v=32" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="page">
+      <header class="site-header">
+        <div class="page__pad">
+          <nav class="nav" aria-label="Primary">
+            <a class="nav__brand font-heading" href="index.html"><span class="nav__brand-name">Ellie Barrett</span></a>
+            <div class="nav__actions">
+              <div class="nav-dropdown">
+                <a class="btn btn--ghost nav-dropdown__link" href="index.html#projects">Projects</a>
+                <button
+                  type="button"
+                  class="btn btn--ghost nav-dropdown__toggle"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls="nav-projects-menu"
+                  aria-label="Show case studies"
+                >
+                  <img
+                    class="btn__icon nav-dropdown__chevron"
+                    src="assets/icons/chevron-down.svg"
+                    width="16"
+                    height="16"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </button>
+                <div class="nav-dropdown__menu" id="nav-projects-menu">
+                  <ul class="nav-dropdown__list" role="menu" aria-label="Case studies">
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-wcr.html">Worldwide Cancer Research</a>
+                    </li>
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-gifct.html">GIFCT</a>
+                    </li>
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-ffs.html">Fight for Sight</a>
+                    </li>
+                    <li role="none">
+                      <a class="nav-dropdown__item" role="menuitem" href="case-study-wwct.html">Designing a Mapping Tool for Disabled Users</a>
+                    </li>
+                  </ul>
+                  <button type="button" class="nav-dropdown__close" aria-label="Close case studies menu">
+                    <span class="nav-dropdown__close-icon" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+              <a class="btn btn--ghost" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
+              <a class="btn btn--primary" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download my CV">
+                <span class="btn__label-desktop">Download my </span>CV
+                <img
+                  class="btn__icon"
+                  src="assets/icons/download.svg"
+                  width="16"
+                  height="16"
+                  alt=""
+                />
+              </a>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <main id="main-content" class="page__pad cs-stack">
+        <div class="cs-intro">
+          <div class="cs-hero">
+            <h1 class="h1 cs-hero__title">How I use AI as a UX designer</h1>
+            <p class="text-body cs-hero__lede">
+              I get asked about this a lot, so I thought I'd write it down properly. The short version is that AI
+              hasn't changed what I do, it's changed how long the slow bits take. The thinking, the judgement,
+              the decisions - those are still mine. But there's a lot of legwork in UX, and that's where AI has
+              quietly become really useful.
+            </p>
+          </div>
+        </div>
+
+        <section class="cs-section" aria-labelledby="research-heading">
+          <h2 id="research-heading" class="h1 cs-section__title">Research</h2>
+          <div class="cs-prose text-body">
+            <p>
+              Research produces a lot of stuff. Interview transcripts, survey responses, competitor notes. The
+              insights are the valuable part, but getting to them used to mean days of reading, highlighting and
+              moving sticky notes around.
+            </p>
+            <p>
+              These days I let AI do the first read-through. I'll give it a set of transcripts and ask what themes
+              keep coming up, where people contradict themselves, or whether anything unexpected is hiding in
+              there. Then, and this is the important bit, I go back to the source material and check everything
+              myself. AI is great at spotting patterns but it will happily invent one if you let it, so nothing
+              goes into a findings deck that I haven't traced back to something a real person actually said.
+            </p>
+            <p>
+              What I've noticed is that I turn up to workshops with better questions now, because my time went
+              into thinking about the findings rather than assembling them.
+            </p>
+          </div>
+        </section>
+
+        <section class="cs-section" aria-labelledby="accessibility-heading">
+          <h2 id="accessibility-heading" class="h1 cs-section__title">Spotting accessibility issues in code</h2>
+          <div class="cs-prose text-body">
+            <p>
+              I'm not a developer, but I work alongside them every day, and accessibility is something I care
+              about a lot. This is honestly where AI has surprised me most.
+            </p>
+            <p>
+              Before a build goes to review, I'll run the front-end code through AI and ask it to look for
+              accessibility problems. Missing alt text, wonky heading structures, form fields without labels,
+              colour contrast that's baked into the CSS. Things that used to take an afternoon of poking around
+              now surface in a few minutes.
+            </p>
+            <p>
+              I still test properly afterwards, with a keyboard and a screen reader, because no tool can tell you
+              what an experience actually feels like for the person using it. But catching the obvious stuff early
+              means the conversations I have with developers are about the genuinely tricky problems, which is a
+              much better use of everyone's time.
+            </p>
+          </div>
+        </section>
+
+        <section class="cs-section" aria-labelledby="learning-heading">
+          <h2 id="learning-heading" class="h1 cs-section__title">Learning new things (without letting it do the learning for me)</h2>
+          <div class="cs-prose text-body">
+            <p>
+              This is the bit I'm probably most careful about. It's really easy to ask AI to do something, get a
+              decent result, and learn absolutely nothing in the process. I've fallen into that trap before and
+              it's not a nice feeling.
+            </p>
+            <p>
+              So I try to flip it around. When I want to understand something new, I ask AI to explain it, then I
+              have a go myself and ask it to tell me where I went wrong. If it writes code for me, I make it talk
+              me through every line until I could explain it to someone else. The little test I use is: could I do
+              this again tomorrow without any help? If the answer is no, I haven't really learned it yet.
+            </p>
+            <p>
+              It's a slower way to use AI, but it means the skills actually stick.
+            </p>
+          </div>
+        </section>
+
+        <section class="cs-section" aria-labelledby="landed-heading">
+          <h2 id="landed-heading" class="h1 cs-section__title">Where I've landed on all this</h2>
+          <div class="cs-prose text-body">
+            <p>
+              I think of AI a bit like a very fast, very keen junior colleague. Brilliant for first drafts and
+              heavy lifting, but you'd never send their work to a client without looking at it first. Everything
+              it gives me gets checked, questioned, and quite often reworked before it goes anywhere near a real
+              project.
+            </p>
+            <p>
+              That feels like the right balance to me. The tools keep getting better, and I'll keep using them.
+              But the responsibility for the work being good, honest and accessible stays with me, and I wouldn't
+              want it any other way.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-row">
+          <div class="footer-row__left">
+            <p class="footer-name">Ellie Barrett 2026</p>
+            <p class="footer-note">© Ellie Barrett 2026</p>
+          </div>
+          <div class="footer-row__actions">
+            <a class="footer-link" href="my-ai-approach.html">My AI Approach</a>
+            <a class="footer-social" href="https://www.linkedin.com/in/elliembarrett" target="_blank" rel="noopener noreferrer" aria-label="Ellie Barrett on LinkedIn">
+              <img
+                class="footer-social__icon"
+                src="assets/icons/linkedin.png"
+                width="24"
+                height="24"
+                alt=""
+              />
+            </a>
+          </div>
+        </div>
+      </footer>
+
+      <nav class="nav-mobile" aria-label="Primary mobile" aria-hidden="true">
+        <div class="nav-mobile__inner">
+          <a class="btn btn--primary" href="index.html#projects">Projects</a>
+          <a class="btn btn--primary" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
+          <a class="btn btn--primary" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download my CV">
+            <span class="btn__label-desktop">Download my </span>CV
+            <img
+              class="btn__icon"
+              src="assets/icons/download.svg"
+              width="16"
+              height="16"
+              alt=""
+            />
+          </a>
+        </div>
+      </nav>
+    </div>
+    <script src="js/header-scroll.js" defer></script>
+    <script src="js/nav-dropdown.js" defer></script>
+    <script src="js/smooth-scroll.js" defer></script>
+    <script src="js/mobile-nav-visibility.js" defer></script>
+  </body>
+</html>
