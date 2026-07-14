@@ -14,7 +14,17 @@
       href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=46" />
+    <link rel="stylesheet" href="css/styles.css?v=51" />
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("pfmay-movement-paused") === "true") {
+            document.documentElement.dataset.movementPaused = "true";
+          }
+        } catch (error) {}
+      })();
+    </script>
+    <script src="js/movement-toggle.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -107,13 +117,13 @@
             </div>
             <div class="cs-meta__item">
               <p class="cs-meta__label">Result</p>
-              <p class="cs-meta__value">5 pan-impairment personas</p>
+              <p class="cs-meta__value">Next phase funding unlocked</p>
             </div>
           </div>
 
           <div class="cs-success-metrics" aria-label="Success metrics">
             <span>Findings report delivered</span>
-            <span>5 pan-impairment personas</span>
+            <span>Next phase funding unlocked</span>
             <span>5 mapping tools audited</span>
           </div>
         </div>
@@ -259,53 +269,13 @@
         </section>
 
         <div class="cs-figure-group">
-          <div class="cs-figure-group__row">
-            <div class="cs-figure-group__a">
-              <img
-                class="media-fill-img"
-                src="assets/Sustrans/Sarah%20-%20Running%20and%20Walking%2C%20Rural%2C%20Physical%20Health.png"
-                width="800"
-                height="600"
-                alt="Persona card for Sarah: partially sighted, walking and running in rural settings."
-              />
-            </div>
-            <div class="cs-figure-group__b">
-              <img
-                class="media-fill-img"
-                src="assets/Sustrans/Samuel%20Ansal%20-%20Wheelchair%2C%20Rural%2C%20Mental%20Health%20-%20v1.png"
-                width="800"
-                height="600"
-                alt="Persona card for Samuel: wheelchair user integrating active travel into work-from-home life."
-              />
-            </div>
-          </div>
-          <div class="cs-figure-group__row">
-            <div class="cs-figure-group__a">
-              <img
-                class="media-fill-img"
-                src="assets/Sustrans/Lucy%20Ross%20-%20Walking%2C%20Town/City%2C%20Commute%20-%20v1.png"
-                width="800"
-                height="600"
-                alt="Persona card for Lucy: sensory overwhelm and anxiety on a walking commute."
-              />
-            </div>
-            <div class="cs-figure-group__b">
-              <img
-                class="media-fill-img"
-                src="assets/Sustrans/David%20Lee%20-%20Hand%20Cycle%2C%20Rural%2C%20Physical%20Health.png"
-                width="800"
-                height="600"
-                alt="Persona card for David: hand cyclist, fitness-driven, in rural settings."
-              />
-            </div>
-          </div>
-          <div class="cs-figure-group__primary">
+          <div class="cs-figure-group__stacked">
             <img
               class="media-fill-img"
-              src="assets/Sustrans/Kathy%20Davies-%20Tricycle%2C%20Town%2C%20Social%20-%20v1.png"
+              src="assets/Sustrans/David%20Lee%20-%20Hand%20Cycle%2C%20Rural%2C%20Physical%20Health.png"
               width="800"
               height="600"
-              alt="Persona card for Kathy: new tricycle user with low digital confidence in town settings."
+              alt="Persona card for David: hand cyclist, fitness-driven, in rural settings."
             />
           </div>
           <p class="text-img-caption cs-figure-group__caption">
@@ -463,10 +433,10 @@
                 <div class="project-card__media">
                   <img
                     class="media-fill-img"
-                    src="assets/WCR/wcr-home-card.jpg?v=2"
-                    width="1024"
-                    height="519"
-                    alt="Worldwide Cancer Research donation page with amount selectors, impact messaging, and donor details form."
+                    src="assets/WCR/wcr-home-card.jpg?v=4"
+                    width="2800"
+                    height="2276"
+                    alt="Grid of Worldwide Cancer Research website components including donation hero, article cards, FAQ sections, and call-to-action blocks."
                   />
                 </div>
                 <h3 class="project-card__title">Worldwide Cancer Research</h3>
@@ -541,6 +511,26 @@
             <p class="footer-note">© Ellie Barrett 2026</p>
           </div>
           <div class="footer-row__actions">
+            <div class="footer-movement" role="group" aria-labelledby="movement-toggle-label">
+              <span class="footer-movement__label" id="movement-toggle-label">Movement</span>
+              <button
+                type="button"
+                id="movement-toggle"
+                class="footer-movement__switch"
+                role="switch"
+                aria-checked="false"
+                aria-labelledby="movement-toggle-label"
+                aria-describedby="movement-toggle-desc"
+              >
+                <span class="footer-movement__track" aria-hidden="true">
+                  <span class="footer-movement__thumb"></span>
+                </span>
+              </button>
+              <span id="movement-toggle-desc" class="visually-hidden">
+                When on, animated GIFs are paused across the website.
+              </span>
+              <span id="movement-toggle-status" class="visually-hidden" aria-live="polite" aria-atomic="true"></span>
+            </div>
             <a class="footer-link" href="my-ai-approach.html">My AI Approach</a>
             <a class="footer-social" href="https://www.linkedin.com/in/elliembarrett" target="_blank" rel="noopener noreferrer" aria-label="Ellie Barrett on LinkedIn">
               <img

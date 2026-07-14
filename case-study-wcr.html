@@ -17,11 +17,11 @@
     <meta property="og:url" content="https://elbazzzzzz.github.io/EBFolio/case-study-wcr.html" />
     <meta
       property="og:image"
-      content="https://elbazzzzzz.github.io/EBFolio/assets/WCR/wcr-home-card.jpg?v=2"
+      content="https://elbazzzzzz.github.io/EBFolio/assets/WCR/wcr-home-card.jpg?v=4"
     />
-    <meta property="og:image:width" content="1024" />
-    <meta property="og:image:height" content="519" />
-    <meta property="og:image:alt" content="Worldwide Cancer Research donation page with amount selectors, impact messaging, and donor details form." />
+    <meta property="og:image:width" content="2800" />
+    <meta property="og:image:height" content="2276" />
+    <meta property="og:image:alt" content="Grid of Worldwide Cancer Research website components including donation hero, article cards, FAQ sections, and call-to-action blocks." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Worldwide Cancer Research — Ellie Barrett" />
     <meta
@@ -30,16 +30,26 @@
     />
     <meta
       name="twitter:image"
-      content="https://elbazzzzzz.github.io/EBFolio/assets/WCR/wcr-home-card.jpg?v=2"
+      content="https://elbazzzzzz.github.io/EBFolio/assets/WCR/wcr-home-card.jpg?v=4"
     />
-    <meta name="twitter:image:alt" content="Worldwide Cancer Research donation page with amount selectors, impact messaging, and donor details form." />
+    <meta name="twitter:image:alt" content="Grid of Worldwide Cancer Research website components including donation hero, article cards, FAQ sections, and call-to-action blocks." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=46" />
+    <link rel="stylesheet" href="css/styles.css?v=51" />
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("pfmay-movement-paused") === "true") {
+            document.documentElement.dataset.movementPaused = "true";
+          }
+        } catch (error) {}
+      })();
+    </script>
+    <script src="js/movement-toggle.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -373,6 +383,29 @@
           </div>
         </section>
 
+        <div class="cs-figure-group">
+          <div class="cs-figure-group__row">
+            <div class="cs-figure-group__a">
+              <img
+                class="media-fill-img"
+                src="assets/WCR/WCR%20Mobile.png"
+                width="1155"
+                height="2721"
+                alt="A series of screenshots showing a website for the Worldwide Cancer Research charity on mobile."
+              />
+            </div>
+            <div class="cs-figure-group__b">
+              <img
+                class="media-fill-img"
+                src="assets/WCR/WCR%20Grid.png"
+                width="3347"
+                height="2721"
+                alt="A series of screenshots showing a website for the Worldwide Cancer Research charity on desktop."
+              />
+            </div>
+          </div>
+        </div>
+
         <section class="cs-section" aria-labelledby="delivery-heading">
           <h2 id="delivery-heading" class="h1 cs-section__title">Delivery</h2>
           <div class="cs-prose text-body">
@@ -465,7 +498,7 @@
                   assumed fitness.</p>
                 <div class="project-card__metrics" aria-label="Project metrics">
                   <span>Findings report delivered</span>
-                  <span>5 pan-impairment personas</span>
+                  <span>Next phase funding unlocked</span>
                   <span>5 mapping tools audited</span>
                 </div>
               </a>
@@ -505,6 +538,26 @@
             <p class="footer-note">© Ellie Barrett 2026</p>
           </div>
           <div class="footer-row__actions">
+            <div class="footer-movement" role="group" aria-labelledby="movement-toggle-label">
+              <span class="footer-movement__label" id="movement-toggle-label">Movement</span>
+              <button
+                type="button"
+                id="movement-toggle"
+                class="footer-movement__switch"
+                role="switch"
+                aria-checked="false"
+                aria-labelledby="movement-toggle-label"
+                aria-describedby="movement-toggle-desc"
+              >
+                <span class="footer-movement__track" aria-hidden="true">
+                  <span class="footer-movement__thumb"></span>
+                </span>
+              </button>
+              <span id="movement-toggle-desc" class="visually-hidden">
+                When on, animated GIFs are paused across the website.
+              </span>
+              <span id="movement-toggle-status" class="visually-hidden" aria-live="polite" aria-atomic="true"></span>
+            </div>
             <a class="footer-link" href="my-ai-approach.html">My AI Approach</a>
             <a class="footer-social" href="https://www.linkedin.com/in/elliembarrett" target="_blank" rel="noopener noreferrer" aria-label="Ellie Barrett on LinkedIn">
               <img

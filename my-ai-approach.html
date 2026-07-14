@@ -14,7 +14,17 @@
       href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=46" />
+    <link rel="stylesheet" href="css/styles.css?v=51" />
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("pfmay-movement-paused") === "true") {
+            document.documentElement.dataset.movementPaused = "true";
+          }
+        } catch (error) {}
+      })();
+    </script>
+    <script src="js/movement-toggle.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -181,6 +191,26 @@
             <p class="footer-note">© Ellie Barrett 2026</p>
           </div>
           <div class="footer-row__actions">
+            <div class="footer-movement" role="group" aria-labelledby="movement-toggle-label">
+              <span class="footer-movement__label" id="movement-toggle-label">Movement</span>
+              <button
+                type="button"
+                id="movement-toggle"
+                class="footer-movement__switch"
+                role="switch"
+                aria-checked="false"
+                aria-labelledby="movement-toggle-label"
+                aria-describedby="movement-toggle-desc"
+              >
+                <span class="footer-movement__track" aria-hidden="true">
+                  <span class="footer-movement__thumb"></span>
+                </span>
+              </button>
+              <span id="movement-toggle-desc" class="visually-hidden">
+                When on, animated GIFs are paused across the website.
+              </span>
+              <span id="movement-toggle-status" class="visually-hidden" aria-live="polite" aria-atomic="true"></span>
+            </div>
             <a class="footer-link" href="my-ai-approach.html">My AI Approach</a>
             <a class="footer-social" href="https://www.linkedin.com/in/elliembarrett" target="_blank" rel="noopener noreferrer" aria-label="Ellie Barrett on LinkedIn">
               <img

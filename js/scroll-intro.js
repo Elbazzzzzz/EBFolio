@@ -1,17 +1,19 @@
 /**
  * Homepage intro: fixed yellow stage + frame sequence.
- * Autoplays on load (driven by programmatic scroll through `.scroll-intro__runway`),
- * so the same scrub pipeline also responds to manual scroll if the user takes over.
- * A failsafe guarantees the page content is revealed within FAILSAFE_MS of load.
+ * Autoplays on load at ~2 frames per second (programmatic scroll through
+ * `.scroll-intro__runway` and landing buffer to the hero). Manual scroll,
+ * wheel, touch, or keyboard input cancels autoplay immediately.
  */
 (function () {
   var TOTAL_FRAMES = 51;
   var FRAMES_PER_SCROLL_UNIT = 4;
   var SCROLL_UNIT_DESKTOP = 100;
   var SCROLL_UNIT_MOBILE = 72;
-  var AUTOPLAY_DELAY_MS = 700;
-  var AUTOPLAY_DURATION_MS = 4800;
-  var FAILSAFE_MS = 8000;
+  var AUTOPLAY_DELAY_MS = 1500;
+  var AUTOPLAY_FPS = 2;
+  var AUTOPLAY_FRAME_MS = 1000 / AUTOPLAY_FPS;
+  var AUTOPLAY_LANDING_STEP_MS = 800;
+  var FAILSAFE_BUFFER_MS = 1500;
   var mobileMq = window.matchMedia("(max-width: 768px)");
 
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -141,10 +143,11 @@
   /* —— Autoplay on load ——
      Drives the same scroll-scrubbed pipeline programmatically, so manual
      scroll stays a fully working alternative trigger at any point. */
-  var autoplayRaf = null;
+  var autoplayTimer = null;
   var autoplayDelayTimer = null;
   var failsafeTimer = null;
   var userTookOver = false;
+  var lastProgrammaticY = 0;
 
   function introTargetScroll() {
     // Scroll past the landing buffer too, so the hero sits at the top
@@ -152,12 +155,30 @@
     return Math.max(maxScrollRange, intro.offsetHeight);
   }
 
+  function autoplayMaxDurationMs() {
+    var startFrame = Math.max(
+      0,
+      Math.min(TOTAL_FRAMES - 1, Math.floor(window.scrollY / pixelsPerFrame))
+    );
+    var frameSteps = TOTAL_FRAMES - 1 - startFrame;
+    var landingSteps = Math.max(
+      0,
+      Math.ceil((introTargetScroll() - maxScrollRange) / pixelsPerFrame)
+    );
+
+    return (
+      AUTOPLAY_DELAY_MS +
+      frameSteps * AUTOPLAY_FRAME_MS +
+      landingSteps * AUTOPLAY_LANDING_STEP_MS +
+      FAILSAFE_BUFFER_MS
+    );
+  }
+
   function cancelAutoplay() {
     clearTimeout(autoplayDelayTimer);
-    if (autoplayRaf) {
-      cancelAnimationFrame(autoplayRaf);
-      autoplayRaf = null;
-    }
+    autoplayDelayTimer = null;
+    clearTimeout(autoplayTimer);
+    autoplayTimer = null;
   }
 
   function onUserScroll() {
@@ -170,8 +191,8 @@
   }
 
   function onPointerDown() {
-    // A click or scrollbar drag stops the autoplay fighting the pointer,
-    // but the failsafe stays armed so the content still reveals on time.
+    // Stop autoplay fighting the pointer; failsafe still reveals the hero if
+    // the user does not scroll manually.
     cancelAutoplay();
   }
 
@@ -189,33 +210,66 @@
     if (scrollKeys.indexOf(event.key) !== -1) onUserScroll();
   }
 
-  function easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
-
   function startAutoplay() {
+    autoplayDelayTimer = null;
     if (userTookOver || complete) return;
 
-    var startY = window.scrollY;
-    if (startY >= maxScrollRange) return;
+    if (window.scrollY >= introTargetScroll()) return;
 
     var targetY = introTargetScroll();
-    var startTime = null;
+    var frameIndex = Math.min(
+      TOTAL_FRAMES - 1,
+      Math.max(0, Math.floor(window.scrollY / pixelsPerFrame))
+    );
 
-    function step(timestamp) {
+    function step() {
       if (userTookOver) return;
-      if (startTime === null) startTime = timestamp;
-      var t = Math.min(1, (timestamp - startTime) / AUTOPLAY_DURATION_MS);
-      window.scrollTo(0, Math.round(startY + (targetY - startY) * easeInOutCubic(t)));
-      autoplayRaf = t < 1 ? requestAnimationFrame(step) : null;
+
+      if (window.scrollY >= targetY) {
+        autoplayTimer = null;
+        return;
+      }
+
+      if (frameIndex < TOTAL_FRAMES - 1) {
+        frameIndex += 1;
+        lastProgrammaticY = Math.round(
+          Math.min(targetY, frameIndex * pixelsPerFrame)
+        );
+        window.scrollTo(0, lastProgrammaticY);
+        autoplayTimer = setTimeout(step, AUTOPLAY_FRAME_MS);
+        return;
+      }
+
+      // Frame sequence finished — coast through the landing buffer more slowly.
+      var nextY = Math.min(targetY, window.scrollY + pixelsPerFrame);
+      lastProgrammaticY = Math.round(nextY);
+      window.scrollTo(0, lastProgrammaticY);
+
+      if (nextY >= targetY) {
+        autoplayTimer = null;
+        return;
+      }
+
+      autoplayTimer = setTimeout(step, AUTOPLAY_LANDING_STEP_MS);
     }
 
-    autoplayRaf = requestAnimationFrame(step);
+    autoplayTimer = setTimeout(step, AUTOPLAY_FRAME_MS);
+  }
+
+  function onScroll() {
+    render();
+
+    if (userTookOver) return;
+    if (window.scrollY === lastProgrammaticY) return;
+
+    if (autoplayDelayTimer || autoplayTimer || failsafeTimer) {
+      onUserScroll();
+    }
   }
 
   syncMetrics();
   render();
-  window.addEventListener("scroll", render, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onResize, { passive: true });
   if (typeof mobileMq.addEventListener === "function") {
     mobileMq.addEventListener("change", onResize);
@@ -243,8 +297,9 @@
     failsafeTimer = setTimeout(function () {
       if (userTookOver || complete || window.scrollY >= maxScrollRange) return;
       cancelAutoplay();
-      window.scrollTo(0, introTargetScroll());
+      lastProgrammaticY = introTargetScroll();
+      window.scrollTo(0, lastProgrammaticY);
       render();
-    }, FAILSAFE_MS);
+    }, autoplayMaxDurationMs());
   }
 })();
