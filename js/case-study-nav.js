@@ -26,9 +26,7 @@
   var layoutMain = document.createElement("div");
   layoutMain.className = "cs-layout__main";
 
-  toMove.forEach(function (node) {
-    layoutMain.appendChild(node);
-  });
+  var successMetrics = main.querySelector(".cs-success-metrics");
 
   var aside = document.createElement("aside");
   aside.className = "cs-layout__aside";
@@ -92,14 +90,37 @@
   nav.appendChild(list);
   aside.appendChild(nav);
 
+  toMove.forEach(function (node) {
+    layoutMain.appendChild(node);
+  });
+
   layout.appendChild(layoutMain);
   layout.appendChild(aside);
+
+  var mobileIntroMq = window.matchMedia("(max-width: 768px)");
+
+  function placeSuccessMetrics() {
+    if (!successMetrics) return;
+
+    var csIntro = layoutMain.querySelector(".cs-intro");
+    var csMeta = csIntro && csIntro.querySelector(".cs-meta");
+
+    if (mobileIntroMq.matches && csMeta) {
+      csMeta.insertAdjacentElement("afterend", successMetrics);
+      return;
+    }
+
+    aside.appendChild(successMetrics);
+  }
 
   if (projects) {
     main.insertBefore(layout, projects);
   } else {
     main.appendChild(layout);
   }
+
+  placeSuccessMetrics();
+  mobileIntroMq.addEventListener("change", placeSuccessMetrics);
 
   window.scrollTo(0, scrollY);
 
