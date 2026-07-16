@@ -103,10 +103,18 @@ body {
   /* Shift nav right so wide case study media (1099px) isn’t covered */
   --cs-nav-offset: 72px;
   --cs-rail-width: 168px;
+  --cs-rail-gap: 32px;
   --cs-nav-top-gap: 40px;
   --cs-nav-sticky-top: calc(var(--float-nav-block) + var(--cs-nav-top-gap));
   --cs-rail-right: calc(
     max(0px, (100vw - var(--page-max)) / 2) + var(--page-pad-x) - var(--cs-nav-offset)
+  );
+  --cs-main-max: min(
+    var(--content-wide),
+    calc(
+      100vw - var(--cs-rail-right) - var(--cs-rail-width) - var(--cs-rail-gap) -
+        max(0px, (100vw - var(--page-max)) / 2) - var(--page-pad-x)
+    )
   );
   --cs-rail-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
   --cs-nav-pad: 16px;
@@ -1285,13 +1293,16 @@ html.is-header-floating .site-header {
   margin-top: auto;
 }
 
-/* Same image frame in every row card (feature cards stay wide only when full-width) */
+/* Same image frame whenever cards sit side by side in a row */
 .project-row-split .project-card__media,
-.more-projects-row .project-card__media {
+.more-projects-row .project-card__media,
+.project-row-split .project-card--feature .project-card__media,
+.more-projects-row .project-card--feature .project-card__media {
   aspect-ratio: 4 / 5;
   min-height: 300px;
   max-height: 500px;
   height: auto;
+  flex-shrink: 0;
 }
 
 .project-card__surface {
@@ -1357,7 +1368,8 @@ a.project-card__surface--link:focus-visible {
   }
 }
 
-.project-card--feature .project-card__media {
+/* Wide crop only for the full-width homepage feature card */
+.projects-list > .project-card--feature .project-card__media {
   aspect-ratio: 1024 / 519;
   max-height: none;
   min-height: 0;
@@ -2227,18 +2239,28 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
 @media (min-width: 1101px) {
   .cs-layout {
-    gap: 60px;
+    display: block;
   }
 
   .cs-layout__main {
+    width: 100%;
+    max-width: var(--cs-main-max);
     min-width: 0;
   }
 
+  .cs-layout__main .cs-intro,
+  .cs-layout__main .cs-section,
   .cs-layout__main .media-bleed,
   .cs-layout__main .cs-media-frame,
   .cs-layout__main .cs-figure-group,
-  .cs-layout__main .cs-competitor {
+  .cs-layout__main .cs-competitor,
+  .cs-layout__main .results-metrics,
+  .cs-layout__main .cs-at-a-glance {
     max-width: 100%;
+  }
+
+  main.cs-stack > .projects {
+    max-width: var(--cs-main-max);
   }
 
   .cs-figure-group__b {
@@ -2715,12 +2737,15 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   }
 
   .project-row-split .project-card__media,
-  .more-projects-row .project-card__media {
+  .more-projects-row .project-card__media,
+  .project-row-split .project-card--feature .project-card__media,
+  .more-projects-row .project-card--feature .project-card__media {
     min-height: 200px;
     max-height: 360px;
+    aspect-ratio: 4 / 5;
   }
 
-  .project-card--feature .project-card__media {
+  .projects-list > .project-card--feature .project-card__media {
     aspect-ratio: 1024 / 519;
     min-height: 0;
     max-height: none;
