@@ -1,7 +1,7 @@
 /**
  * Homepage intro: fixed yellow stage + frame sequence.
- * Autoplays on load at ~2 frames per second (programmatic scroll through
- * `.scroll-intro__runway` and landing buffer to the hero). Manual scroll,
+ * Autoplays on load at AUTOPLAY_FPS (programmatic scroll through
+ * `.scroll-intro__runway` and a fast landing buffer to the hero). Manual scroll,
  * wheel, touch, or keyboard input cancels autoplay immediately.
  */
 (function () {
@@ -12,7 +12,9 @@
   var AUTOPLAY_DELAY_MS = 1500;
   var AUTOPLAY_FPS = 12;
   var AUTOPLAY_FRAME_MS = 1000 / AUTOPLAY_FPS;
-  var AUTOPLAY_LANDING_STEP_MS = 800;
+  // After the last frame, snap through the landing buffer quickly so the hero
+  // reveals without a long pause (was 800ms/step).
+  var AUTOPLAY_LANDING_STEP_MS = 40;
   var FAILSAFE_BUFFER_MS = 1500;
   var mobileMq = window.matchMedia("(max-width: 768px)");
 
@@ -240,7 +242,8 @@
         return;
       }
 
-      // Frame sequence finished — coast through the landing buffer more slowly.
+      // Frame sequence finished — coast through the landing buffer quickly
+      // so the hero loads in without a long pause after the GIF.
       var nextY = Math.min(targetY, window.scrollY + pixelsPerFrame);
       lastProgrammaticY = Math.round(nextY);
       window.scrollTo(0, lastProgrammaticY);
