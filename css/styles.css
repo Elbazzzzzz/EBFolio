@@ -196,7 +196,6 @@ img {
 /* Framed content images (case study); project card thumbs sit inside card chrome */
 img:not(.btn__icon):not(.media-fill-img):not(.scroll-intro__frame):not(.scroll-intro__cue):not(.hero-home__avatar):not(.footer-social__icon) {
   border-radius: var(--radius-rect);
-  border: 2px solid #000000;
   box-sizing: border-box;
 }
 
@@ -1945,7 +1944,6 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 .media-bleed--framed .media-bleed__lg,
 .media-bleed--framed .media-bleed__sm {
   border-radius: var(--radius-rect);
-  border: 2px solid #000000;
   box-sizing: border-box;
 }
 
@@ -1954,7 +1952,6 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   max-width: 100%;
   overflow: hidden;
   border-radius: var(--radius-rect);
-  border: 2px solid #000000;
   box-sizing: border-box;
 }
 
