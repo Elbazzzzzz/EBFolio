@@ -79,7 +79,9 @@
     var sectionHeading = section.querySelector(":scope > h2[id]");
     if (!sectionHeading) return;
 
-    createNavItem(sectionHeading.id, sectionHeading.textContent.trim(), {
+    var navLabel = sectionHeading.getAttribute("data-nav-label") || sectionHeading.textContent.trim();
+
+    createNavItem(sectionHeading.id, navLabel, {
       section: section,
       heading: sectionHeading,
     });
