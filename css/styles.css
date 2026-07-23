@@ -849,6 +849,8 @@ html.is-header-floating .site-header {
 }
 
 .hero-home__ticker {
+  /* Wave ticker hidden (decorative, aria-hidden) */
+  display: none;
   position: relative;
   left: 50%;
   z-index: 0;
@@ -2928,8 +2930,10 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 .scroll-intro__headline {
   position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  /* Sits below the scribble: artwork never extends past ~56% of the centred
+     frame's height (centre + ~6% of min(96vmin, 693px)), plus a gap */
+  top: calc(50% + min(6vmin, 44px) + 24px);
+  transform: translateX(-50%);
   margin: 0;
   font-family: "Kaisei Decol", "Helvetica Neue", Arial, sans-serif;
   font-size: clamp(2rem, 6vw, 4.5rem);

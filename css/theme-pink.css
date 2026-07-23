@@ -1,0 +1,93 @@
+/*
+ * Pink / teal palette overrides for the alternate homepage (index-pink.html).
+ * Loads AFTER styles.css and remaps the brand colours:
+ *   yellow #ffce00  ->  pink  #ff8ab8
+ *   orange #ff7300  ->  teal  #24606d
+ *   canvas #fff5f5  ->  grey  #f2f2f2
+ * Hover / pressed shades are darkened versions of the pink, matching the
+ * relative steps used by the original yellow states.
+ */
+
+:root {
+  --brand-yellow: #ff8ab8;
+  --brand-orange: #24606d;
+  /* Buttons (ghost hover/press + primary CTA). Black text on #ff8ab8 = 10.1:1 */
+  --btn-hover-bg: #ff8ab8;
+  --btn-pressed-bg: #e67ca6;
+  --btn-hover-bg-pointer: #ff8ab8;
+  --btn-pressed-bg-pointer: #e07aa2;
+  --btn-primary-bg: #ff8ab8;
+  --btn-primary-hover-bg: #ed80ab;
+  --btn-primary-pressed-bg: #d9759c;
+  /* Page canvas behind cards / sections */
+  --page-canvas: #f2f2f2;
+  --page-canvas-gradient: linear-gradient(
+    152deg,
+    #f2f2f2 0%,
+    #f5f5f5 26%,
+    #f0f0f1 52%,
+    #f3f3f3 78%,
+    #f1f1f1 100%
+  );
+}
+
+/* Overscroll + scrollbar (matches footer / intro pink) */
+html {
+  background-color: #ff8ab8;
+  scrollbar-color: #24606d #ff8ab8;
+}
+
+html::-webkit-scrollbar-track {
+  background: #ff8ab8;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #24606d;
+  border-color: #ff8ab8;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: #1c4e59;
+  border-color: #ff8ab8;
+}
+
+html::-webkit-scrollbar-corner {
+  background: #ff8ab8;
+}
+
+/* Hero ticker wave: pink band, teal dot */
+.hero-home__ticker-track {
+  fill: #ff8ab8;
+}
+
+.hero-home__ticker-dot {
+  fill: #24606d;
+}
+
+/* Footer band */
+.site-footer {
+  background: #ff8ab8;
+}
+
+.footer-movement__track {
+  background: color-mix(in srgb, #2d2c2b 20%, #ff8ab8);
+}
+
+.footer-movement__switch[aria-checked="true"] .footer-movement__thumb {
+  background: #ff8ab8;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-movement__switch:hover .footer-movement__track {
+    background: color-mix(in srgb, #2d2c2b 30%, #ff8ab8);
+  }
+
+  .footer-movement__switch[aria-checked="true"]:hover .footer-movement__track {
+    background: color-mix(in srgb, #2d2c2b 85%, #ff8ab8);
+  }
+}
+
+/* Opening scroll animation: pink stage (frames themselves are the teal set) */
+.scroll-intro {
+  --scroll-intro-yellow: #ff8ab8;
+}

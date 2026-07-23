@@ -33,11 +33,12 @@
     return;
   }
 
+  var framesPath = intro.getAttribute("data-frames-path") || "assets/intro-frames";
   var frames = [];
   var i;
   for (i = 0; i < TOTAL_FRAMES; i += 1) {
     frames.push(
-      "assets/intro-frames/frame_" + String(i).padStart(3, "0") + ".png"
+      framesPath + "/frame_" + String(i).padStart(3, "0") + ".png"
     );
   }
 

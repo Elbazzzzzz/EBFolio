@@ -1,0 +1,97 @@
+/*
+ * Monochrome dark theme (index-mono-dark.html).
+ * Loads AFTER styles.css, theme-pink.css and theme-pink-dark.css, and swaps
+ * every pink (#ff8ab8) accent for #f2f2f2, keeping the dark surfaces and the
+ * teal (#24606d) fills from the dark theme.
+ *
+ * Contrast:
+ *   #f2f2f2 accent on #15181b canvas          16.2:1
+ *   #15181b ink on #f2f2f2 fills              16.2:1
+ *   #2d2c2b ink on #f2f2f2 footer band        12.6:1
+ *   teal #24606d on #f2f2f2 (wave dot, pills)  6.3:1
+ *
+ * Hover / pressed shades are darkened #f2f2f2 using the same relative steps
+ * as the original palette.
+ */
+
+:root {
+  --brand-yellow: #f2f2f2;
+  --btn-hover-bg: #f2f2f2;
+  --btn-pressed-bg: #dadada;
+  --btn-hover-bg-pointer: #f2f2f2;
+  --btn-pressed-bg-pointer: #d5d5d5;
+  --btn-primary-bg: #f2f2f2;
+  --btn-primary-hover-bg: #e1e1e1;
+  --btn-primary-pressed-bg: #cecece;
+  --btn-focus-ring: #f2f2f2;
+  /* Subnav active dot: light on the dark floating surface */
+  --nav-state-dot: #f2f2f2;
+}
+
+/* Scrollbar: light thumb on dark track */
+html {
+  scrollbar-color: #f2f2f2 #1e2328;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #f2f2f2;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: #e1e1e1;
+}
+
+::selection {
+  background-color: #f2f2f2;
+  color: #15181b;
+}
+
+.skip-link {
+  background: #f2f2f2;
+}
+
+/* Skip link ring would vanish against its own grey pill — use teal */
+.skip-link:focus-visible {
+  outline-color: #24606d;
+}
+
+/* Hero ticker wave: grey band; the teal dot (6.3:1) carries over */
+.hero-home__ticker-track {
+  fill: #f2f2f2;
+}
+
+/* Primary CTA hover dot: teal, so it reads on the grey hover fill
+   (a grey dot on grey would disappear) */
+.btn--primary:has(.btn__icon)::after {
+  background: #24606d;
+}
+
+/* Footer band: grey with the same dark ink (12.6:1) */
+.site-footer {
+  background: #f2f2f2;
+}
+
+.footer-movement__track {
+  background: color-mix(in srgb, #2d2c2b 20%, #f2f2f2);
+}
+
+.footer-movement__switch[aria-checked="true"] .footer-movement__thumb {
+  background: #f2f2f2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-movement__switch:hover .footer-movement__track {
+    background: color-mix(in srgb, #2d2c2b 30%, #f2f2f2);
+  }
+
+  .footer-movement__switch[aria-checked="true"]:hover .footer-movement__track {
+    background: color-mix(in srgb, #2d2c2b 85%, #f2f2f2);
+  }
+
+  /* Footer link hover wash: teal-tinted (a --nav-state-dot grey wash would
+     be invisible on the grey band) */
+  .footer-social:hover,
+  .footer-link:hover {
+    background-color: color-mix(in srgb, #24606d 18%, transparent);
+  }
+}
