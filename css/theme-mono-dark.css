@@ -95,3 +95,9 @@ html::-webkit-scrollbar-thumb:hover {
     background-color: color-mix(in srgb, #24606d 18%, transparent);
   }
 }
+
+/* Case study results metrics: mono accent (16.2:1 on the dark canvas) */
+.results-metrics__item,
+.results-metrics__label {
+  color: #f2f2f2;
+}
