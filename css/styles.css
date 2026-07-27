@@ -1061,6 +1061,8 @@ html.is-header-floating .site-header {
   flex-wrap: wrap;
   gap: 8px;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 350ms cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 .hero-gallery__tag {
@@ -1078,6 +1080,11 @@ html.is-header-floating .site-header {
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .hero-gallery__slide:hover .hero-gallery__tags,
+  .hero-gallery__slide:focus-visible .hero-gallery__tags {
+    opacity: 1;
+  }
+
   .hero-gallery__stage:hover .hero-gallery__slide:not(:hover),
   .hero-gallery__stage:has(.hero-gallery__slide:focus-visible)
     .hero-gallery__slide:not(:focus-visible) {
@@ -1117,14 +1124,16 @@ html.is-header-floating .site-header {
 @media (prefers-reduced-motion: reduce) {
   .hero-gallery__slide,
   .hero-gallery__media,
-  .hero-gallery__tone {
+  .hero-gallery__tone,
+  .hero-gallery__tags {
     transition: none;
   }
 }
 
 html[data-movement-paused="true"] .hero-gallery__slide,
 html[data-movement-paused="true"] .hero-gallery__media,
-html[data-movement-paused="true"] .hero-gallery__tone {
+html[data-movement-paused="true"] .hero-gallery__tone,
+html[data-movement-paused="true"] .hero-gallery__tags {
   transition: none;
 }
 
@@ -2773,6 +2782,10 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
   .hero-gallery__tone {
     display: none;
+  }
+
+  .hero-gallery__tags {
+    opacity: 1;
   }
 
   .hero-home__text-panel {
