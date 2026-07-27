@@ -192,18 +192,16 @@
 
   function syncMode() {
     clearAnimTimeout();
-    slides.forEach(function (s) {
-      s.classList.remove("is-exit", "is-enter");
-    });
     if (isMobile()) {
-      slides.forEach(function (s) {
+      slides.forEach(function (s, i) {
         s.hidden = false;
+        s.classList.toggle("is-active", i === index);
+        s.classList.remove("is-exit", "is-enter");
       });
-      slides[index].classList.add("is-active");
+      updateChrome();
     } else {
       showInstant(index);
     }
-    updateChrome();
   }
 
   MOBILE_MQ.addEventListener("change", syncMode);
