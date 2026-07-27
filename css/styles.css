@@ -974,8 +974,8 @@ html.is-header-floating .site-header {
 
 .hero-gallery {
   width: 100%;
-  /* Offset .main-stack gap so gallery sits close under the bio */
-  margin: calc(-1 * (32px + var(--section-gap-extra)) + 8px) 0 clamp(32px, 5vh, 56px);
+  /* Offset .main-stack gap; leave a fixed 40px under the bio */
+  margin: calc(-1 * (32px + var(--section-gap-extra)) + 40px) 0 clamp(32px, 5vh, 56px);
 }
 
 .hero-gallery__stage {
@@ -2722,7 +2722,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   }
 
   .hero-gallery {
-    margin: 8px 0 32px;
+    margin: 40px 0 32px;
   }
 
   .hero-gallery__stage {
