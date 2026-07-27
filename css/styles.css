@@ -878,6 +878,7 @@ html.is-header-floating .site-header {
 .hero-home__main {
   grid-column: 1 / span 2;
   min-width: 0;
+  align-self: end;
 }
 
 .hero-home__stack {
@@ -979,7 +980,7 @@ html.is-header-floating .site-header {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  align-self: stretch;
+  align-self: end;
 }
 
 .hero-gallery__controls {
