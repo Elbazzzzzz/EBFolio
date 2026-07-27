@@ -6,3 +6,6 @@ Archive /
 
 # Local notes (not part of the site)
 *Notes.txt
+
+# Git worktrees (local isolated checkouts)
+.worktrees/
