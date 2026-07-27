@@ -1037,8 +1037,7 @@ html.is-header-floating .site-header {
 .hero-gallery__slide {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
+  display: block;
   text-decoration: none;
   color: inherit;
   transform: translate3d(0, 0, 0) scale(1);
@@ -1069,9 +1068,10 @@ html.is-header-floating .site-header {
 }
 
 .hero-gallery__media {
-  flex: 1 1 auto;
-  min-height: 0;
+  position: absolute;
+  inset: 0;
   width: 100%;
+  height: 100%;
   border-radius: var(--radius-rect);
 }
 
@@ -1084,18 +1084,29 @@ html.is-header-floating .site-header {
 }
 
 .hero-gallery__tags {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  padding-top: 12px;
-  flex: none;
+  pointer-events: none;
 }
 
 .hero-gallery__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border: 1.5px solid #ffffff;
+  border-radius: 999px;
+  background: #000000;
+  color: #ffffff;
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   line-height: 1.2;
-  color: #f2f2f2;
+  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2751,13 +2762,17 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
     transform: none;
     scroll-snap-align: start;
     transition: none;
+    aspect-ratio: 4 / 5;
+    min-height: 220px;
   }
 
   .hero-gallery__media {
-    aspect-ratio: 4 / 5;
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
     flex: none;
     height: auto;
-    min-height: 220px;
+    min-height: 0;
   }
 
   .hero-home__text-panel {
