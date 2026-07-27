@@ -868,8 +868,8 @@ html.is-header-floating .site-header {
 
 .hero-home__layout {
   display: grid;
-  /* 6-col shell: bio 4 cols, gallery 2 cols */
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  /* Bio slightly wider than gallery (~60/40), not a crushed 4/2 */
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   gap: var(--grid-gutter);
   align-items: start;
   width: 100%;
@@ -877,9 +877,7 @@ html.is-header-floating .site-header {
 }
 
 .hero-home__main {
-  grid-column: span 4;
   min-width: 0;
-  max-width: var(--grid-span-4);
 }
 
 .hero-home__stack {
@@ -975,10 +973,7 @@ html.is-header-floating .site-header {
 /* --- Hero gallery --- */
 
 .hero-gallery {
-  grid-column: span 2;
   min-width: 0;
-  max-width: var(--grid-span-2);
-  justify-self: stretch;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -2718,12 +2713,6 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
   .hero-home__main {
     max-width: 100%;
-    grid-column: auto;
-  }
-
-  .hero-gallery {
-    max-width: 100%;
-    grid-column: auto;
   }
 
   .hero-home__stack {
