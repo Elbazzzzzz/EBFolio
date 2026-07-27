@@ -23,7 +23,8 @@
   let wheelLockUntil = 0;
 
   const WHEEL_STEP_PX = 48;
-  const WHEEL_LOCK_MS = 450;
+  const WHEEL_LOCK_MS = 950;
+  const SLIDE_ANIM_MS = 920;
 
   function isMobile() {
     return MOBILE_MQ.matches;
@@ -104,7 +105,7 @@
       animating = false;
       animTimeout = null;
       updateChrome();
-    }, 420);
+    }, SLIDE_ANIM_MS);
   }
 
   function step(delta) {
