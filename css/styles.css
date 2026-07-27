@@ -996,12 +996,12 @@ html.is-header-floating .site-header {
   width: 40px;
   height: 40px;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 0;
   border-radius: var(--radius-rect);
   background: transparent;
   cursor: pointer;
   color: #ffffff;
-  transition: border-color 160ms ease, background-color 160ms ease;
+  transition: background-color 160ms ease, opacity 160ms ease;
 }
 
 .hero-gallery__arrow:focus-visible {
@@ -1011,7 +1011,6 @@ html.is-header-floating .site-header {
 
 @media (hover: hover) and (pointer: fine) {
   .hero-gallery__arrow:hover:not([aria-disabled="true"]) {
-    border-color: rgba(255, 255, 255, 0.7);
     background: rgba(255, 255, 255, 0.08);
   }
 }
