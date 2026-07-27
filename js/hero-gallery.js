@@ -19,6 +19,11 @@
   let animating = false;
   let animTimeout = null;
   let scrollSyncTimer = null;
+  let wheelAccum = 0;
+  let wheelLockUntil = 0;
+
+  const WHEEL_STEP_PX = 48;
+  const WHEEL_LOCK_MS = 450;
 
   function isMobile() {
     return MOBILE_MQ.matches;
@@ -116,27 +121,46 @@
     step(1);
   });
 
-  stage.addEventListener(
+  // Trap wheel over the whole gallery (stage + arrows + tags). Always
+  // preventDefault while not at an end, including tiny trackpad deltas —
+  // otherwise the page scrolls underneath between steps.
+  root.addEventListener(
     "wheel",
     function (event) {
       if (isMobile()) return;
+
       const dy = event.deltaY;
-      if (Math.abs(dy) < 4) return;
+      if (dy === 0) return;
 
       const goingNext = dy > 0;
       const atStart = index <= 0;
       const atEnd = index >= slides.length - 1;
 
       if ((goingNext && atEnd) || (!goingNext && atStart)) {
-        return; // pass through to page
+        wheelAccum = 0;
+        return; // pass through to page at ends
       }
 
       event.preventDefault();
-      if (animating) return;
-      step(goingNext ? 1 : -1);
+      event.stopPropagation();
+
+      const now = Date.now();
+      if (animating || now < wheelLockUntil) return;
+
+      wheelAccum += dy;
+      if (Math.abs(wheelAccum) < WHEEL_STEP_PX) return;
+
+      const direction = wheelAccum > 0 ? 1 : -1;
+      wheelAccum = 0;
+      wheelLockUntil = now + WHEEL_LOCK_MS;
+      step(direction);
     },
     { passive: false }
   );
+
+  root.addEventListener("mouseleave", function () {
+    wheelAccum = 0;
+  });
 
   stage.addEventListener("keydown", function (event) {
     if (event.key === "ArrowDown" || event.key === "ArrowRight") {
