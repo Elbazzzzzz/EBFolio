@@ -872,7 +872,7 @@ html.is-header-floating .site-header {
   gap: var(--grid-gutter);
   align-items: start;
   width: 100%;
-  margin-bottom: clamp(12px, 1.75vh, 20px);
+  margin-bottom: 0;
 }
 
 .hero-home__main {
@@ -974,12 +974,13 @@ html.is-header-floating .site-header {
 
 .hero-gallery {
   width: 100%;
-  margin: 0 0 clamp(32px, 5vh, 56px);
+  /* Offset .main-stack gap so gallery sits close under the bio */
+  margin: calc(-1 * (32px + var(--section-gap-extra)) + 8px) 0 clamp(32px, 5vh, 56px);
 }
 
 .hero-gallery__stage {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: clamp(10px, 1.2vw, 16px);
   width: 100%;
   height: clamp(260px, 40vh, 460px);
@@ -991,7 +992,7 @@ html.is-header-floating .site-header {
   display: block;
   flex: 1 1 0;
   min-width: 0;
-  height: 82%;
+  height: 100%;
   overflow: hidden;
   border-radius: var(--radius-rect);
   text-decoration: none;
@@ -1061,7 +1062,7 @@ html.is-header-floating .site-header {
   .hero-gallery__stage:has(.hero-gallery__slide:focus-visible)
     .hero-gallery__slide:not(:focus-visible) {
     flex: 0.55 1 0;
-    height: 68%;
+    height: 78%;
   }
 
   .hero-gallery__stage:hover .hero-gallery__slide:hover,
@@ -2721,7 +2722,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   }
 
   .hero-gallery {
-    margin-bottom: 32px;
+    margin: 8px 0 32px;
   }
 
   .hero-gallery__stage {
