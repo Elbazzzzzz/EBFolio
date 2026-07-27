@@ -6,7 +6,7 @@
   if (!svg || !track || !center || !textPath) return;
 
   var SVG_NS = "http://www.w3.org/2000/svg";
-  var label = "Ellie Barrett User Experience Designer";
+  var label = "Ellie Barrett Product Designer";
   var pathLength = 0;
   var segmentLength = 0;
 
