@@ -100,20 +100,23 @@ body {
   --cs-nav-border: #cccccc;
   --radius-rect: 30px;
   --cs-nav-radius: var(--radius-rect);
-  /* Shift nav right so wide case study media (1099px) isn’t covered */
-  --cs-nav-offset: 72px;
+  /* Rail sits in the rightmost grid column; main clears it via --cs-main-max */
+  --cs-nav-offset: 0px;
   --cs-rail-width: 168px;
-  --cs-rail-gap: 32px;
+  --cs-rail-gap: 20px;
   --cs-nav-top-gap: 40px;
   --cs-nav-sticky-top: calc(var(--float-nav-block) + var(--cs-nav-top-gap));
   --cs-rail-right: calc(
-    max(0px, (100vw - var(--page-max)) / 2) + var(--page-pad-x) - var(--cs-nav-offset)
+    max(0px, (100vw - var(--page-max)) / 2) + var(--page-pad-x)
   );
+  /* Main spans 5 of 6 desktop columns; leaves col 6 + gutter for the rail */
   --cs-main-max: min(
     var(--content-wide),
     calc(
-      100vw - var(--cs-rail-right) - var(--cs-rail-width) - var(--cs-rail-gap) -
-        max(0px, (100vw - var(--page-max)) / 2) - var(--page-pad-x)
+      (
+          100vw - 2 * (max(0px, (100vw - var(--page-max)) / 2) + var(--page-pad-x)) -
+            5 * var(--grid-gutter)
+        ) / 6 * 5 + 4 * var(--grid-gutter)
     )
   );
   --cs-rail-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
@@ -137,18 +140,27 @@ body {
   --color-metric-pill-fg: #ffffff;
   --color-metric-pill-border: #ffffff;
   --content-prose: min(44.3125rem, 100%);
-  --content-wide: min(75rem, 100%);
+  --content-wide: 100%;
   --page-max: 1440px;
-  --grid-columns-desktop: 12;
-  --grid-columns-tablet: 8;
+  --grid-columns-desktop: 6;
+  --grid-columns-tablet: 4;
   --grid-columns-mobile: 4;
-  --grid-gutter-desktop: 24px;
-  --grid-gutter-tablet: 24px;
-  --grid-gutter-mobile: 16px;
+  --grid-gutter-desktop: 20px;
+  --grid-gutter-tablet: 20px;
+  --grid-gutter-mobile: 20px;
   --grid-columns: var(--grid-columns-desktop);
   --grid-gutter: var(--grid-gutter-desktop);
-  /* Desktop: 96px sides (12x8). Mobile: 16px (2x8) */
-  --page-pad-x: 96px;
+  /* Desktop: 20px sides on a 6-col grid. Tablet/mobile also 20px. */
+  --page-pad-x: 20px;
+  /* Span helper: N columns + (N-1) gutters within the padded content width */
+  --grid-span-3: calc(
+    (100% - (var(--grid-columns) - 1) * var(--grid-gutter)) / var(--grid-columns) * 3 +
+      2 * var(--grid-gutter)
+  );
+  --grid-span-5: calc(
+    (100% - (var(--grid-columns) - 1) * var(--grid-gutter)) / var(--grid-columns) * 5 +
+      4 * var(--grid-gutter)
+  );
   --section-gap-extra: 60px;
   --section-gap-lg: calc(40px + var(--section-gap-extra));
   --section-gap-sm: calc(32px + var(--section-gap-extra));
@@ -836,9 +848,10 @@ html.is-header-floating .site-header {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: var(--grid-span-3);
   min-height: auto;
   /* Clear the floating glass header exactly, plus a small fluid gap —
-     keeps intro text + top of the yellow wave above the fold at 1440x900 */
+     keeps intro text above the fold at 1440x900 */
   padding-top: calc(var(--main-pad-for-nav-floating) + clamp(8px, 1.5vh, 20px));
   padding-bottom: 0;
   margin-bottom: 0;
@@ -851,23 +864,20 @@ html.is-header-floating .site-header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: clamp(20px, 2.5vh, 32px);
   width: 100%;
   margin-top: 0;
   margin-bottom: clamp(24px, 3.5vh, 40px);
   box-sizing: border-box;
 }
 
-.main-stack > .hero-home + .bio {
-  margin-top: -44px;
-}
-
 .hero-home__text-panel {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: clamp(18px, 2.5vw, 32px);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(16px, 2vh, 24px);
   width: 100%;
-  max-width: min(calc(var(--content-prose) + 12rem), 100%);
+  max-width: 100%;
   padding: 0;
   box-sizing: border-box;
   text-align: left;
@@ -877,16 +887,17 @@ html.is-header-floating .site-header {
 }
 
 .hero-home__content {
-  flex: 0 1 calc(var(--content-prose) - 176px);
-  max-width: calc(var(--content-prose) - 176px);
+  flex: none;
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
 }
 
 .hero-home__avatar {
   display: block;
-  width: 152px;
-  height: 152px;
-  flex: 0 0 152px;
+  width: 120px;
+  height: 120px;
+  flex: none;
   object-fit: cover;
   object-position: center 22%;
   border: 0;
@@ -897,6 +908,16 @@ html.is-header-floating .site-header {
   max-width: 100%;
   font-size: var(--text-display-hero-home);
   text-align: left;
+}
+
+.hero-home__bio {
+  width: 100%;
+  max-width: 100%;
+  scroll-margin-top: var(--main-pad-for-nav);
+}
+
+.hero-home__bio .section-label {
+  display: none;
 }
 
 /* --- Bio --- */
@@ -915,8 +936,8 @@ html.is-header-floating .site-header {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: var(--content-prose);
-  margin-left: auto;
+  max-width: 100%;
+  margin-left: 0;
 }
 
 .bio__lead {
@@ -1653,7 +1674,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   flex-direction: column;
   gap: 32px;
   width: 100%;
-  max-width: var(--content-wide);
+  max-width: 100%;
 }
 
 .cs-hero {
@@ -1661,16 +1682,16 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   flex-direction: column;
   gap: 16px;
   padding-top: 72px;
-  width: 854px;
-  max-width: 100%;
+  width: 100%;
+  max-width: min(854px, 100%);
 }
 
 .cs-hero__title {
-  max-width: 854px;
+  max-width: min(854px, 100%);
 }
 
 .cs-hero__lede {
-  max-width: 709px;
+  max-width: min(709px, 100%);
 }
 
 .cs-meta {
@@ -1679,7 +1700,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   column-gap: var(--grid-gutter);
   row-gap: 24px;
   width: 100%;
-  max-width: 854px;
+  max-width: min(854px, 100%);
 }
 
 .cs-meta__item {
@@ -1735,8 +1756,8 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 854px;
-  max-width: 100%;
+  width: 100%;
+  max-width: min(854px, 100%);
 }
 
 .cs-section__title {
@@ -2163,12 +2184,17 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
 @media (min-width: 1101px) {
   .cs-layout {
-    display: block;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+    align-items: start;
+    width: 100%;
   }
 
   .cs-layout__main {
+    grid-column: 1 / span 5;
     width: 100%;
-    max-width: var(--cs-main-max);
+    max-width: none;
     min-width: 0;
   }
 
@@ -2205,6 +2231,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    grid-column: 6;
     position: fixed;
     top: var(--cs-nav-sticky-top);
     bottom: var(--cs-rail-bottom);
@@ -2332,7 +2359,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
 @media (max-width: 1100px) {
   :root {
-    --page-pad-x: 40px;
+    --page-pad-x: 20px;
     --grid-columns: var(--grid-columns-tablet);
     --grid-gutter: var(--grid-gutter-tablet);
   }
@@ -2387,10 +2414,10 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
 @media (max-width: 900px) {
   :root {
-    --page-pad-x: 24px;
+    --page-pad-x: 20px;
     --section-gap-lg: calc(40px + var(--section-gap-extra));
     --grid-columns: var(--grid-columns-tablet);
-    --grid-gutter: 16px;
+    --grid-gutter: var(--grid-gutter-tablet);
   }
 
   .main-stack,
@@ -2437,7 +2464,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
 @media (max-width: 768px) {
   :root {
-    --page-pad-x: 16px;
+    --page-pad-x: 20px;
     --section-gap-extra: 24px;
     --section-gap-lg: calc(32px + var(--section-gap-extra));
     --section-gap-sm: calc(24px + var(--section-gap-extra));
@@ -2516,39 +2543,36 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
     padding-top: calc(var(--float-nav-block) - 12px);
     display: flex;
     flex-direction: column;
+    max-width: 100%;
   }
 
   .hero-home__stack {
     order: 0;
     margin-bottom: 28px;
-  }
-
-  /* Cancel the large main-stack section gap so bio starts just below the intro */
-  .main-stack > .hero-home + .bio {
-    margin-top: calc(-1 * var(--section-gap-lg));
+    gap: 20px;
   }
 
   .hero-home__text-panel {
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     gap: 16px;
     max-width: 100%;
   }
 
   .hero-home__content {
-    flex: 1 1 auto;
+    flex: none;
     order: 0;
-    width: auto;
-    max-width: none;
+    width: 100%;
+    max-width: 100%;
     min-width: 0;
   }
 
   .hero-home__avatar {
     display: block;
-    order: 1;
+    order: 0;
     width: 96px;
     height: 96px;
-    flex: 0 0 96px;
+    flex: none;
     align-self: flex-start;
   }
 
