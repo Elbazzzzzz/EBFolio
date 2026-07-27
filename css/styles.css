@@ -872,7 +872,7 @@ html.is-header-floating .site-header {
   gap: var(--grid-gutter);
   align-items: start;
   width: 100%;
-  margin-bottom: clamp(24px, 3.5vh, 40px);
+  margin-bottom: clamp(12px, 1.75vh, 20px);
 }
 
 .hero-home__main {
