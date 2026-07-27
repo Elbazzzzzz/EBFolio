@@ -1,8 +1,10 @@
 /*
- * Monochrome dark theme (index-mono-dark.html).
- * Loads AFTER styles.css, theme-pink.css and theme-pink-dark.css, and swaps
- * every pink (#ff8ab8) accent for #f2f2f2, keeping the dark surfaces and the
- * teal (#24606d) fills from the dark theme.
+ * Monochrome dark theme — the site's single live palette.
+ *
+ * Consolidated from three previously separate cascading files
+ * (theme-pink.css -> theme-pink-dark.css -> theme-mono-dark.css) into one,
+ * in the same order, so the computed styles are unchanged but the site no
+ * longer depends on loading three unscoped stylesheets in the right order.
  *
  * Contrast:
  *   #f2f2f2 accent on #15181b canvas          16.2:1
@@ -13,6 +15,378 @@
  * Hover / pressed shades are darkened #f2f2f2 using the same relative steps
  * as the original palette.
  */
+
+/* ---- Base palette + brand accent (from former theme-pink.css) ---- */
+
+:root {
+  --brand-yellow: #ff8ab8;
+  --brand-orange: #24606d;
+  /* Buttons (ghost hover/press + primary CTA). Black text on #ff8ab8 = 10.1:1 */
+  --btn-hover-bg: #ff8ab8;
+  --btn-pressed-bg: #e67ca6;
+  --btn-hover-bg-pointer: #ff8ab8;
+  --btn-pressed-bg-pointer: #e07aa2;
+  --btn-primary-bg: #ff8ab8;
+  --btn-primary-hover-bg: #ed80ab;
+  --btn-primary-pressed-bg: #d9759c;
+  /* Page canvas behind cards / sections */
+  --page-canvas: #f2f2f2;
+  --page-canvas-gradient: linear-gradient(
+    152deg,
+    #f2f2f2 0%,
+    #f5f5f5 26%,
+    #f0f0f1 52%,
+    #f3f3f3 78%,
+    #f1f1f1 100%
+  );
+}
+
+/* Overscroll + scrollbar (matches footer / intro pink) */
+html {
+  background-color: #ff8ab8;
+  scrollbar-color: #24606d #ff8ab8;
+}
+
+html::-webkit-scrollbar-track {
+  background: #ff8ab8;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #24606d;
+  border-color: #ff8ab8;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: #1c4e59;
+  border-color: #ff8ab8;
+}
+
+html::-webkit-scrollbar-corner {
+  background: #ff8ab8;
+}
+
+/* Footer band */
+.site-footer {
+  background: #ff8ab8;
+}
+
+.footer-movement__track {
+  background: color-mix(in srgb, #2d2c2b 20%, #ff8ab8);
+}
+
+.footer-movement__switch[aria-checked="true"] .footer-movement__thumb {
+  background: #ff8ab8;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-movement__switch:hover .footer-movement__track {
+    background: color-mix(in srgb, #2d2c2b 30%, #ff8ab8);
+  }
+
+  .footer-movement__switch[aria-checked="true"]:hover .footer-movement__track {
+    background: color-mix(in srgb, #2d2c2b 85%, #ff8ab8);
+  }
+}
+
+/* Opening scroll animation: pink stage (frames themselves are the teal set) */
+.scroll-intro {
+  --scroll-intro-yellow: #ff8ab8;
+}
+
+/* ---- Dark surfaces (from former theme-pink-dark.css) ---- */
+
+:root {
+  /* Dark canvas + gradient */
+  --page-canvas: #15181b;
+  --page-canvas-gradient: linear-gradient(
+    152deg,
+    #15181b 0%,
+    #171a1e 26%,
+    #14171a 52%,
+    #16191c 78%,
+    #141719 100%
+  );
+  /* Buttons: light outline ghost; states flip to dark-ink-on-pink */
+  --btn-fg: #f2f2f2;
+  --btn-border: #f2f2f2;
+  --btn-focus-ring: #ff8ab8;
+  /* Frosted glass header / mobile nav over dark canvas */
+  --nav-glass-bg: rgba(21, 24, 27, 0.72);
+  --nav-glass-border: rgba(255, 255, 255, 0.14);
+  /* Floating subnav (Overview / Bio / Projects / Experience) */
+  --cs-nav-bg: #1e2328;
+  --cs-nav-fg: #f2f2f2;
+  --cs-nav-fg-muted: #b9c0c4;
+  --cs-nav-fg-knockback: #a0a8ad;
+  --cs-nav-fg-hover: #d7dcdf;
+  --cs-nav-fg-pressed: #ffffff;
+  --cs-nav-border: rgba(255, 255, 255, 0.18);
+  /* Active-section dot: pink reads on dark surfaces (teal does not) */
+  --nav-state-dot: #ff8ab8;
+  /* Metric pills: white outline + white type on dark canvas */
+  --color-metric-pill-bg: transparent;
+  --color-metric-pill-fg: #ffffff;
+  --color-metric-pill-border: #ffffff;
+}
+
+/* Overscroll + scrollbar: dark track, pink thumb */
+html {
+  color-scheme: dark;
+  background-color: #15181b;
+  scrollbar-color: #ff8ab8 #1e2328;
+}
+
+html::-webkit-scrollbar-track {
+  background: #1e2328;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #ff8ab8;
+  border-color: #1e2328;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: #ed80ab;
+  border-color: #1e2328;
+}
+
+html::-webkit-scrollbar-corner {
+  background: #1e2328;
+}
+
+body {
+  color: #f2f2f2;
+}
+
+::selection {
+  background-color: #ff8ab8;
+  color: #15181b;
+}
+
+/* Skip link: pink pill, dark ink, light ring against the dark canvas */
+.skip-link {
+  color: #15181b;
+  background: #ff8ab8;
+}
+
+.skip-link:focus-visible {
+  outline-color: #f2f2f2;
+}
+
+/* --- Header / nav --- */
+
+.nav__brand {
+  color: #f2f2f2;
+}
+
+html.is-header-floating .site-header {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 40px rgba(0, 0, 0, 0.55);
+}
+
+.nav-mobile {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 -8px 32px rgba(0, 0, 0, 0.45);
+}
+
+/* --- Buttons ---
+   Ghost: light text/border on dark. All pink-filled states (hover, press,
+   primary) flip the ink dark so contrast is 8.5:1+ in every state. */
+
+.btn--primary {
+  color: #15181b;
+  border-color: var(--btn-primary-bg);
+}
+
+.btn--ghost:active:not(:disabled):not([aria-disabled="true"]) {
+  color: #15181b;
+  border-color: var(--btn-pressed-bg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+    color: #15181b;
+    border-color: var(--btn-hover-bg-pointer);
+  }
+}
+
+/* Button icons (download / chevron SVGs are black): invert on dark ghost,
+   back to black whenever the button sits on a pink fill */
+.btn__icon {
+  filter: invert(1);
+  transition: filter 0.15s ease;
+}
+
+.btn--primary .btn__icon,
+.btn--ghost:active .btn__icon {
+  filter: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--ghost:hover .btn__icon {
+    filter: none;
+  }
+}
+
+/* Projects dropdown: the container turns pink when open/hovered while the
+   inner ghost buttons go transparent — flip their ink + icons to dark */
+.nav-dropdown--open .nav-dropdown__link.btn--ghost,
+.nav-dropdown--open .nav-dropdown__toggle.btn--ghost,
+.nav-dropdown:has(.nav-dropdown__link:active) .btn--ghost,
+.nav-dropdown:has(.nav-dropdown__toggle:active) .btn--ghost {
+  color: #15181b;
+}
+
+.nav-dropdown--open .btn--ghost .btn__icon,
+.nav-dropdown:has(.nav-dropdown__link:active) .btn--ghost .btn__icon,
+.nav-dropdown:has(.nav-dropdown__toggle:active) .btn--ghost .btn__icon {
+  filter: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-dropdown:hover .nav-dropdown__link.btn--ghost,
+  .nav-dropdown:hover .nav-dropdown__toggle.btn--ghost {
+    color: #15181b;
+  }
+
+  .nav-dropdown:hover .btn--ghost .btn__icon {
+    filter: none;
+  }
+}
+
+/* Dropdown menu: solid dark surface, light items, pink hover with dark ink */
+.nav-dropdown__menu {
+  background: #1e2328;
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06),
+    0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+.nav-dropdown__item {
+  color: #f2f2f2;
+}
+
+.nav-dropdown__close {
+  color: #f2f2f2;
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
+
+.nav-dropdown__item:active,
+.nav-dropdown__close:active {
+  color: #15181b;
+  background-color: var(--btn-pressed-bg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-dropdown__item:hover,
+  .nav-dropdown__close:hover {
+    color: #15181b;
+  }
+}
+
+/* --- Hero --- */
+
+/* Wave stays pink; the black type on it is 10.1:1. */
+
+/* --- Floating home subnav: dark surface (link colours come from vars) --- */
+
+.home-subnav {
+  background: var(--cs-nav-bg);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Project cards --- */
+
+.project-card__title {
+  color: #f2f2f2;
+}
+
+.project-card__category {
+  color: #b9c0c4;
+}
+
+a.project-card__surface--link:active {
+  background-color: #1e2328;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.project-card__surface--link:hover {
+    background-color: #1e2328;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+}
+
+/* --- Experience table --- */
+
+.experience__row {
+  border-bottom-color: rgba(242, 242, 242, 0.45);
+}
+
+.experience__text {
+  color: #f2f2f2;
+}
+
+/* --- Footer: stays the pink band with dark ink; focus rings use the ink
+   colour so they are visible against pink (pink-on-pink would vanish) --- */
+
+.footer-movement__switch:focus-visible,
+.footer-social:focus-visible,
+.footer-link:focus-visible {
+  outline-color: #2d2c2b;
+}
+
+/* --- Opening scroll animation: dark stage, light headline
+   (frame images come from assets/intro-frames-grey via data-frames-path) --- */
+
+.scroll-intro {
+  --scroll-intro-yellow: #15181b;
+  --scroll-intro-ink: #f2f2f2;
+}
+
+/* --- Case study pages --- */
+
+/* At-a-glance summary card: light grey -> dark surface */
+.cs-at-a-glance {
+  background: #1e2328;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* Results metrics: the green (#007f2f) only reaches 3.6:1 on the dark
+   canvas — use the accent instead (9.1:1) */
+.results-metrics__item,
+.results-metrics__label {
+  color: #ff8ab8;
+}
+
+/* Floating article nav: solid dark surface (text colours come from the
+   --cs-nav-* variables overridden above) */
+.cs-article-nav {
+  background: var(--cs-nav-bg);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* No-backdrop-filter fallback: near-opaque dark instead of near-opaque white */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  html.is-header-floating .site-header,
+  .home-subnav,
+  .nav-mobile,
+  .nav-dropdown__menu,
+  .cs-article-nav {
+    background: rgba(30, 35, 40, 0.97);
+  }
+}
+
+/* ---- Monochrome accent swap (from former theme-mono-dark.css) ---- */
 
 :root {
   --brand-yellow: #f2f2f2;
@@ -53,11 +427,6 @@ html::-webkit-scrollbar-thumb:hover {
 /* Skip link ring would vanish against its own grey pill — use teal */
 .skip-link:focus-visible {
   outline-color: #24606d;
-}
-
-/* Hero ticker wave: grey band; the teal dot (6.3:1) carries over */
-.hero-home__ticker-track {
-  fill: #f2f2f2;
 }
 
 /* Primary CTA hover dot: teal, so it reads on the grey hover fill

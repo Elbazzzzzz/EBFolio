@@ -132,8 +132,10 @@ body {
   --nav-glass-bg: rgba(255, 255, 255, 0.58);
   --nav-glass-border: rgba(255, 255, 255, 0.42);
   --nav-glass-blur: 16px;
-  --color-metric-pill-bg: #007f2f;
+  /* Metric pills: outlined (2px stroke, no fill) — icons are white SVGs */
+  --color-metric-pill-bg: transparent;
   --color-metric-pill-fg: #ffffff;
+  --color-metric-pill-border: #ffffff;
   --content-prose: min(44.3125rem, 100%);
   --content-wide: min(75rem, 100%);
   --page-max: 1440px;
@@ -625,11 +627,6 @@ html.is-header-floating .site-header {
   }
 }
 
-/* CV label: full title on desktop, “CV” on narrow viewports (Figma mobile bottom nav) */
-.btn__label-mobile {
-  display: none;
-}
-
 /* Sticky bottom nav ("Stickly Bottom Mobile Nav") (iPhone 16 - Home) */
 .nav-mobile {
   display: none;
@@ -848,51 +845,6 @@ html.is-header-floating .site-header {
   box-sizing: border-box;
 }
 
-.hero-home__ticker {
-  /* Wave ticker hidden (decorative, aria-hidden) */
-  display: none;
-  position: relative;
-  left: 50%;
-  z-index: 0;
-  width: 100vw;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-  pointer-events: auto;
-  cursor: default;
-  transform: translateX(-50%);
-}
-
-.hero-home__ticker-svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-  shape-rendering: geometricPrecision;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-.hero-home__ticker-track {
-  fill: #ffce00;
-  stroke: none;
-}
-
-.hero-home__ticker-text {
-  fill: #000000;
-  font-family: var(--font-sans);
-  font-size: clamp(1.75rem, 1rem + 1.35vw, 2.5rem);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  word-spacing: 0.35em;
-  text-transform: uppercase;
-  text-rendering: geometricPrecision;
-}
-
-.hero-home__ticker-dot {
-  fill: #ff7300;
-}
-
 .hero-home__stack {
   position: relative;
   z-index: 1;
@@ -907,13 +859,6 @@ html.is-header-floating .site-header {
 
 .main-stack > .hero-home + .bio {
   margin-top: -44px;
-}
-
-@media (min-width: 769px) {
-  .hero-home__ticker-text {
-    font-size: clamp(1.65rem, 0.85rem + 1.1vw, 2.35rem);
-    word-spacing: 0.3em;
-  }
 }
 
 .hero-home__text-panel {
@@ -952,33 +897,6 @@ html.is-header-floating .site-header {
   max-width: 100%;
   font-size: var(--text-display-hero-home);
   text-align: left;
-}
-
-.hero-home__actions {
-  display: none;
-}
-
-/* Status line: same padding + min-height rhythm as .btn */
-.hero-home__availability {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  font-weight: 500;
-  line-height: var(--leading-normal);
-  color: #000000;
-}
-
-.hero-home__availability-dot {
-  width: 10px;
-  height: 10px;
-  flex-shrink: 0;
-  border-radius: 30px;
-  background-color: #007f2f;
 }
 
 /* --- Bio --- */
@@ -1479,26 +1397,44 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   font-weight: 500;
 }
 
-.project-card__metrics span {
+.project-card__metrics span,
+.cs-success-metrics span {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   padding: 4px 10px;
   border-radius: var(--radius-rect);
+  border: 2px solid var(--color-metric-pill-border);
   background-color: var(--color-metric-pill-bg);
   color: var(--color-metric-pill-fg);
   white-space: normal;
   font-size: 10px;
   text-align: center;
+  box-sizing: border-box;
 }
 
-.project-card__metrics span::before {
+.project-card__metrics span::before,
+.cs-success-metrics span::before {
   content: "";
   flex-shrink: 0;
-  width: 14px;
-  height: 14px;
-  background: url("../assets/icons/arrow-up.svg") center / contain no-repeat;
+  width: 12px;
+  height: 12px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Quantitative increase → up arrow */
+.project-card__metrics span.metric-pill--up::before,
+.cs-success-metrics span.metric-pill--up::before {
+  background-image: url("../assets/icons/arrow-up.svg");
+}
+
+/* Qualitative benefit → plus */
+.project-card__metrics span.metric-pill--plus::before,
+.cs-success-metrics span.metric-pill--plus::before {
+  background-image: url("../assets/icons/plus.svg");
 }
 
 /* --- Footer --- */
@@ -1787,18 +1723,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 }
 
 .cs-success-metrics span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 10px;
-  border-radius: var(--radius-rect);
-  background-color: var(--color-metric-pill-bg);
-  color: var(--color-metric-pill-fg);
-  white-space: normal;
-  text-align: center;
   max-width: 100%;
-  box-sizing: border-box;
-  font-size: 10px;
 }
 
 .cs-intro > .btn {
@@ -2543,10 +2468,6 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
     display: none;
   }
 
-  .btn__label-mobile {
-    display: inline;
-  }
-
   .page {
     padding-bottom: 0;
   }
@@ -2593,13 +2514,8 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
   .hero-home {
     /* Clear the fixed brand bar with less empty air above the intro */
     padding-top: calc(var(--float-nav-block) - 12px);
-    /* Mobile: ticker first, then intro copy */
     display: flex;
     flex-direction: column;
-  }
-
-  .hero-home__ticker {
-    display: none;
   }
 
   .hero-home__stack {
@@ -2846,10 +2762,6 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 }
 
 @media (min-width: 769px) {
-  .btn__label-mobile {
-    display: none !important;
-  }
-
   .btn__label-desktop {
     display: inline;
   }

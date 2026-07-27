@@ -18,10 +18,8 @@
       href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=55" />
-    <link rel="stylesheet" href="css/theme-pink.css?v=1" />
-    <link rel="stylesheet" href="css/theme-pink-dark.css?v=2" />
-    <link rel="stylesheet" href="css/theme-mono-dark.css?v=2" />
+    <link rel="stylesheet" href="css/styles.css?v=57" />
+    <link rel="stylesheet" href="css/theme-mono-dark.css?v=5" />
     <script>
       (function () {
         try {
@@ -31,7 +29,6 @@
         } catch (error) {}
       })();
     </script>
-    <script src="js/movement-toggle.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -82,13 +79,13 @@
               </div>
               <a class="btn btn--ghost" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download CV">
                 <span class="btn__label-desktop">Download </span>CV
-                <img
-                  class="btn__icon"
-                  src="assets/icons/download.svg"
-                  width="16"
-                  height="16"
-                  alt=""
-                />
+                  <img
+                    class="btn__icon"
+                    src="assets/icons/download.svg"
+                    width="16"
+                    height="16"
+                    alt=""
+                  />
               </a>
               <a class="btn btn--primary" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
             </div>
@@ -125,9 +122,9 @@
           </div>
 
           <div class="cs-success-metrics" aria-label="Success metrics">
-            <span>+70% donation page traffic</span>
-            <span>+533% newsletter sign-up increase</span>
-            <span>+£10k YoY increase in income</span>
+            <span class="metric-pill--up">+70% donation page traffic</span>
+            <span class="metric-pill--up">+533% newsletter sign-up increase</span>
+            <span class="metric-pill--up">+£10k YoY increase in income</span>
           </div>
 
           <div class="cs-figure-group">
@@ -135,19 +132,23 @@
               <div class="media-bleed__lg">
                 <img
                   class="media-fill-img"
-                  src="assets/F4S/Az%20conditionpages.gif"
+                  src="assets/F4S/Az_conditionpages.gif"
                   width="800"
                   height="455"
                   alt="Desktop screen recording of the A–Z eye conditions hub: filterable list and detail layout."
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div class="media-bleed__sm">
                 <img
                   class="media-fill-img"
-                  src="assets/F4S/az%20eye%20conditions%20mobile.gif"
+                  src="assets/F4S/az_eye_conditions_mobile.gif"
                   width="670"
                   height="1466"
                   alt="Mobile screen recording of the same A–Z eye conditions flow, stacked for small screens."
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -164,13 +165,13 @@
             rel="noopener noreferrer"
           >
             Visit live
-            <img
-              class="btn__icon"
-              src="assets/icons/arrow-outward.svg"
-              width="16"
-              height="16"
-              alt=""
-            />
+              <img
+                class="btn__icon"
+                src="assets/icons/arrow-outward.svg"
+                width="16"
+                height="16"
+                alt=""
+              />
           </a>
         </div>
 
@@ -262,6 +263,10 @@
               width="2000"
               height="1250"
               alt="Composite mockup of the 404 error page on desktop and in a mobile frame, with branded 404 artwork and a back-home call to action."
+              loading="lazy"
+              decoding="async"
+              srcset="assets/ffs-embedded-img05-800w.jpg 800w, assets/ffs-embedded-img05-1200w.jpg 1200w, assets/ffs-embedded-img05-1600w.jpg 1600w, assets/ffs-embedded-img05.jpg 2000w"
+              sizes="(max-width: 768px) 100vw, min(1200px, 92vw)"
             />
           </div>
           <p class="text-img-caption cs-figure-group__caption">
@@ -297,19 +302,23 @@
             <div class="media-bleed__lg">
               <img
                 class="media-fill-img"
-                src="assets/F4S/accessibility%20controls%20desktop.gif"
+                src="assets/F4S/accessibility_controls_desktop.gif"
                 width="800"
                 height="457"
                 alt="Desktop screen recording of the header accessibility toolbar: colour mode and text size controls."
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div class="media-bleed__sm">
               <img
                 class="media-fill-img"
-                src="assets/F4S/mobile%20accessibility%20controls.gif"
+                src="assets/F4S/mobile_accessibility_controls.gif"
                 width="670"
                 height="1466"
                 alt="Mobile screen recording of the same accessibility controls, opened from the mobile header."
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -361,6 +370,10 @@
                     width="2800"
                     height="2276"
                     alt="Grid of Worldwide Cancer Research website components including donation hero, article cards, FAQ sections, and call-to-action blocks."
+                    loading="lazy"
+                    decoding="async"
+                    srcset="assets/WCR/wcr-case-study-card-800w.png 800w, assets/WCR/wcr-case-study-card-1200w.png 1200w, assets/WCR/wcr-case-study-card-1600w.png 1600w, assets/WCR/wcr-case-study-card.png 1728w"
+                    sizes="(max-width: 768px) 100vw, min(1200px, 92vw)"
                   />
                 </div>
                 <h3 class="project-card__title">Worldwide Cancer Research</h3>
@@ -370,9 +383,9 @@
                   and researcher journeys, with bespoke donation components, post-donation pathways to encourage
                   monthly giving, and impact storytelling to make discovery research tangible.</p>
                 <div class="project-card__metrics" aria-label="Project metrics">
-                  <span>+£1,157 / month in donations</span>
-                  <span>+18.6% users</span>
-                  <span>+19.6% session duration</span>
+                  <span class="metric-pill--up">+£1,157 / month in donations</span>
+                  <span class="metric-pill--up">+18.6% users</span>
+                  <span class="metric-pill--up">+19.6% session duration</span>
                 </div>
               </a>
             </article>
@@ -385,18 +398,22 @@
                     width="2870"
                     height="1636"
                     alt="GIFCT digital platform: desktop view of the legislation research interface."
+                    loading="lazy"
+                    decoding="async"
+                    srcset="assets/GIFCT/gifct-case-study-card-800w.png 800w, assets/GIFCT/gifct-case-study-card-1200w.png 1200w, assets/GIFCT/gifct-case-study-card-1600w.png 1600w, assets/GIFCT/gifct-case-study-card.png 1728w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 570px"
                   />
                 </div>
                 <h3 class="project-card__title">The Global Internet Forum to Counter Terrorism</h3>
-                <p class="project-card__category">Global digital platform</p>
+                <p class="project-card__category">High stress use case</p>
                 <p class="project-card__desc">
                   A global research tool making terrorism legislation searchable and comparable across
                   jurisdictions. Built to support governments, researchers, and trust-and-safety professionals with
                   different mental models and levels of digital fluency.</p>
                 <div class="project-card__metrics" aria-label="Project metrics">
-                  <span>Practitioners reported faster legislation research</span>
-                  <span>#1 most adopted GIFCT digital release</span>
-                  <span>Global summit launch</span>
+                  <span class="metric-pill--plus">Practitioners reported faster legislation research</span>
+                  <span class="metric-pill--plus">#1 most adopted GIFCT digital release</span>
+                  <span class="metric-pill--plus">Global summit launch</span>
                 </div>
               </a>
             </article>
@@ -409,6 +426,10 @@
                     width="1440"
                     height="900"
                     alt="Walk Wheel Cycle Trust mapping tool on desktop, showing community-reported barriers on active travel routes."
+                    loading="lazy"
+                    decoding="async"
+                    srcset="assets/Sustrans/wwct-case-study-card-800w.png 800w, assets/Sustrans/wwct-case-study-card-1200w.png 1200w, assets/Sustrans/wwct-case-study-card-1600w.png 1600w, assets/Sustrans/wwct-case-study-card.png 1728w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 570px"
                   />
                 </div>
                 <h3 class="project-card__title">Designing a Mapping Tool for Disabled Users</h3>
@@ -418,9 +439,9 @@
                   and an embedded expert panel of disabled volunteers. Built around real barriers rather than
                   assumed fitness.</p>
                 <div class="project-card__metrics" aria-label="Project metrics">
-                  <span>Findings report delivered</span>
-                  <span>£1mil+ funding unlocked</span>
-                  <span>5 mapping tools audited</span>
+                  <span class="metric-pill--plus">Findings report delivered</span>
+                  <span class="metric-pill--up">£1mil+ funding unlocked</span>
+                  <span class="metric-pill--plus">5 mapping tools audited</span>
                 </div>
               </a>
             </article>
@@ -473,13 +494,13 @@
           <a class="btn btn--ghost" href="index.html#projects">Projects</a>
           <a class="btn btn--ghost" href="assets/CV/Ellie_Barrett_CV_May2026.pdf" download="Ellie_Barrett_CV_May2026.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download CV">
             <span class="btn__label-desktop">Download </span>CV
-            <img
-              class="btn__icon"
-              src="assets/icons/download.svg"
-              width="16"
-              height="16"
-              alt=""
-            />
+              <img
+                class="btn__icon"
+                src="assets/icons/download.svg"
+                width="16"
+                height="16"
+                alt=""
+              />
           </a>
           <a class="btn btn--primary" href="mailto:elliemeganbarrett@gmail.com">Contact me</a>
         </div>
@@ -490,5 +511,6 @@
     <script src="js/smooth-scroll.js?v=3" defer></script>
     <script src="js/case-study-nav.js?v=5" defer></script>
     <script src="js/mobile-nav-visibility.js" defer></script>
+    <script src="js/movement-toggle.js?v=2" defer></script>
   </body>
 </html>
