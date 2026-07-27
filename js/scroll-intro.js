@@ -33,6 +33,12 @@
     return;
   }
 
+  // Prevent the browser from restoring a mid-intro scroll position on refresh;
+  // we decide below whether to restart from the top.
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
   var framesPath = intro.getAttribute("data-frames-path") || "assets/intro-frames";
   var frames = [];
   var i;
@@ -272,6 +278,26 @@
   }
 
   syncMetrics();
+
+  // If a refresh left us mid-frame scrub, jump back to the top so autoplay
+  // can run from frame 0. Past the frame range (landing buffer / hero / page),
+  // keep the restored position.
+  if (!window.location.hash && window.scrollY > 0 && window.scrollY < maxScrollRange) {
+    lastProgrammaticY = 0;
+    window.scrollTo(0, 0);
+  }
+
+  // Some browsers restore scroll after deferred scripts; catch that on load.
+  window.addEventListener("load", function () {
+    if (window.location.hash) return;
+    if (window.scrollY > 0 && window.scrollY < maxScrollRange) {
+      lastProgrammaticY = 0;
+      window.scrollTo(0, 0);
+      currentFrame = -1;
+      render();
+    }
+  });
+
   render();
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onResize, { passive: true });
@@ -287,6 +313,29 @@
   window.addEventListener("keydown", onScrollKeydown);
   window.addEventListener("touchstart", onPointerDown, { passive: true });
   window.addEventListener("mousedown", onPointerDown, { passive: true });
+
+  // bfcache restore can revive a mid-intro scroll; reset again if needed.
+  window.addEventListener("pageshow", function (event) {
+    if (!event.persisted) return;
+    syncMetrics();
+    if (!window.location.hash && window.scrollY > 0 && window.scrollY < maxScrollRange) {
+      userTookOver = false;
+      lastProgrammaticY = 0;
+      window.scrollTo(0, 0);
+      currentFrame = -1;
+      render();
+      cancelAutoplay();
+      clearTimeout(failsafeTimer);
+      autoplayDelayTimer = setTimeout(startAutoplay, AUTOPLAY_DELAY_MS);
+      failsafeTimer = setTimeout(function () {
+        if (userTookOver || complete || window.scrollY >= maxScrollRange) return;
+        cancelAutoplay();
+        lastProgrammaticY = introTargetScroll();
+        window.scrollTo(0, lastProgrammaticY);
+        render();
+      }, autoplayMaxDurationMs());
+    }
+  });
 
   if (window.location.hash) {
     // Deep link (e.g. #projects): let the hash navigation own the scroll
