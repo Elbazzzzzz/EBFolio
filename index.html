@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=60" />
+    <link rel="stylesheet" href="css/styles.css?v=61" />
     <link rel="stylesheet" href="css/theme-mono-dark.css?v=5" />
     <script>
       (function () {
@@ -120,36 +120,126 @@
 
       <main id="main-content" class="page__pad main-stack">
         <section class="hero-home" aria-label="Introduction">
-          <div class="hero-home__stack" data-mobile-nav-sentinel>
-            <div class="hero-home__text-panel">
-              <img
-                class="hero-home__avatar"
-                src="assets/ellie-barrett-headshot.png"
-                width="156"
-                height="156"
-                alt="Ellie Barrett"
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
-                srcset="assets/ellie-barrett-headshot-156w.png 156w, assets/ellie-barrett-headshot-312w.png 312w, assets/ellie-barrett-headshot.png 767w"
-                sizes="(max-width: 768px) 96px, 120px"
-              />
-              <div class="hero-home__content">
-                <h1 class="h1 hero-home__intro">
-                  I'm a Senior Product Designer who untangles ambiguity to create accessible, research-led products that drive results.
-                </h1>
+          <div class="hero-home__layout" data-mobile-nav-sentinel>
+            <div class="hero-home__main">
+              <div class="hero-home__stack">
+                <div class="hero-home__text-panel">
+                  <img
+                    class="hero-home__avatar"
+                    src="assets/ellie-barrett-headshot.png"
+                    width="156"
+                    height="156"
+                    alt="Ellie Barrett"
+                    loading="eager"
+                    fetchpriority="high"
+                    decoding="async"
+                    srcset="assets/ellie-barrett-headshot-156w.png 156w, assets/ellie-barrett-headshot-312w.png 312w, assets/ellie-barrett-headshot.png 767w"
+                    sizes="(max-width: 768px) 96px, 120px"
+                  />
+                  <div class="hero-home__content">
+                    <h1 class="h1 hero-home__intro">
+                      I'm a Senior Product Designer who untangles ambiguity to create accessible, research-led products that drive results.
+                    </h1>
+                  </div>
+                </div>
+                <div id="bio" class="bio hero-home__bio" aria-labelledby="bio-heading">
+                  <h2 id="bio-heading" class="visually-hidden">Bio</h2>
+                  <div class="bio__content">
+                    <p class="text-body bio__lead">
+                      As my agency's UX lead for the last five years, I've had the freedom to build research and design processes from scratch and embed them across multidisciplinary project teams.
+                    </p>
+                    <p class="text-body bio__text">
+                      I've been entrusted with outcomes for users and stakeholders at major charities and NGOs worldwide, including Worldwide Cancer Research, Fight for Sight, Marie Curie, and the Global Internet Forum to Counter Terrorism. I care about optimisation, sustainability and accessibility and that forms the basis of all my work.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div id="bio" class="bio hero-home__bio" aria-labelledby="bio-heading">
-              <h2 id="bio-heading" class="visually-hidden">Bio</h2>
-              <div class="bio__content">
-                <p class="text-body bio__lead">
-                  As my agency's UX lead for the last five years, I've had the freedom to build research and design processes from scratch and embed them across multidisciplinary project teams.
-                </p>
-                <p class="text-body bio__text">
-                  I've been entrusted with outcomes for users and stakeholders at major charities and NGOs worldwide, including Worldwide Cancer Research, Fight for Sight, Marie Curie, and the Global Internet Forum to Counter Terrorism. I care about optimisation, sustainability and accessibility and that forms the basis of all my work.
-                </p>
+
+            <div
+              class="hero-gallery"
+              id="hero-gallery"
+              aria-roledescription="carousel"
+              aria-label="Featured case studies"
+            >
+              <div class="hero-gallery__controls">
+                <button
+                  type="button"
+                  class="hero-gallery__arrow hero-gallery__arrow--prev"
+                  aria-label="Previous case study"
+                  aria-controls="hero-gallery-stage"
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                    <path d="M10 4L16 14H4L10 4Z" fill="#FFFFFF" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  class="hero-gallery__arrow hero-gallery__arrow--next"
+                  aria-label="Next case study"
+                  aria-controls="hero-gallery-stage"
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                    <path d="M10 16L4 6H16L10 16Z" fill="#FFFFFF" />
+                  </svg>
+                </button>
               </div>
+
+              <div class="hero-gallery__stage" id="hero-gallery-stage" tabindex="0">
+                <a
+                  class="hero-gallery__slide is-active"
+                  href="case-study-wcr.html"
+                  data-index="0"
+                  aria-label="Worldwide Cancer Research case study"
+                >
+                  <div class="hero-gallery__media hero-gallery__media--grey" aria-hidden="true"></div>
+                  <div class="hero-gallery__tags">
+                    <span class="hero-gallery__tag">UX</span>
+                    <span class="hero-gallery__tag">CRO</span>
+                  </div>
+                </a>
+                <a
+                  class="hero-gallery__slide"
+                  href="case-study-gifct.html"
+                  data-index="1"
+                  aria-label="GIFCT case study"
+                  hidden
+                >
+                  <div class="hero-gallery__media hero-gallery__media--white" aria-hidden="true"></div>
+                  <div class="hero-gallery__tags">
+                    <span class="hero-gallery__tag">UX</span>
+                    <span class="hero-gallery__tag">High Stress</span>
+                  </div>
+                </a>
+                <a
+                  class="hero-gallery__slide"
+                  href="case-study-ffs.html"
+                  data-index="2"
+                  aria-label="Fight for Sight case study"
+                  hidden
+                >
+                  <div class="hero-gallery__media hero-gallery__media--grey" aria-hidden="true"></div>
+                  <div class="hero-gallery__tags">
+                    <span class="hero-gallery__tag">UX</span>
+                    <span class="hero-gallery__tag">Accessibility</span>
+                  </div>
+                </a>
+                <a
+                  class="hero-gallery__slide"
+                  href="case-study-wwct.html"
+                  data-index="3"
+                  aria-label="Walk Wheel Cycle Trust case study"
+                  hidden
+                >
+                  <div class="hero-gallery__media hero-gallery__media--white" aria-hidden="true"></div>
+                  <div class="hero-gallery__tags">
+                    <span class="hero-gallery__tag">UX</span>
+                    <span class="hero-gallery__tag">Research</span>
+                  </div>
+                </a>
+              </div>
+
+              <p class="visually-hidden" id="hero-gallery-status" aria-live="polite" aria-atomic="true"></p>
             </div>
           </div>
         </section>
@@ -419,5 +509,6 @@
     <script src="js/home-nav.js?v=5" defer></script>
     <script src="js/mobile-nav-visibility.js" defer></script>
     <script src="js/movement-toggle.js?v=2" defer></script>
+    <script src="js/hero-gallery.js?v=1" defer></script>
   </body>
 </html>
