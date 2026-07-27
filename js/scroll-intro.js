@@ -158,10 +158,28 @@
   var userTookOver = false;
   var lastProgrammaticY = 0;
 
-  function introTargetScroll() {
-    // Scroll past the landing buffer too, so the hero sits at the top
-    // of the viewport once the stage has faded out.
+  function heroLandingScrollY() {
+    // Pin the hero overview (avatar + gallery) to the top of the viewport,
+    // matching the Overview subnav destination after the stage dismisses.
+    var hero = document.querySelector(".hero-home");
+    if (hero) {
+      return Math.max(
+        maxScrollRange,
+        Math.round(window.scrollY + hero.getBoundingClientRect().top)
+      );
+    }
     return Math.max(maxScrollRange, intro.offsetHeight);
+  }
+
+  function introTargetScroll() {
+    return heroLandingScrollY();
+  }
+
+  function snapToHeroLanding() {
+    var y = heroLandingScrollY();
+    lastProgrammaticY = y;
+    window.scrollTo(0, y);
+    render();
   }
 
   function autoplayMaxDurationMs() {
@@ -236,6 +254,7 @@
 
       if (window.scrollY >= targetY) {
         autoplayTimer = null;
+        snapToHeroLanding();
         return;
       }
 
@@ -249,14 +268,17 @@
         return;
       }
 
-      // Frame sequence finished — coast through the landing buffer quickly
-      // so the hero loads in without a long pause after the GIF.
+      // Frame sequence finished — remeasure the hero pin (layout may have
+      // settled), then coast through the landing buffer quickly so the hero
+      // loads in without a long pause after the GIF.
+      targetY = heroLandingScrollY();
       var nextY = Math.min(targetY, window.scrollY + pixelsPerFrame);
       lastProgrammaticY = Math.round(nextY);
       window.scrollTo(0, lastProgrammaticY);
 
       if (nextY >= targetY) {
         autoplayTimer = null;
+        snapToHeroLanding();
         return;
       }
 
@@ -330,9 +352,7 @@
       failsafeTimer = setTimeout(function () {
         if (userTookOver || complete || window.scrollY >= maxScrollRange) return;
         cancelAutoplay();
-        lastProgrammaticY = introTargetScroll();
-        window.scrollTo(0, lastProgrammaticY);
-        render();
+        snapToHeroLanding();
       }, autoplayMaxDurationMs());
     }
   });
@@ -350,9 +370,7 @@
     failsafeTimer = setTimeout(function () {
       if (userTookOver || complete || window.scrollY >= maxScrollRange) return;
       cancelAutoplay();
-      lastProgrammaticY = introTargetScroll();
-      window.scrollTo(0, lastProgrammaticY);
-      render();
+      snapToHeroLanding();
     }, autoplayMaxDurationMs());
   }
 })();
