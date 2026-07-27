@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=71" />
+    <link rel="stylesheet" href="css/styles.css?v=72" />
     <link rel="stylesheet" href="css/theme-mono-dark.css?v=5" />
     <script>
       (function () {
@@ -155,94 +155,51 @@
                 </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            <div
-              class="hero-gallery"
-              id="hero-gallery"
-              role="region"
-              aria-roledescription="carousel"
-              aria-label="Featured case studies"
+        <section
+          class="hero-gallery"
+          id="hero-gallery"
+          aria-label="Featured case studies"
+        >
+          <div class="hero-gallery__stage" id="hero-gallery-stage">
+            <a
+              class="hero-gallery__slide"
+              href="case-study-wcr.html"
+              aria-label="Worldwide Cancer Research case study"
             >
-              <div class="hero-gallery__controls">
-                <button
-                  type="button"
-                  class="hero-gallery__arrow hero-gallery__arrow--prev"
-                  aria-label="Previous case study"
-                  aria-controls="hero-gallery-stage"
-                  aria-disabled="true"
-                >
-                  <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-                    <path d="M14 4L4 10L14 16V4Z" fill="#FFFFFF" />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  class="hero-gallery__arrow hero-gallery__arrow--next"
-                  aria-label="Next case study"
-                  aria-controls="hero-gallery-stage"
-                >
-                  <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-                    <path d="M6 4L16 10L6 16V4Z" fill="#FFFFFF" />
-                  </svg>
-                </button>
+              <div class="hero-gallery__media hero-gallery__media--grey" aria-hidden="true"></div>
+              <span class="hero-gallery__tone" aria-hidden="true"></span>
+              <div class="hero-gallery__tags">
+                <span class="hero-gallery__tag">UX</span>
+                <span class="hero-gallery__tag">CRO</span>
               </div>
-
-              <div class="hero-gallery__stage" id="hero-gallery-stage" tabindex="0">
-                <a
-                  class="hero-gallery__slide is-active"
-                  href="case-study-wcr.html"
-                  data-index="0"
-                  aria-label="Worldwide Cancer Research case study"
-                >
-                  <div class="hero-gallery__media hero-gallery__media--grey" aria-hidden="true"></div>
-                  <div class="hero-gallery__tags">
-                    <span class="hero-gallery__tag">UX</span>
-                    <span class="hero-gallery__tag">CRO</span>
-                  </div>
-                </a>
-                <a
-                  class="hero-gallery__slide"
-                  href="case-study-gifct.html"
-                  data-index="1"
-                  aria-label="GIFCT case study"
-                  hidden
-                >
-                  <div class="hero-gallery__media hero-gallery__media--white" aria-hidden="true"></div>
-                  <div class="hero-gallery__tags">
-                    <span class="hero-gallery__tag">UX</span>
-                    <span class="hero-gallery__tag">High Stress</span>
-                  </div>
-                </a>
-                <a
-                  class="hero-gallery__slide"
-                  href="case-study-ffs.html"
-                  data-index="2"
-                  aria-label="Fight for Sight case study"
-                  hidden
-                >
-                  <div class="hero-gallery__media hero-gallery__media--grey" aria-hidden="true"></div>
-                  <div class="hero-gallery__tags">
-                    <span class="hero-gallery__tag">UX</span>
-                    <span class="hero-gallery__tag">Accessibility</span>
-                  </div>
-                </a>
-                <a
-                  class="hero-gallery__slide"
-                  href="case-study-wwct.html"
-                  data-index="3"
-                  aria-label="Walk Wheel Cycle Trust case study"
-                  hidden
-                >
-                  <div class="hero-gallery__media hero-gallery__media--white" aria-hidden="true"></div>
-                  <div class="hero-gallery__tags">
-                    <span class="hero-gallery__tag">UX</span>
-                    <span class="hero-gallery__tag">Research</span>
-                  </div>
-                </a>
+            </a>
+            <a
+              class="hero-gallery__slide"
+              href="case-study-gifct.html"
+              aria-label="GIFCT case study"
+            >
+              <div class="hero-gallery__media hero-gallery__media--white" aria-hidden="true"></div>
+              <span class="hero-gallery__tone" aria-hidden="true"></span>
+              <div class="hero-gallery__tags">
+                <span class="hero-gallery__tag">UX</span>
+                <span class="hero-gallery__tag">High Stress</span>
               </div>
-
-              <p class="visually-hidden" id="hero-gallery-status" aria-live="polite" aria-atomic="true"></p>
-            </div>
+            </a>
+            <a
+              class="hero-gallery__slide"
+              href="case-study-ffs.html"
+              aria-label="Fight for Sight case study"
+            >
+              <div class="hero-gallery__media hero-gallery__media--grey" aria-hidden="true"></div>
+              <span class="hero-gallery__tone" aria-hidden="true"></span>
+              <div class="hero-gallery__tags">
+                <span class="hero-gallery__tag">UX</span>
+                <span class="hero-gallery__tag">Accessibility</span>
+              </div>
+            </a>
           </div>
         </section>
 
@@ -511,6 +468,6 @@
     <script src="js/home-nav.js?v=5" defer></script>
     <script src="js/mobile-nav-visibility.js" defer></script>
     <script src="js/movement-toggle.js?v=2" defer></script>
-    <script src="js/hero-gallery.js?v=5" defer></script>
+    <script src="js/hero-gallery.js?v=6" defer></script>
   </body>
 </html>
