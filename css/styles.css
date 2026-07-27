@@ -990,6 +990,7 @@ html.is-header-floating .site-header {
   background: transparent;
   cursor: pointer;
   color: #ffffff;
+  transition: border-color 160ms ease, background-color 160ms ease;
 }
 
 .hero-gallery__arrow:focus-visible {
@@ -997,9 +998,17 @@ html.is-header-floating .site-header {
   outline-offset: 2px;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .hero-gallery__arrow:hover:not([aria-disabled="true"]) {
+    border-color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
 .hero-gallery__arrow[aria-disabled="true"] {
   opacity: 0.35;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .hero-gallery__stage {
@@ -2727,6 +2736,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
     pointer-events: auto;
     transform: none;
     scroll-snap-align: start;
+    transition: none;
   }
 
   .hero-gallery__media {

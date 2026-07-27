@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=61" />
+    <link rel="stylesheet" href="css/styles.css?v=62" />
     <link rel="stylesheet" href="css/theme-mono-dark.css?v=5" />
     <script>
       (function () {
@@ -159,6 +159,7 @@
             <div
               class="hero-gallery"
               id="hero-gallery"
+              role="region"
               aria-roledescription="carousel"
               aria-label="Featured case studies"
             >
@@ -168,6 +169,7 @@
                   class="hero-gallery__arrow hero-gallery__arrow--prev"
                   aria-label="Previous case study"
                   aria-controls="hero-gallery-stage"
+                  aria-disabled="true"
                 >
                   <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
                     <path d="M10 4L16 14H4L10 4Z" fill="#FFFFFF" />
@@ -509,6 +511,6 @@
     <script src="js/home-nav.js?v=5" defer></script>
     <script src="js/mobile-nav-visibility.js" defer></script>
     <script src="js/movement-toggle.js?v=2" defer></script>
-    <script src="js/hero-gallery.js?v=1" defer></script>
+    <script src="js/hero-gallery.js?v=2" defer></script>
   </body>
 </html>
