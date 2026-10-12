@@ -100,25 +100,16 @@ body {
   --cs-nav-border: #cccccc;
   --radius-rect: 30px;
   --cs-nav-radius: var(--radius-rect);
-  /* Rail sits in the rightmost grid column; main clears it via --cs-main-max */
+  /* Rail sits in page columns 10-11; main clears it via --cs-main-max */
   --cs-nav-offset: 0px;
   --cs-rail-width: 168px;
   --cs-rail-gap: 20px;
   --cs-nav-top-gap: 40px;
   --cs-nav-sticky-top: calc(var(--float-nav-block) + var(--cs-nav-top-gap));
-  --cs-rail-right: calc(
-    max(0px, (100vw - var(--page-max)) / 2) + var(--page-pad-x)
-  );
-  /* Main spans 5 of 6 desktop columns; leaves col 6 + gutter for the rail */
-  --cs-main-max: min(
-    var(--content-wide),
-    calc(
-      (
-          100vw - 2 * (max(0px, (100vw - var(--page-max)) / 2) + var(--page-pad-x)) -
-            5 * var(--grid-gutter)
-        ) / 6 * 5 + 4 * var(--grid-gutter)
-    )
-  );
+  /* Rail's right edge lines up with the right edge of page column 11 */
+  --cs-rail-right: var(--page-edge);
+  /* Main spans page columns 2-9 (8 columns); columns 10-11 hold the rail */
+  --cs-main-max: calc(8 * var(--page-col) + 7 * var(--grid-gutter));
   --cs-rail-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
   --cs-nav-pad: 16px;
   --cs-nav-link-pad-y: 8px;
@@ -142,24 +133,37 @@ body {
   --content-prose: min(44.3125rem, 100%);
   --content-wide: 100%;
   --page-max: 1440px;
-  --grid-columns-desktop: 6;
-  --grid-columns-tablet: 4;
-  --grid-columns-mobile: 4;
+  /*
+   * 12-column page grid at every breakpoint.
+   * Columns 1 and 12 are the side margins, so content sits in columns 2-11
+   * (a 10-column content grid). The grid spans the full .page width,
+   * capped at --page-max, with gutters between columns and none at the edges.
+   */
+  --grid-columns-page: 12;
+  --grid-columns: 10; /* columns available to content (2-11) */
   --grid-gutter-desktop: 20px;
   --grid-gutter-tablet: 20px;
-  --grid-gutter-mobile: 20px;
-  --grid-columns: var(--grid-columns-desktop);
+  --grid-gutter-mobile: 16px;
   --grid-gutter: var(--grid-gutter-desktop);
-  /* Desktop: 20px sides on a 6-col grid. Tablet/mobile also 20px. */
-  --page-pad-x: 20px;
-  /* Span helper: N columns + (N-1) gutters within the padded content width */
-  --grid-span-3: calc(
-    (100% - (var(--grid-columns) - 1) * var(--grid-gutter)) / var(--grid-columns) * 3 +
-      2 * var(--grid-gutter)
+  /* Width of the page grid (the viewport, capped at --page-max) */
+  --page-width: min(100vw, var(--page-max));
+  /* One page column */
+  --page-col: calc(
+    (var(--page-width) - (var(--grid-columns-page) - 1) * var(--grid-gutter)) /
+      var(--grid-columns-page)
   );
-  --grid-span-5: calc(
-    (100% - (var(--grid-columns) - 1) * var(--grid-gutter)) / var(--grid-columns) * 5 +
-      4 * var(--grid-gutter)
+  /* Side margin = column 1 + the gutter after it */
+  --page-pad-x: calc(var(--page-col) + var(--grid-gutter));
+  /* Distance from the viewport edge to the content edge (adds centring above --page-max) */
+  --page-edge: calc(max(0px, (100vw - var(--page-max)) / 2) + var(--page-pad-x));
+  /* Span helpers: N columns + (N-1) gutters, relative to the content box (cols 2-11) */
+  --grid-span-6: calc(
+    (100% - (var(--grid-columns) - 1) * var(--grid-gutter)) / var(--grid-columns) * 6 +
+      5 * var(--grid-gutter)
+  );
+  --grid-span-8: calc(
+    (100% - (var(--grid-columns) - 1) * var(--grid-gutter)) / var(--grid-columns) * 8 +
+      7 * var(--grid-gutter)
   );
   --section-gap-extra: 60px;
   --section-gap-lg: calc(40px + var(--section-gap-extra));
@@ -848,7 +852,7 @@ html.is-header-floating .site-header {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: var(--grid-span-3);
+  max-width: var(--grid-span-6);
   min-height: auto;
   /* Clear the floating glass header exactly, plus a small fluid gap —
      keeps intro text above the fold at 1440x900 */
@@ -954,7 +958,7 @@ html.is-header-floating .site-header {
   display: none;
   position: fixed;
   bottom: calc(var(--home-subnav-bottom-gap) + env(safe-area-inset-bottom, 0px));
-  left: var(--page-pad-x);
+  left: var(--page-edge);
   transform: none;
   z-index: 50;
   box-sizing: border-box;
@@ -1461,7 +1465,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 /* --- Footer --- */
 
 .site-footer {
-  padding: 30px var(--page-pad-x) 30px;
+  padding: 30px var(--page-edge) 30px;
   background: #ffce00;
   color: #2d2c2b;
   /* Full-bleed yellow band (matches scroll-intro stage) */
@@ -2183,16 +2187,20 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 }
 
 @media (min-width: 1101px) {
+  :root {
+    --cs-rail-width: min(168px, calc(2 * var(--page-col) + var(--grid-gutter)));
+  }
+
   .cs-layout {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
     column-gap: var(--grid-gutter);
     align-items: start;
     width: 100%;
   }
 
   .cs-layout__main {
-    grid-column: 1 / span 5;
+    grid-column: 1 / span 8;
     width: 100%;
     max-width: none;
     min-width: 0;
@@ -2231,7 +2239,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    grid-column: 6;
+    grid-column: 9 / span 2;
     position: fixed;
     top: var(--cs-nav-sticky-top);
     bottom: var(--cs-rail-bottom);
@@ -2359,9 +2367,12 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
 @media (max-width: 1100px) {
   :root {
-    --page-pad-x: 20px;
-    --grid-columns: var(--grid-columns-tablet);
     --grid-gutter: var(--grid-gutter-tablet);
+  }
+
+  /* Tablet: hero widens to 8 of the 10 content columns */
+  .hero-home {
+    max-width: var(--grid-span-8);
   }
 
   /* Desktop + mobile GIF rows: stay side-by-side through tablet; stack on phone */
@@ -2414,10 +2425,7 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
 @media (max-width: 900px) {
   :root {
-    --page-pad-x: 20px;
     --section-gap-lg: calc(40px + var(--section-gap-extra));
-    --grid-columns: var(--grid-columns-tablet);
-    --grid-gutter: var(--grid-gutter-tablet);
   }
 
   .main-stack,
@@ -2464,7 +2472,6 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
 
 @media (max-width: 768px) {
   :root {
-    --page-pad-x: 20px;
     --section-gap-extra: 24px;
     --section-gap-lg: calc(32px + var(--section-gap-extra));
     --section-gap-sm: calc(24px + var(--section-gap-extra));
@@ -2478,7 +2485,6 @@ a.project-card__surface--link:focus-visible .project-card__media .media-fill-img
     --text-sm: 0.9375rem;
     --text-body: 1rem;
     --leading-normal: 1.65;
-    --grid-columns: var(--grid-columns-mobile);
     --grid-gutter: var(--grid-gutter-mobile);
   }
 
